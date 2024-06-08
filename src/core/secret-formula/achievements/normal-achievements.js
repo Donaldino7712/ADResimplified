@@ -70,8 +70,8 @@ export const normalAchievements = [
     checkRequirement: () => AntimatterDimension(8).continuumAmount > 0,
     checkEvent: GAME_EVENT.GAME_TICK_BEFORE,
     get reward() {
-      return `Each Antimatter Dimension gains a boost proportional to tier
-      (8th gets ${formatPercents(0.08)}, 7th gets ${formatPercents(0.07)}, etc.)`;
+      return `Each Antimatter Dimension gains a power proportional to tier
+      (8th gets ${formatPow(1.08, 2, 2)}, 7th gets ${formatPow(1.07, 2, 2)}, etc.)`;
     }
   },
   {
@@ -308,7 +308,7 @@ export const normalAchievements = [
     name: "Age of Automation",
     description: "Max the interval for Antimatter Dimension and Tickspeed upgrade autobuyers.",
     checkRequirement: () => true,
-    checkEvent: [GAME_EVENT.REALITY_RESET_AFTER, GAME_EVENT.REALITY_UPGRADE_TEN_BOUGHT]
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER
   },
   {
     id: 53,
@@ -697,8 +697,8 @@ export const normalAchievements = [
     description: "Eternity without having any 8th Antimatter Dimensions.",
     checkRequirement: () => AntimatterDimension(8).totalAmount.eq(0),
     checkEvent: GAME_EVENT.ETERNITY_RESET_BEFORE,
-    reward: "Gain more Eternities based on current Infinity Points amount.",
-    effect: () => Math.max(Currency.infinityPoints.value.log10() / 3.08, 1),
+    reward: "Time Study 32 also applies to Eternities at a reduced rate.",
+    effect: () => Math.max(TimeStudy(32).effectOrDefault(0) * 0.75, 1),
     formatEffect: value => formatX(value, 2, 2),
   },
   {
@@ -802,8 +802,8 @@ export const normalAchievements = [
     description: "Fail an Eternity Challenge.",
     checkRequirement: () => true,
     checkEvent: GAME_EVENT.CHALLENGE_FAILED,
-    reward: "A fading sense of accomplishment.",
-    effect: () => "Sense of accomplishment (fading)"
+    get reward() { return `You gain ${formatPercents(0.01)} of your Infinity Points gained on crunch each second`; },
+    effect: 0.01
   },
   {
     id: 115,
@@ -817,16 +817,6 @@ export const normalAchievements = [
     get description() { return `Eternity with only ${formatInt(1)} Infinity.`; },
     checkRequirement: () => Currency.infinities.lte(1),
     checkEvent: GAME_EVENT.ETERNITY_RESET_BEFORE,
-    reward: "Multiplier to Infinity Points based on Infinities.",
-    effect: () => Decimal.pow(Currency.infinitiesTotal.value.clampMin(1), LOG10_2 / 4).powEffectOf(TimeStudy(31)),
-    cap: () => Effarig.eternityCap,
-    formatEffect: value => {
-      // Since TS31 is already accounted for in the effect prop, we need to "undo" it to display the base value here
-      const mult = formatX(value, 2, 2);
-      return TimeStudy(31).canBeApplied
-        ? `${formatX(value.pow(1 / TimeStudy(31).effectValue), 2, 1)} (After TS31: ${mult})`
-        : mult;
-    }
   },
   {
     id: 117,
@@ -853,14 +843,24 @@ export const normalAchievements = [
     name: "Can you get infinite IP?",
     get description() { return `Reach ${formatPostBreak("1e30008")} Infinity Points.`; },
     checkRequirement: () => Currency.infinityPoints.exponent >= 30008,
-    checkEvent: GAME_EVENT.GAME_TICK_AFTER
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
+    reward: "Multiplier to Infinity Points based on Infinities.",
+    effect: () => Decimal.pow(Currency.infinitiesTotal.value.clampMin(1), LOG10_2 / 4).powEffectOf(TimeStudy(31)),
+    cap: () => Effarig.eternityCap,
+    formatEffect: value => {
+      // Since TS31 is already accounted for in the effect prop, we need to "undo" it to display the base value here
+      const mult = formatX(value, 2, 2);
+      return TimeStudy(31).canBeApplied
+        ? `${formatX(value.pow(1 / TimeStudy(31).effectValue), 2, 1)} (After TS31: ${mult})`
+        : mult;
+    }
   },
   {
     id: 122,
     name: "You're already dead.",
     description: "Eternity without buying Antimatter Dimensions 2-8.",
-    checkRequirement: () => player.requirementChecks.eternity.onlyAD1,
-    checkEvent: GAME_EVENT.ETERNITY_RESET_BEFORE
+    checkRequirement: () => true,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER
   },
   {
     id: 123,
@@ -1069,6 +1069,8 @@ export const normalAchievements = [
     description: "Unlock the Black Hole.",
     checkRequirement: () => BlackHole(1).isUnlocked,
     checkEvent: GAME_EVENT.BLACK_HOLE_UNLOCKED,
+    get reward() { return `Gain ${formatX(3)} more Realities and Perk Points.`; },
+    effect: 3
   },
   {
     id: 145,
@@ -1112,7 +1114,7 @@ export const normalAchievements = [
     name: "You really didn't need it anyway",
     get description() {
       return `Get ${formatInt(800)} Antimatter Galaxies without
-      buying 8th Antimatter Dimensions in your current Infinity.`;
+      having 8th Antimatter Dimensions in your current Infinity.`;
     },
     checkRequirement: () => player.galaxies >= 800 && player.requirementChecks.infinity.noAD8 && Enslaved.isRunning,
     checkEvent: GAME_EVENT.GALAXY_RESET_AFTER,
@@ -1129,8 +1131,8 @@ export const normalAchievements = [
     id: 153,
     name: "More like \"reallydoesn'tmatter\"",
     description: "Reality without producing antimatter.",
-    checkRequirement: () => player.requirementChecks.reality.noAM,
-    checkEvent: GAME_EVENT.REALITY_RESET_BEFORE,
+    checkRequirement: () => true,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
   },
   {
     id: 154,
@@ -1138,8 +1140,8 @@ export const normalAchievements = [
     get description() { return `Reality in under ${formatInt(5)} seconds (game time).`; },
     checkRequirement: () => Time.thisReality.totalSeconds <= 5,
     checkEvent: GAME_EVENT.REALITY_RESET_BEFORE,
-    get reward() { return `${formatPercents(0.1)} chance each Reality of ${formatX(2)} Realities and Perk Points.`; },
-    effect: 0.1
+    get reward() { return `Multiply Realities and Perk Points by ${formatX(2)}.`; },
+    effect: 2
   },
   {
     id: 155,
@@ -1163,11 +1165,8 @@ export const normalAchievements = [
     id: 157,
     name: "It's super effective!",
     get description() { return `Get a Glyph with ${formatInt(4)} effects.`; },
-    checkRequirement: () => Glyphs.activeList.concat(Glyphs.inventoryList).map(
-      glyph => getGlyphEffectsFromBitmask(glyph.effects, 0, 0)
-        .filter(effect => effect.isGenerated).length
-    ).max() >= 4,
-    checkEvent: GAME_EVENT.GLYPHS_CHANGED
+    checkRequirement: () => true,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER
   },
   {
     id: 158,

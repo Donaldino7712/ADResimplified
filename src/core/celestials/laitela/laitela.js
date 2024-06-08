@@ -31,20 +31,12 @@ export const Laitela = {
   get isFullyDestabilized() {
     return Laitela.maxAllowedDimension === 0;
   },
-  // TODO: add the reqs for dimboosts, gals, ids and tds
   get continuumUnlocked() {
-    const continuum = [
-      AntimatterDimensions,
-      Tickspeed,
-      DimBoost,
-      Galaxy,
-      InfinityDimensions,
-      TimeDimensions
-    ];
-    return continuum.countWhere(x => x.continuumUnlocked) >= 1;
+    return Achievement(11).isUnlocked;
   },
   get continuumActive() {
-    return this.continuumUnlocked && !player.auto.disableContinuum && !Pelle.isDisabled("continuum");
+    //  && !Pelle.isDisabled("continuum")
+    return this.continuumUnlocked && !player.auto.disableContinuum;
   },
   setContinuum(x) {
     player.auto.disableContinuum = !x;

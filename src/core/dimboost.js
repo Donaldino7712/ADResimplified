@@ -157,49 +157,12 @@ export class DimBoost {
     return Math.floor(player.dimensionBoosts);
   }
 
-  static get continuumBoosts() {
-    // Credit to the AD Rewarded mod
-    if (!this.continuumActive) return 0;
-    // This is a modification of maxBuyDimboosts()
-    // If we still don't have all available dimensions, this is disabled
-    if (DimBoost.canUnlockNewDimension) {
-      // The below line causes the game to fall into an infinite loop, crashing it
-      // if (DimBoost.requirement.isSatisfied) softReset(1);
-      return 0;
-    }
-
-    // Inverting bulkRequirement to improve performance, assuming EC5 is not active
-    const increase = GameCache.increasePerDimBoost.value;
-    const dim = AntimatterDimension(this.maxDimensionsUnlockable).continuumAmount;
-    let maxBoosts = Math.clamp(5 + (dim - 20) / increase, 0, this.maxBoosts);
-    if (!EternityChallenge(5).isRunning) {
-      player.dimensionBoosts = Math.max(Math.floor(maxBoosts), 4);
-      return maxBoosts;
-    }
-
-    // But in case of EC5 it's not, so do binary search for appropriate boost amount
-    // ECs shouldn't matter once Continuum is unlocked, so I won't worry about this part.
-    let minBoosts = 2;
-    while (maxBoosts !== minBoosts + 1) {
-      const middle = Math.floor((maxBoosts + minBoosts) / 2);
-      if (DimBoost.bulkRequirement(middle).isSatisfied) minBoosts = middle;
-      else maxBoosts = middle;
-    }
-    return this.purchasedBoosts + minBoosts + 1 - (dim -
-      DimBoost.bulkRequirement(minBoosts).amount) / (DimBoost.bulkRequirement(minBoosts + 1).amount -
-      DimBoost.bulkRequirement(minBoosts).amount);
-  }
-
-  static get realBoosts() {
-    return Math.max(this.purchasedBoosts, this.continuumBoosts);
-  }
-
   static get imaginaryBoosts() {
     return Ra.isRunning ? 0 : ImaginaryUpgrade(12).effectOrDefault(0) * ImaginaryUpgrade(23).effectOrDefault(1);
   }
 
   static get totalBoosts() {
-    return Math.floor(this.realBoosts + this.imaginaryBoosts);
+    return Math.floor(this.purchasedBoosts + this.imaginaryBoosts);
   }
 
   static get startingDimensionBoosts() {
@@ -209,14 +172,6 @@ export class DimBoost {
     if (InfinityUpgrade.skipReset2.isBought) return 2;
     if (InfinityUpgrade.skipReset1.isBought) return 1;
     return 0;
-  }
-
-  static get continuumUnlocked() {
-    return player.tempValueForDimboostContinuumRequirementYesIKnowThisIsAVeryLongName;
-  }
-
-  static get continuumActive() {
-    return this.continuumUnlocked && Laitela.continuumActive;
   }
 }
 

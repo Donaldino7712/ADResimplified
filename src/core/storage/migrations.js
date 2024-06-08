@@ -472,19 +472,31 @@ export const migrations = {
 
   fixChallengeIds(player) {
     let wasFucked = false;
+    const newIds = {
+      1: 1,
+      2: 2,
+      3: 3,
+      4: 10,
+      5: 9,
+      6: 5,
+      7: 12,
+      8: 4,
+      9: 7,
+      10: 6,
+      11: 8,
+      12: 11
+    };
     function unfuckChallengeId(id) {
       if (!id.startsWith("challenge")) return id;
       wasFucked = true;
-      const legacyId = parseInt(id.substr(9), 10);
-      const config = GameDatabase.challenges.normal.find(c => c.legacyId === legacyId);
-      return `challenge${config.id}`;
+      return `challenge${newIds[parseInt(id.substr(9), 10)]}`;
     }
     player.currentChallenge = unfuckChallengeId(player.currentChallenge);
     player.challenges = player.challenges.map(unfuckChallengeId);
     if (wasFucked && player.challengeTimes) {
-      player.challengeTimes = GameDatabase.challenges.normal
-        .slice(1)
-        .map(c => player.challengeTimes[c.legacyId - 2]);
+      const cTimes = Array.repeat(null, 11);
+      Object.keys(newIds).slice(1).forEach(i => cTimes[i - 2] = player.challengeTimes[newIds[i - 2]]);
+      player.challengeTimes = cTimes;
     }
   },
 

@@ -421,9 +421,9 @@ export const normalTimeStudies = [
     cost: 15,
     requirement: [161, 162],
     reqType: TS_REQUIREMENT_TYPE.AT_LEAST_ONE,
-    description: () => `Time Shard requirement for the next Tickspeed upgrade goes up slower
-      ${formatX(1.33, 0, 2)} ➜ ${formatX(1.25, 0, 2)}`,
-    effect: () => TS171_MULTIPLIER
+    description: () => `Time Shard requirement for the next Tickspeed upgrade goes up slower`,
+    effect: () => 1.25,
+    formatEffect: value => `${formatX(1.33, 0, 2)} ➜ ${formatX(value, 0, 2)}`
   },
   {
     id: 181,
@@ -433,9 +433,9 @@ export const normalTimeStudies = [
       () => EternityChallenge(2).completions > 0 || Perk.bypassEC2Lock.isBought,
       () => EternityChallenge(3).completions > 0 || Perk.bypassEC3Lock.isBought],
     reqType: TS_REQUIREMENT_TYPE.ALL,
-    description: () => `You gain ${formatPercents(0.01)} of your Infinity Points gained on crunch each second`,
-    effect: () => gainedInfinityPoints().times(Time.deltaTime / 100)
-      .timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige)
+    description: () => `Infinity Point multiplier based on free tickspeed upgrades`,
+    effect: () => DC.D2.pow(FreeTickspeed.amount),
+    formatEffect: value => formatX(value, 2, 2)
   },
   {
     id: 191,

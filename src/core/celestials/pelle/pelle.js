@@ -50,8 +50,7 @@ const disabledMechanicUnlocks = {
   dtMults: () => ({}),
   chargedInfinityUpgrades: () => ({}),
   alteration: () => ({}),
-  timeTheorems: () => ({}),
-  continuumBoosts: () => ({})
+  continuumBoost: () => ({})
 };
 
 export const Pelle = {
@@ -181,11 +180,6 @@ export const Pelle = {
 
   get isDoomed() {
     return this.cel.doomed;
-  },
-
-  get disabledAchievements() {
-    return [164, 156, 143, 142, 141, 137, 134, 133, 132, 126, 125, 118, 117, 116, 113, 111, 104, 103, 95, 93, 92, 91,
-      87, 85, 78, 76, 74, 65, 55, 54, 37];
   },
 
   get uselessInfinityUpgrades() {

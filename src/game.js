@@ -89,7 +89,7 @@ export function gainedInfinityPoints() {
     308,
     Achievement(103),
     TimeStudy(111)
-  );
+  ) - FabricUpgrade(1).effectOrDefault(0);
   if (Pelle.isDisabled("IPMults")) {
     return Decimal.pow10(player.records.thisInfinity.maxAM.log10() / div - 0.75)
       .timesEffectsOf(PelleRifts.vacuum)
@@ -134,8 +134,12 @@ function totalEPMult() {
 }
 
 export function gainedEternityPoints() {
+  const div = Effects.min(
+    308,
+    FabricUpgrade(2)
+  ) - PelleRifts.recursion.effectValue.toNumber();
   let ep = DC.D5.pow(player.records.thisEternity.maxIP.plus(
-    gainedInfinityPoints()).log10() / (308 - PelleRifts.recursion.effectValue.toNumber()) - 0.7).times(totalEPMult());
+    gainedInfinityPoints()).log10() / div - 0.7).times(totalEPMult());
 
   if (Teresa.isRunning) {
     ep = ep.pow(0.55);
@@ -636,6 +640,8 @@ export function gameLoop(passDiff, options = {}) {
     }
   }
 
+  Currency.realityFabric.add(FabricHandler.productionForDiff(diff));
+
   EventHub.dispatch(GAME_EVENT.GAME_TICK_AFTER);
   GameUI.update();
   player.lastUpdate = thisUpdate;
@@ -806,7 +812,10 @@ function laitelaBeatText(disabledDim) {
 
 // This gives IP/EP/RM from the respective upgrades that reward the prestige currencies continuously
 function applyAutoprestige(diff) {
-  Currency.infinityPoints.add(TimeStudy(181).effectOrDefault(0));
+  // TODO:hevi
+  Currency.infinityPoints.add(gainedInfinityPoints()
+    .times(Time.deltaTime * Effects.max(0, Achievement(114)))
+    .timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige));
 
   if (TeresaUnlocks.epGen.canBeApplied) {
     Currency.eternityPoints.add(player.records.thisEternity.bestEPmin.times(DC.D0_01)

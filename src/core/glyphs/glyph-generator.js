@@ -93,7 +93,11 @@ export const GlyphGenerator = {
   },
   /* eslint-enable lines-between-class-members */
 
-  randomGlyph(level, typeIn = this.availableTypes.randomElement()) {
+  randomGlyph(level) {
+    return this.createGlyph(level, this.availableTypes.randomElement());
+  },
+
+  createGlyph(level, typeIn) {
     const strength = this.strength;
     const effectBitmask = this.getEffectsForType(typeIn);
 
@@ -177,7 +181,7 @@ export const GlyphGenerator = {
   musicGlyph() {
     const rng = new GlyphGenerator.MusicGlyphRNG();
     const glyph =
-      this.randomGlyph({ actualLevel: Math.floor(player.records.bestReality.glyphLevel * 0.8), rawLevel: 1 }, rng);
+      this.randomGlyph({ actualLevel: Math.floor(player.records.bestReality.glyphLevel * 0.8), rawLevel: 1 });
     rng.finalize();
     glyph.cosmetic = "music";
     glyph.fixedCosmetic = "music";
@@ -195,33 +199,37 @@ export const GlyphGenerator = {
       .reduce((max, glyph) => Math.max(max, glyph.id), 0);
   },
 
-  get strength() {
-    return rarityToStrength(Effects.max(
-      1,
+  get rarityMultiplier() {
+    return 1 + Effects.product(
       RealityUpgrade(16)
-    ) * 100);
+    );
   },
 
-  // eslint-disable-next-line max-params
-  randomNumberOfEffects(type, strength, level, rng) {
-    // Call the RNG twice before anything else to advance the RNG seed properly, even if the whole method returns early.
-    // This prevents the position of effarig glyphs in the choice list from affecting the choices themselves, as well
-    // as preventing all of the glyphs changing drastically when RU17 is purchased.
-    const random1 = rng.uniform();
-    const random2 = rng.uniform();
-    if (type !== "effarig" && Ra.unlocks.glyphEffectCount.canBeApplied) return 4;
-    const maxEffects = Ra.unlocks.glyphEffectCount.canBeApplied ? 7 : 4;
-    let num = Math.min(
-      maxEffects,
-      Math.floor(Math.pow(random1, 1 - (Math.pow(level * strength, 0.5)) / 100) * 1.5 + 1)
-    );
-    // If we do decide to add anything else that boosts chance of an extra effect, keeping the code like this
-    // makes it easier to do (add it to the Effects.max).
-    if (RealityUpgrade(17).isBought && random2 < Effects.max(0, RealityUpgrade(17))) {
-      num = Math.min(num + 1, maxEffects);
-    }
-    return Ra.unlocks.glyphEffectCount.canBeApplied ? Math.max(num, 4) : num;
+  get strength() {
+    return rarityToStrength(1 + Effarig.maxRarityBoost + Effects.sum(
+      Achievement(146),
+      FabricUpgrade(11),
+      GlyphSacrifice.effarig
+    ) * 100 * this.rarityMultiplier);
   },
+
+  // eslint-disable-next-line capitalized-comments
+  // get strength() {
+  //   // TODO:glyf
+  //   if (Ra.unlocks.maxGlyphRarityAndShardSacrificeBoost.canBeApplied) return rarityToStrength(100);
+  //   let result = GlyphGenerator.gaussianBellCurve(rng) * GlyphGenerator.strengthMultiplier;
+  // eslint-disable-next-line max-len
+  //   const relicShardFactor = Ra.unlocks.extraGlyphChoicesAndRelicShardRarityAlwaysMax.canBeApplied ? 1 : rng.uniform();
+  //   const increasedRarity =
+  //   // relicShardFactor *
+  //     Effarig.maxRarityBoost +
+  //     Effects.sum(Achievement(146), GlyphSacrifice.effarig);
+  //   // Each rarity% is 0.025 strength.
+  //   result += increasedRarity / 40;
+  //   // Raise the result to the next-highest 0.1% rarity.
+  //   result = Math.ceil(result * 400) / 400;
+  //   return result;
+  // },
 
   // Populate a list of reality glyph effects based on level
   generateRealityEffects(level) {
@@ -238,95 +246,6 @@ export const GlyphGenerator = {
     let effectValues = GlyphTypes[type].effects;
     if (!RealityUpgrade(17).isBought) effectValues = effectValues.slice(0, -1);
     return effectValues.map(i => i.bitmaskIndex).toBitmask();
-  },
-
-  // TODO:glyf
-  // randomType(rng, typesSoFar = []) {
-  //   const generatable = generatedTypes.filter(x => EffarigUnlock.reality.isUnlocked || x !== "effarig");
-  //   const maxOfSameTypeSoFar = generatable.map(x => typesSoFar.countWhere(y => y === x)).max();
-  //   const blacklisted = typesSoFar.length === 0
-  //     ? [] : generatable.filter(x => typesSoFar.countWhere(y => y === x) === maxOfSameTypeSoFar);
-  //   return GlyphTypes.random(rng, blacklisted);
-  // },
-
-  /**
-   * To generate glyphs with a "uniformly random" effect spread, we effectively need to generate all the glyphs in
-   *  uniform groups of some size at once, and then select from that generated group. In this case, we've decided
-   *  that a group which satisfies uniformity is that of 5 realities, such that all 20 choices amongst the group
-   *  must contain each individual glyph effect at least once. This makes types more "uniform" by ensuring that
-   *  any individual glyph type is never *repeatedly* absent for more than 2 realities in a row (which can only
-   *  happen between groups), as well as ensuring that trends of long-term type/effect absences never happen
-   * Note: At this point, realityCount should be the number of realities BEFORE processing completes (ie. the first
-   *  random generated set begins at a parameter of 1)
-   */
-  uniformGlyphs(level, rng, realityCount) {
-    // Reality count divided by 5 determines which group of 5 we're in, while count mod 5 determines the index
-    // within that block. Note that we have a minus 1 because we want to exclude the first fixed glyph
-    const groupNum = Math.floor((realityCount - 1) / 5);
-    const groupIndex = (realityCount - 1) % 5;
-
-    // The usage of the initial seed is complicated in order to prevent future prediction without using information
-    // not normally available in-game (ie. the console). This makes it appear less predictable overall
-    const initSeed = player.reality.initialSeed;
-    const typePerm = permutationIndex(5, (31 + initSeed % 7) * groupNum + initSeed % 1123);
-
-    // Figure out a permutation index for each generated glyph type this reality by counting through the sets
-    // for choices which have already been generated for options in previous realities for this group
-    const typePermIndex = Array.repeat(0, 5);
-    for (let i = 0; i < groupIndex; i++) {
-      for (let type = 0; type < 5; type++) {
-        if (type !== typePerm[i]) typePermIndex[type]++;
-      }
-    }
-
-    // Determine which effect needs to be added for uniformity (startID is a hardcoded array of the lowest ID glyph
-    // effect of each type, in the same type order as BASIC_GLYPH_TYPES). We use type, initial seed, and group index
-    // to pick a random permutation, again to make it less predictable and to make sure they're generally different
-    const uniformEffects = [];
-    const startID = [16, 12, 8, 0, 4];
-    const typesThisReality = Array.range(0, 5);
-    typesThisReality.splice(typePerm[groupIndex], 1);
-    for (let i = 0; i < 4; i++) {
-      const type = typesThisReality[i];
-      const effectPerm = permutationIndex(4, 5 * type + (7 + initSeed % 5) * groupNum + initSeed % 11);
-      uniformEffects.push(startID[type] + effectPerm[typePermIndex[type]]);
-    }
-
-    // Generate the glyphs without uniformity applied first, assuming 4 glyph choices early on, then fix it to contain
-    // the new effect. This fixing process is a 50% chance to add to existing effects and 50% to replace them instead.
-    // Note that if this would give us "too many" effects, we remove one of the existing ones, and the threshold for
-    // having "too many" depends on if the player has the upgrade that improves effect count - we don't want the
-    // uniformity code to make glyph generation disproportionately worse in that case
-    const glyphs = [];
-    for (let i = 0; i < 4; ++i) {
-      const newGlyph = GlyphGenerator.randomGlyph(level, BASIC_GLYPH_TYPES[typesThisReality[i]]);
-      const newMask = (initSeed + realityCount + i) % 2 === 0
-        ? (1 << uniformEffects[i])
-        : newGlyph.effects | (1 << uniformEffects[i]);
-      const maxEffects = RealityUpgrade(17).isBought ? 3 : 2;
-      if (countValuesFromBitmask(newMask) > maxEffects) {
-        // Turn the old effect bitmask into an array of removable effects and then deterministically remove one
-        // of the non-power effects based on seed and reality count
-        const replacable = getGlyphEffectsFromBitmask(newGlyph.effects)
-          .filter(eff => eff.isGenerated)
-          .map(eff => eff.bitmaskIndex)
-          .filter(eff => ![0, 12, 16].includes(eff));
-        const toRemove = replacable[Math.abs(initSeed + realityCount) % replacable.length];
-        newGlyph.effects = newMask & ~(1 << toRemove);
-      } else {
-        newGlyph.effects = newMask;
-      }
-
-      // Add the power effects on power/infinity/time, since the initial setting of newMask removes them half the time
-      const dimPowers = { power: 16, infinity: 12, time: 0 };
-      if (dimPowers[newGlyph.type] !== undefined) {
-        newGlyph.effects |= 1 << dimPowers[newGlyph.type];
-      }
-
-      glyphs.push(newGlyph);
-    }
-
-    return glyphs;
   },
 
   getRNG(fake) {

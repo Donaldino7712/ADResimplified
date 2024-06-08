@@ -131,4 +131,12 @@ export const sidebarResources = [
     formatValue: x => format(x, 2),
     formatClass: "o-sidebar-currency--pelle",
   },
+  {
+    id: 17,
+    optionName: "Reality Fabric",
+    isAvailable: () => PlayerProgress.realityUnlocked(),
+    value: () => Currency.realityFabric,
+    formatValue: x => format(x, 2, 2),
+    formatClass: "o-sidebar-currency--reality"
+  }
 ];

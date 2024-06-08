@@ -12,15 +12,16 @@ export const MachineHandler = {
   },
 
   get realityMachineMultiplier() {
-    return ShopPurchase.RMPurchases.currentMult * Teresa.rmMultiplier * Effects.max(1, PerkShopUpgrade.rmMult) *
-      getAdjustedGlyphEffect("effarigrm") * Achievement(167).effectOrDefault(1) * Perk.firstPerk.effectOrDefault(1);
+    return ShopPurchase.RMPurchases.currentMult *
+      Teresa.rmMultiplier *
+      Effects.max(1, PerkShopUpgrade.rmMult) *
+      getAdjustedGlyphEffect("effarigrm") *
+      Achievement(167).effectOrDefault(1) *
+      Perk.firstPerk.effectOrDefault(1);
   },
 
   get uncappedRM() {
-    let log10FinalEP = player.records.thisReality.maxEP.plus(gainedEternityPoints()).log10();
-    if (!PlayerProgress.realityUnlocked()) {
-      if (log10FinalEP > 6000) log10FinalEP -= (log10FinalEP - 6000) * 0.2;
-    }
+    const log10FinalEP = player.records.thisReality.maxEP.plus(gainedEternityPoints()).log10();
     let rmGain = DC.E3.pow(log10FinalEP / 4000 - 1);
     // Increase base RM gain if <10 RM
     if (rmGain.gte(1) && rmGain.lt(10)) rmGain = new Decimal(27 / 4000 * log10FinalEP - 26);

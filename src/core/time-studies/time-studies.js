@@ -151,7 +151,6 @@ export function respecTimeStudies(auto) {
   if (!auto) {
     Tab.eternity.studies.show();
   }
-  GameCache.increasePerDimBoost.invalidate();
   GameCache.currentStudyTree.invalidate();
 }
 

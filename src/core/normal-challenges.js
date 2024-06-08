@@ -70,8 +70,7 @@ class NormalChallengeState extends GameMechanicState {
     if (this.id === 1 || this.isOnlyActiveChallenge) return;
     if (!Tab.challenges.isUnlocked) return;
     // Forces big crunch reset but ensures IP gain, if any.
-    bigCrunchReset(true, true, this.id === 7);
-    if (this.id === 7) GameCache.increasePerDimBoost.invalidate();
+    bigCrunchReset(true, true);
     player.challenge.normal.current = this.id;
     player.challenge.infinity.current = 0;
     if (Enslaved.isRunning && EternityChallenge(6).isRunning && this.id === 7) {

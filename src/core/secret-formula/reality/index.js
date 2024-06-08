@@ -2,6 +2,7 @@ import { cosmeticGlyphs, glyphTypes } from "./glyph-types";
 import { perkConnections, perks } from "./perks";
 
 import { automator } from "./automator";
+import { fabricUpgrades } from "./fabric-upgrades";
 import { glyphCosmeticSets } from "./glyph-cosmetics";
 import { glyphEffects } from "./glyph-effects";
 import { glyphSacrifice } from "./glyph-sacrifices";
@@ -18,5 +19,6 @@ export const reality = {
   imaginaryUpgrades,
   perks,
   perkConnections,
-  upgrades: realityUpgrades
+  upgrades: realityUpgrades,
+  fabricUpgrades
 };

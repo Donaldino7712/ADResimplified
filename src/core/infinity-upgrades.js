@@ -72,12 +72,10 @@ export class InfinityUpgradeState extends SetPurchasableMechanicState {
   }
 
   charge() {
-    if (this.id === "resetBoost") GameCache.increasePerDimBoost.invalidate();
     player.celestials.ra.charged.add(this.id);
   }
 
   disCharge() {
-    if (this.id === "resetBoost") GameCache.increasePerDimBoost.invalidate();
     player.celestials.ra.charged.delete(this.id);
   }
 }
@@ -94,15 +92,16 @@ export function totalIPMult() {
       TimeStudy(141),
       TimeStudy(142),
       TimeStudy(143),
+      TimeStudy(181),
+      Achievement(48),
       Achievement(85),
       Achievement(93),
-      Achievement(116),
+      Achievement(121),
       Achievement(123),
       Achievement(141).effects.ipGain,
       InfinityUpgrade.ipMult,
       DilationUpgrade.ipMultDT,
-      GlyphEffect.ipMult,
-      Achievement(48)
+      GlyphEffect.ipMult
     );
   ipMult = ipMult.times(Replicanti.amount.powEffectOf(AlchemyResource.exponential));
   return ipMult;
@@ -181,7 +180,8 @@ class InfinityIPMultUpgrade extends GameMechanicState {
   // change mid-purchase
   purchase(amount = 1) {
     if (!this.canBeBought) return;
-    if (!TimeStudy(181).isBought) {
+    // TODO:hevi
+    if (!Achievement(114).isUnlocked) {
       Autobuyer.bigCrunch.bumpAmount(DC.D2.pow(amount));
     }
     Currency.infinityPoints.subtract(Decimal.sumGeometricSeries(amount, this.cost, this.costIncrease, 0));

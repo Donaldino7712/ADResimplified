@@ -16,7 +16,7 @@ export const GlyphSelection = {
   },
 
   glyphList(level) {
-    return GlyphGenerator.availableTypes.map(type => GlyphGenerator.randomGlyph(level, type));
+    return GlyphGenerator.availableTypes.map(type => GlyphGenerator.createGlyph(level, type));
   },
 
   generate(level = gainedGlyphLevel()) {
@@ -228,7 +228,10 @@ function updateRealityRecords(realityProps) {
 
 function giveRealityRewards(realityProps) {
   const multiplier = realityProps.simulatedRealities + 1;
-  const realityAndPPMultiplier = multiplier + binomialDistribution(multiplier, Achievement(154).effectOrDefault(0));
+  const realityAndPPMultiplier = multiplier * Effects.product(
+    Achievement(144),
+    Achievement(154)
+  );
   const gainedRM = Currency.realityMachines.gte(MachineHandler.hardcapRM) ? DC.D0 : realityProps.gainedRM;
   Currency.realityMachines.add(gainedRM.times(multiplier));
   updateRealityRecords(realityProps);
@@ -762,7 +765,7 @@ export function isInCelestialReality() {
 function lockAchievementsOnReality() {
   if (Perk.achievementGroup5.isBought) return;
   for (const achievement of Achievements.preReality) {
-    achievement.lock();
+    if (achievement.id !== 11) achievement.lock();
   }
   player.reality.achTimer = 0;
 }

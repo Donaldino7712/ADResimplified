@@ -58,6 +58,10 @@ export const awayProgressTypes = [
     reference: ["reality", "realityMachines"],
     isUnlocked: () => PlayerProgress.realityUnlocked(),
   }, {
+    name: "realityFabric",
+    reference: ["machine", "realityFabric"],
+    isUnlocked: () => PlayerProgress.realityUnlocked(),
+  }, {
     name: "blackHole",
     isUnlocked: () => BlackHole(1).isUnlocked,
     // Functions as the visible option for both first & second BHs, never appears due to having no reference.

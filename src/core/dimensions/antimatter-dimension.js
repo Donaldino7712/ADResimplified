@@ -137,9 +137,6 @@ function applyNDMultipliers(mult, tier) {
     tier === 8 ? TimeStudy(214) : null,
     tier > 1 && tier < 8 ? InfinityChallenge(8).reward : null
   );
-  if (Achievement(18).isUnlocked) {
-    multiplier = multiplier.times(1 + tier / 100);
-  }
 
   return multiplier.clampMin(1);
 }
@@ -175,6 +172,9 @@ function applyNDPowers(mult, tier) {
 
   multiplier = multiplier.pow(VUnlocks.adPow.effectOrDefault(1));
 
+  if (Achievement(18).canBeApplied) {
+    multiplier = multiplier.pow(1 + tier / 100);
+  }
   if (PelleStrikes.infinity.hasStrike) {
     multiplier = multiplier.pow(0.5);
   }

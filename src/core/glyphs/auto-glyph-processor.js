@@ -317,8 +317,9 @@ export function getGlyphLevelInputs() {
   adjustFactor(sources.dt, weights.dt / 100);
   adjustFactor(sources.eternities, weights.eternities / 100);
   const shardFactor = Ra.unlocks.relicShardGlyphLevelBoost.effectOrDefault(0);
+  const fabricFactor = FabricUpgrade(10).effectOrDefault(0);
   let baseLevel = sources.ep.value * sources.repl.value * sources.dt.value * sources.eternities.value *
-    staticFactors.perkShop + shardFactor;
+    staticFactors.perkShop + shardFactor + fabricFactor;
 
   const singularityEffect = SingularityMilestone.glyphLevelFromSingularities.effectOrDefault(1);
   baseLevel *= singularityEffect;
@@ -348,6 +349,7 @@ export function getGlyphLevelInputs() {
     repl: sources.repl,
     dt: sources.dt,
     eter: sources.eternities,
+    fabricFactor,
     perkShop: staticFactors.perkShop,
     scalePenalty,
     rowFactor: staticFactors.realityUpgrades,

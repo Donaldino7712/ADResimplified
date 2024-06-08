@@ -106,31 +106,9 @@ window.player = {
       isActive: true,
       lastTick: 0
     },
-    tickspeed: {
-      isUnlocked: false,
-      cost: 1,
-      interval: 500,
-      mode: AUTOBUYER_MODE.BUY_SINGLE,
-      isActive: true,
-      lastTick: 0,
-      isBought: false
-    },
     sacrifice: {
       multiplier: DC.D2,
       isActive: true
-    },
-    antimatterDims: {
-      all: Array.range(0, 8).map(tier => ({
-        isUnlocked: false,
-        cost: 1,
-        interval: [500, 600, 700, 800, 900, 1000, 1100, 1200][tier],
-        bulk: 1,
-        mode: AUTOBUYER_MODE.BUY_10,
-        isActive: true,
-        lastTick: 0,
-        isBought: false
-      })),
-      isActive: true,
     },
     infinityDims: {
       all: Array.range(0, 8).map(() => ({
@@ -881,6 +859,7 @@ window.player = {
       achievementCount: true,
       realities: true,
       realityMachines: true,
+      realityFabric: true,
       imaginaryMachines: true,
       relicShards: true,
       darkMatter: true,
@@ -912,6 +891,15 @@ window.player = {
       id: false,
     }
   },
+  machine: {
+    realityFabric: DC.D0,
+    rebuyables: {
+      4: 0,
+      8: 0,
+      12: 0
+    },
+    upgradeBits: 0
+  }
 };
 
 export const Player = {

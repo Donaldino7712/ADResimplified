@@ -13,7 +13,6 @@ export default {
         tier: 1,
         amount: 0
       },
-      isContinuum: false,
       canBeBought: false,
       distantStart: 0,
       remoteStart: 0,
@@ -51,9 +50,6 @@ export default {
       }
       return sum;
     },
-    continuumText() {
-      return formatFloat(this.galaxies.normal, 3);
-    },
     typeName() {
       switch (this.type) {
         case GALAXY_TYPE.NORMAL: return "Antimatter Galaxies";
@@ -86,7 +82,6 @@ export default {
         "o-primary-btn o-primary-btn--new o-primary-btn--dimension-reset": true,
         "tutorial--glow": this.canBeBought && this.hasTutorial,
         "o-primary-btn--disabled": !this.canBeBought,
-        "o-non-clickable o-continuum": this.isContinuum,
         "o-pelle-disabled-pointer": this.creditsClosed
       };
     }
@@ -94,10 +89,9 @@ export default {
   methods: {
     update() {
       this.type = Galaxy.type;
-      this.galaxies.normal = Galaxy.totalAmount + GalaxyGenerator.galaxies;
+      this.galaxies.normal = player.galaxies + GalaxyGenerator.galaxies;
       this.galaxies.replicanti = Replicanti.galaxies.total;
       this.galaxies.dilation = player.dilation.totalTachyonGalaxies;
-      this.isContinuum = Galaxy.continuumActive;
       const requirement = Galaxy.requirement;
       this.requirement.amount = requirement.amount;
       this.requirement.tier = requirement.tier;
@@ -116,7 +110,7 @@ export default {
       this.hasTutorial = Tutorial.isActive(TUTORIAL_STATE.GALAXY);
     },
     buyGalaxy(bulk) {
-      if (!this.canBeBought || this.isContinuum) return;
+      if (!this.canBeBought) return;
       manualRequestGalaxyReset(this.canBulkBuy && bulk);
     },
     formatGalaxies(num) {
@@ -129,53 +123,18 @@ export default {
 <template>
   <div class="reset-container galaxy">
     <h4>{{ typeName }} ({{ sumText }})</h4>
-    <span v-if="!isContinuum">Requires: {{ formatInt(requirement.amount) }} {{ dimName }} Antimatter D</span>
+    <span>Requires: {{ formatInt(requirement.amount) }} {{ dimName }} Antimatter D</span>
     <span v-if="hasIncreasedScaling">{{ costScalingText }}</span>
     <button
       :class="classObject"
       @click.exact="buyGalaxy(true)"
       @click.shift.exact="buyGalaxy(false)"
     >
+      {{ buttonText }}
       <div
-        v-if="isContinuum"
-        class="l-modern-buy-ad-text"
-      >
-        <div>{{ canBeBought ? "Continuum: " : "Locked" }}</div>
-        <div>{{ continuumText }}</div>
-      </div>
-      <span v-else>{{ buttonText }}</span>
-      <div
-        v-if="hasTutorial && !isContinuum"
+        v-if="hasTutorial"
         class="fas fa-circle-exclamation l-notification-icon"
       />
     </button>
   </div>
 </template>
-
-<style scoped>
-.l-modern-buy-ad-text {
-  display: flex;
-  flex-direction: column;
-}
-
-.o-non-clickable {
-  cursor: auto;
-}
-
-.o-continuum {
-  border-color: var(--color-laitela--accent);
-  color: var(--color-laitela--accent);
-  background: var(--color-laitela--base);
-  font-size: 1.3rem;
-}
-
-.o-continuum:hover {
-  border-color: var(--color-laitela--accent);
-  color: var(--color-laitela--base);
-  background: var(--color-laitela--accent);
-}
-
-.o-primary-btn--disabled .o-continuum {
-  opacity: 0.5;
-}
-</style>

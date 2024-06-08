@@ -48,8 +48,7 @@ export function bigCrunchResetRequest(disableAnimation = false) {
 
 export function bigCrunchReset(
   forced = false,
-  enteringAntimatterChallenge = Player.isInAntimatterChallenge && player.options.retryChallenge,
-  enteringC7OrIC1 = false
+  enteringAntimatterChallenge = Player.isInAntimatterChallenge && player.options.retryChallenge
 ) {
   if (!forced && !Player.canCrunch) return;
 
@@ -59,7 +58,7 @@ export function bigCrunchReset(
     if (Pelle.isDoomed) PelleStrikes.infinity.trigger();
   }
 
-  bigCrunchResetValues(enteringAntimatterChallenge, enteringC7OrIC1);
+  bigCrunchResetValues(enteringAntimatterChallenge);
   EventHub.dispatch(GAME_EVENT.BIG_CRUNCH_AFTER);
 }
 
@@ -118,13 +117,13 @@ function bigCrunchTabChange(firstInfinity) {
   }
 }
 
-export function bigCrunchResetValues(enteringAntimatterChallenge, enteringC7OrIC1) {
+export function bigCrunchResetValues(enteringAntimatterChallenge) {
   const currentReplicanti = Replicanti.amount;
   const currentReplicantiGalaxies = player.replicanti.galaxies;
   // For unknown reasons, everything but keeping of RGs (including resetting of RGs)
   // is done in the function called below. For now, we're just trying to keep
   // code structure similar to what it was before to avoid new bugs.
-  secondSoftReset(enteringAntimatterChallenge, enteringC7OrIC1);
+  secondSoftReset(enteringAntimatterChallenge);
 
   let remainingGalaxies = 0;
   if (Achievement(95).isUnlocked && !Pelle.isDoomed) {
@@ -152,7 +151,7 @@ function bigCrunchCheckUnlocks() {
   }
 }
 
-export function secondSoftReset(enteringAntimatterChallenge, enteringC7OrIC1) {
+export function secondSoftReset(enteringAntimatterChallenge) {
   player.dimensionBoosts = 0;
   player.galaxies = 0;
   player.records.thisInfinity.maxAM = DC.D0;
@@ -166,7 +165,6 @@ export function secondSoftReset(enteringAntimatterChallenge, enteringC7OrIC1) {
   player.records.thisInfinity.realTime = 0;
   Player.resetRequirements("infinity");
   AchievementTimers.marathon2.reset();
-  // if (enteringC7OrIC1) GameCache.increasePerDimBoost.invalidate();
 }
 
 export function preProductionGenerateIP(diff) {

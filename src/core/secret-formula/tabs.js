@@ -111,7 +111,7 @@ export const tabs = [
       // TODO: fix this tab
       // {
       //   key: "multipliers",
-      //   name: "Multiplier Breakdown (MIGHT BE BROKEN)",
+      //   name: "Multiplier Breakdown",
       //   symbol: "<i class='fas fa-calculator'></i>",
       //   component: "MultiplierBreakdownTab",
       //   condition: () => PlayerProgress.infinityUnlocked(),
@@ -396,6 +396,14 @@ export const tabs = [
         id: 5,
         hidable: true,
       },
+      {
+        key: "machine",
+        name: "The Machine",
+        symbol: "<i class='fas fa-bolt'></i",
+        component: "MachineTab",
+        id: 6,
+        hidable: true,
+      }
     ],
   },
   {

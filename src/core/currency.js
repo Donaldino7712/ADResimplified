@@ -471,3 +471,8 @@ Currency.galaxyGeneratorGalaxies = new class extends NumberCurrency {
     player.celestials.pelle.galaxyGenerator.spentGalaxies += spent;
   }
 }();
+
+Currency.realityFabric = new class extends DecimalCurrency {
+  get value() { return player.machine.realityFabric; }
+  set value(value) { player.machine.realityFabric = value; }
+}();

@@ -118,34 +118,6 @@ export class Galaxy {
     }
     return GALAXY_TYPE.NORMAL;
   }
-
-  static get continuumValue() {
-    // Credit to the AD Rewarded mod
-    if (!this.continuumActive) return 0;
-    const dimAmount = AntimatterDimension(this.requiredTier).totalAmount.toNumber();
-    // Only call buyableGalaxy if neccesary
-    if (dimAmount > this.requirement.amount) {
-      player.galaxies = Galaxy.buyableGalaxies(dimAmount);
-    }
-
-    const req1 = this.requirementAt(player.galaxies - 1).amount;
-    const req2 = this.requirementAt(player.galaxies).amount;
-
-    return player.galaxies + (dimAmount - req1) / (req2 - req1);
-  }
-
-  static get totalAmount() {
-    return Math.max(player.galaxies, this.continuumValue);
-  }
-
-  static get continuumUnlocked() {
-    // TODO: implement requirement
-    return player.tempValueForGalaxyContinuumRequirementYesIKnowThisIsAVeryLongName;
-  }
-
-  static get continuumActive() {
-    return this.continuumUnlocked && Laitela.continuumActive;
-  }
 }
 
 function galaxyReset() {

@@ -20,6 +20,7 @@ export default {
       shardsGained: 0,
       weights: Object.assign({}, player.celestials.effarig.glyphWeights),
       rows: 3,
+      fabricVisible: false,
     };
   },
   computed: {
@@ -64,6 +65,7 @@ export default {
     visibleRows() {
       const rows = ["ep", "replicanti", "dt"];
       if (this.eternityVisible) rows.push("eternities");
+      if (this.fabricVisible) rows.push("reality fabric");
       if (this.perkShopVisible) rows.push("perk shop");
       if (this.shardVisible) rows.push("shards");
       if (this.singularityVisible) rows.push("singularities");
@@ -146,6 +148,7 @@ export default {
       }
       this.showAutoAdjustWeights = Achievement(165).isUnlocked;
       this.isAutoAdjustWeightsOn = player.celestials.effarig.autoAdjustGlyphWeights;
+      this.fabricVisible = FabricUpgrade(10).isUnlocked;
     },
     rowStyle(factor) {
       const row = this.visibleRows.findIndex(r => r === factor) + 1;
@@ -345,6 +348,26 @@ function roundPreservingSum(data) {
         class="l-glyph-levels-and-weights__factor-val"
       >
         {{ formatFactor(factors.eter.value) }}
+      </div>
+    </template>
+    <template v-if="fabricVisible">
+      <div
+        :style="rowStyle('reality fabric')"
+        class="l-glyph-levels-and-weights__factor"
+      >
+        Reality Fabric
+      </div>
+      <div
+        :style="rowStyle('reality fabric')"
+        class="l-glyph-levels-and-weights__operator"
+      >
+        +
+      </div>
+      <div
+        :style="rowStyle('reality fabric')"
+        class="l-glyph-levels-and-weights__factor-val"
+      >
+        {{ formatFactor(factors.fabricFactor) }}
       </div>
     </template>
     <template v-if="perkShopVisible">
