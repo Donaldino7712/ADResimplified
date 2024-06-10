@@ -111,9 +111,10 @@ export function getTachyonGalaxyMult(thresholdUpgrade) {
   const thresholdMult = 3.65 * upgrade + 0.35;
   const glyphEffect = getAdjustedGlyphEffect("dilationgalaxyThreshold");
   const glyphReduction = glyphEffect === 0 ? 1 : glyphEffect;
+  const fbuEffect = FabricUpgrade(7).effectOrDefault(1);
   const power = DilationUpgrade.galaxyThresholdPelle.canBeApplied
     ? DilationUpgrade.galaxyThresholdPelle.effectValue : 1;
-  return (1 + thresholdMult * glyphReduction) ** power;
+  return (1 + thresholdMult * glyphReduction * fbuEffect) ** power;
 }
 
 export function getDilationGainPerSecond() {
@@ -141,6 +142,7 @@ export function getDilationGainPerSecond() {
     Math.clampMin(Decimal.log10(Replicanti.amount) * getAdjustedGlyphEffect("replicationdtgain"), 1));
   if (Enslaved.isRunning && !dtRate.eq(0)) dtRate = Decimal.pow10(Math.pow(dtRate.plus(1).log10(), 0.85) - 1);
   if (V.isRunning) dtRate = dtRate.pow(0.5);
+  dtRate = dtRate.powEffectOf(FabricUpgrade(5));
   return dtRate;
 }
 

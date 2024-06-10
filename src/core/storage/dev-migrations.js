@@ -952,9 +952,6 @@ export const devMigrations = {
         player.auto.realityUpgrades[i].isActive = player.reality.rebuyablesAuto[i];
       }
       // Note: player.autobuyers, the old way of storing autobuyers, seems to have gotten lost in dev migrations
-      if (player.auto.antimatterDims === undefined) {
-        player.auto.antimatterDims = player.auto.dimensions;
-      }
       player.auto.replicantiGalaxies.isActive = player.replicanti.galaxybuyer;
       player.auto.ipMultBuyer.isActive = player.infMultBuyer;
       player.auto.epMultBuyer.isActive = player.reality.epmultbuyer;
@@ -1428,8 +1425,8 @@ export const devMigrations = {
     },
     migrations.moveTS33,
     player => {
-      const toMove = ["antimatterDims", "infinityDims", "timeDims", "replicantiUpgrades", "dilationUpgrades",
-        "blackHolePower", "realityUpgrades", "imaginaryUpgrades"];
+      const toMove = ["infinityDims", "timeDims", "replicantiUpgrades", "dilationUpgrades", "blackHolePower",
+        "realityUpgrades", "imaginaryUpgrades"];
       for (const x of toMove) {
         if (player.auto[x].all !== undefined) {
           // Already up to date

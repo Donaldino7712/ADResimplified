@@ -200,17 +200,17 @@ export const GlyphGenerator = {
   },
 
   get rarityMultiplier() {
-    return 1 + Effects.product(
+    return Effects.product(
       RealityUpgrade(16)
     );
   },
 
   get strength() {
-    return rarityToStrength(1 + Effarig.maxRarityBoost + Effects.sum(
+    return rarityToStrength((100 + Effarig.maxRarityBoost + Effects.sum(
       Achievement(146),
       FabricUpgrade(11),
       GlyphSacrifice.effarig
-    ) * 100 * this.rarityMultiplier);
+    )) * this.rarityMultiplier);
   },
 
   // eslint-disable-next-line capitalized-comments

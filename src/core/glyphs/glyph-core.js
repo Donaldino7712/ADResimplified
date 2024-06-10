@@ -826,9 +826,7 @@ export function calculateGlyph(glyph) {
       glyph.rawLevel = glyph.level < 1000 ? glyph.level : (Math.pow(0.004 * glyph.level - 3, 2) - 1) * 125 + 1000;
     }
 
-    // Used to randomly generate strength in this case; I don't think we actually care.
-    if (glyph.strength === 1) glyph.strength = 1.5;
-    glyph.strength = Math.min(rarityToStrength(100), glyph.strength);
+    glyph.strength = Math.max(rarityToStrength(100), glyph.strength);
   }
 }
 

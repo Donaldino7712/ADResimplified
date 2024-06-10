@@ -704,18 +704,6 @@ export function applyRUPG10() {
   }
   if (Pelle.isDisabled("rupg10")) return;
 
-  player.auto.antimatterDims.all = player.auto.antimatterDims.all.map(current => ({
-    isUnlocked: true,
-    // These costs are approximately right; if bought manually all dimensions are slightly different from one another
-    cost: 1e14,
-    interval: 100,
-    bulk: 1e10,
-    mode: current.mode,
-    priority: current.priority,
-    isActive: current.isActive,
-    lastTick: player.records.realTimePlayed
-  }));
-
   for (const autobuyer of Autobuyers.all) {
     if (autobuyer.data.interval !== undefined) autobuyer.data.interval = 100;
   }

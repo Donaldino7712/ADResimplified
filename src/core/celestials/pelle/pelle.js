@@ -95,12 +95,6 @@ export const Pelle = {
     disChargeAll();
     clearCelestialRuns();
 
-    // Force-enable the group toggle for AD autobuyers to be active; whether or not they can actually tick
-    // is still handled through if the autobuyers are unlocked at all. This fixes an odd edge case where the player
-    // enters cel7 with AD autobuyers disabled - AD autobuyers need to be reupgraded, but the UI component
-    // for the group toggle is hidden until they're all re-upgraded to the max again.
-    player.auto.antimatterDims.isActive = true;
-
     player.buyUntil10 = true;
     player.records.realTimeDoomed = 0;
     for (const res of AlchemyResources.all) res.amount = 0;

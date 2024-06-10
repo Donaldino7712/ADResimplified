@@ -814,30 +814,6 @@ export const migrations = {
       player.autobuyers[11].priority = new Decimal(player.autobuyers[11].priority);
     }
 
-    for (let i = 0; i < 8; i++) {
-      const old = player.autobuyers[i];
-      if (old % 1 === 0) continue;
-      const autobuyer = player.auto.antimatterDims.all[i];
-      autobuyer.cost = old.cost;
-      autobuyer.interval = old.interval;
-      autobuyer.bulk = old.bulk;
-      autobuyer.mode = old.target;
-      autobuyer.priority = old.priority;
-      autobuyer.isActive = old.isOn;
-      autobuyer.lastTick = player.realTimePlayed;
-    }
-
-    if (player.autobuyers[8] % 1 !== 0) {
-      const old = player.autobuyers[8];
-      const autobuyer = player.auto.tickspeed;
-      autobuyer.cost = old.cost;
-      autobuyer.interval = old.interval;
-      autobuyer.mode = old.target;
-      autobuyer.priority = old.priority;
-      autobuyer.isActive = old.isOn;
-      autobuyer.lastTick = player.realTimePlayed;
-    }
-
     if (player.autobuyers[9] % 1 !== 0) {
       const old = player.autobuyers[9];
       const autobuyer = player.auto.dimBoost;
@@ -1154,14 +1130,6 @@ export const migrations = {
     if (player.infinityUpgrades.delete("bulkBoost")) {
       player.infinityUpgrades.add("autobuyMaxDimboosts");
     }
-  },
-
-  removePriority(player) {
-    const dims = player.auto.antimatterDims.all ?? player.auto.antimatterDims;
-    for (let i = 0; i < 8; i++) {
-      delete dims[i].priority;
-    }
-    delete player.auto.tickspeed.priority;
   },
 
   deleteFloatingTextOption(player) {

@@ -1,9 +1,9 @@
 export const FabricHandler = {
   get productionPerSecond() {
-    return Decimal.mul(
-      Decimal.log(Currency.realityMachines.value.clampMin(1), FabricUpgrade(4).effectValue),
-      this.realityFabricMultipliers
-    );
+    const p = FabricUpgrade(4).boughtAmount;
+    let base = Decimal.log(Currency.realityMachines.value.clampMin(1), 10 - p);
+    if (p >= 9) base = Currency.realityMachines.value.pow(p / 1000 + 0.01);
+    return Decimal.mul(base, this.realityFabricMultipliers);
   },
 
   get productionPerRealSecond() {

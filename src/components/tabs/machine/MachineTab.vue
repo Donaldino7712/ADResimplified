@@ -9,7 +9,7 @@ export default {
   data() {
     return {
       realityFabric: new Decimal(0),
-      realityFabricPerSecond: new Decimal(0)
+      realityFabricPerRealSecond: new Decimal(0)
     };
   },
   computed: {
@@ -24,7 +24,7 @@ export default {
   methods: {
     update() {
       this.realityFabric.copyFrom(Currency.realityFabric);
-      this.realityFabricPerSecond.copyFrom(FabricHandler.productionPerSecond);
+      this.realityFabricPerRealSecond.copyFrom(FabricHandler.productionPerRealSecond);
     },
     id(row, column) {
       return (row - 1) * 4 + column - 1;
@@ -43,7 +43,7 @@ export default {
       </div>
       <div>
         You are getting
-        {{ format(realityFabricPerSecond, 2, 2) }}
+        {{ format(realityFabricPerRealSecond, 2, 2) }}
         Reality Fabric per second.
       </div>
     </div>
