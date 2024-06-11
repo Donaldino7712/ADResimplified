@@ -134,10 +134,9 @@ function totalEPMult() {
 }
 
 export function gainedEternityPoints() {
-  const div = Effects.min(
-    308,
-    FabricUpgrade(2)
-  ) - PelleRifts.recursion.effectValue.toNumber();
+  const div = 308 -
+    PelleRifts.recursion.effectValue.toNumber() -
+    FabricUpgrade(2).effectOrDefault(0);
   let ep = DC.D5.pow(player.records.thisEternity.maxIP.plus(
     gainedInfinityPoints()).log10() / div - 0.7).times(totalEPMult());
 

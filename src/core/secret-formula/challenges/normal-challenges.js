@@ -58,7 +58,7 @@ export const normalChallenges = [
     description: () => `upgrading each Antimatter Dimension costs the Antimatter Dimension ${formatInt(2)} tiers ` +
       "below it instead of antimatter. Antimatter Dimension prices are modified.",
     name: "4th Antimatter",
-    reward: "5 hours™️ Gain free Tickspeed upgrades based on Antimatter amount.",
+    reward: "Gain free Tickspeed upgrades based on Antimatter amount.",
     effect: () => Currency.antimatter.value.log10() ** 0.5,
     formatEffect: value => `+${format(value, 2, 2)}`,
     cap: 20,

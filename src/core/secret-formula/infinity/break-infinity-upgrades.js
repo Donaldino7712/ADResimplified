@@ -31,14 +31,14 @@ export const breakInfinityUpgrades = {
     id: "totalMult",
     cost: 1e4,
     description: "Antimatter Dimensions gain a multiplier based on total antimatter produced",
-    effect: () => Math.pow(player.records.totalAntimatter.exponent + 1, 0.5),
+    effect: () => Math.pow(player.records.totalAntimatter.exponent + 1, 2.2),
     formatEffect: value => formatX(value, 2, 2)
   },
   currentAMMult: {
     id: "currentMult",
     cost: 5e4,
     description: "Antimatter Dimensions gain a multiplier based on current antimatter",
-    effect: () => Math.pow(Currency.antimatter.exponent + 1, 0.5),
+    effect: () => Math.pow(Currency.antimatter.exponent + 1, 2),
     formatEffect: value => formatX(value, 2, 2)
   },
   galaxyBoost: {
@@ -65,10 +65,10 @@ export const breakInfinityUpgrades = {
     id: "challengeMult",
     cost: 1e7,
     description: "Antimatter Dimensions gain a multiplier based on slowest challenge run",
-    effect: () => Decimal.clampMin(50 / Time.worstChallenge.totalMinutes, 1),
+    effect: () => Decimal.clampMin(Decimal.pow(50 / Time.worstChallenge.totalMinutes, 10), 1),
     formatEffect: value => formatX(value, 2, 2),
     hasCap: true,
-    cap: DC.D3E4
+    cap: DC.D3E40
   },
   infinitiedGen: {
     id: "infinitiedGeneration",

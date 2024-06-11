@@ -23,7 +23,7 @@ export const fabricUpgrades = [
   {
     name: "Infinite Improvement",
     id: 1,
-    cost: 15,
+    cost: 80,
     description: "Reality Fabric improves the Infinity Pount formula",
     effect: () => {
       let e = Currency.realityFabric.value.pow(0.2);
@@ -36,7 +36,7 @@ export const fabricUpgrades = [
   {
     name: "Eternal Enhancement",
     id: 2,
-    cost: 15,
+    cost: 100,
     description: "Reality Fabric improves the Eternity Point formula",
     effect: () => {
       let e = Currency.realityFabric.value.pow(0.15);
@@ -49,7 +49,7 @@ export const fabricUpgrades = [
   {
     name: "Mechanical Reality",
     id: 3,
-    cost: 15,
+    cost: 500,
     description: "Reality Fabric improves the Reality Machines formula",
     effect: () => {
       let e = Currency.realityFabric.value.pow(0.1);
@@ -74,7 +74,7 @@ export const fabricUpgrades = [
   {
     name: "Dilated Space",
     id: 5,
-    cost: 15,
+    cost: 1e4,
     description: "Gain a power to Dilated Time gain based on Reality Fabric",
     effect: () => {
       let e = 1 + Currency.realityFabric.value.log10() / 1e4;
@@ -86,7 +86,7 @@ export const fabricUpgrades = [
   {
     name: "Multiplicative Machines",
     id: 6,
-    cost: 15,
+    cost: 1e3,
     description: "Gain a multiplier to Reality Machines based on Reality Fabric",
     effect: () => Currency.realityFabric.value.div(Currency.realityFabric.value.ln()).sqrt()
       .clampMax(Number.MAX_VALUE).toNumber(),
@@ -95,7 +95,7 @@ export const fabricUpgrades = [
   {
     name: "Tachyonic Time",
     id: 7,
-    cost: 50,
+    cost: 500,
     description: "Decrease the Tachyon Galaxy threshold based on Reality Fabric",
     effect: () => {
       let e = Currency.realityFabric.value.log10() / 1000;
@@ -116,15 +116,15 @@ export const fabricUpgrades = [
   {
     name: "Compounded Conversion",
     id: 9,
-    cost: 50,
+    cost: 200,
     description: "Reality Fabric improves Infinity Power conversion",
-    effect: () => Currency.realityFabric.value.log10() ** 0.1 / 15,
+    effect: () => Currency.realityFabric.value.log10() ** 0.1 / 5,
     formatEffect: value => `+${format(value, 2, 3)}`
   },
   {
     name: "Generated Glyphs",
     id: 10,
-    cost: 50,
+    cost: 5e3,
     description: "Reality Fabric boosts Glyph Level",
     effect: () => {
       let e = Currency.realityFabric.value;
@@ -140,22 +140,22 @@ export const fabricUpgrades = [
   {
     name: "Recreated Rarities",
     id: 11,
-    cost: 50,
+    cost: 1e3,
     description: "Reality Fabric increases Glyph rarity",
     effect: () => {
-      let e = Currency.realityFabric.value.clampMin(1).ln() / 10;
+      let e = Currency.realityFabric.value.clampMin(1).ln();
       if (e >= 25) e = 25 + Math.cbrt(e - 25);
       return e;
     },
-    formatEffect: value => `+${format(value, 2, 2)}`
+    formatEffect: value => `+${format(value, 2, 2)}%`
   },
   rebuyable({
     name: "Speed Surge",
     id: 12,
-    initialCost: 1,
+    initialCost: 10,
     costMult: 1e3,
     description: "Gain a multiplier to game speed",
-    effect: p => (1 + Currency.realityFabric.value.log10() / 1000) ** p,
+    effect: p => (1 + Currency.realityFabric.value.log10() / 500) ** p,
     formatEffect: value => formatX(value, 2, 2)
   })
 ];
