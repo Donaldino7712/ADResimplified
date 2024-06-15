@@ -155,19 +155,7 @@ export const automatorTemplates = {
         { name: "autoInfMode", type: "mode", prompt: "Infinity Autobuyer Mode" },
         { name: "autoInfValue", type: "decimal", prompt: "Infinity Autobuyer Threshold" },
       ],
-      warnings: () => {
-        const list = [];
-        if (!Perk.studyECRequirement.isBought) {
-          list.push(`Eternity Challenges may not be reliably unlockable due to secondary resource requirements, consider
-            unlocking Perk "${Perk.studyECRequirement.label}" before using this template`);
-        }
-        if (!Perk.studyECBulk.isBought) {
-          list.push(`Using this template without bulk completions of Eternity Challenges may lead to long scripts which
-            are slower and difficult to modify. If you use this template, consider returning to simplify your scripts
-            after unlocking Perk "${Perk.studyECBulk.label}"`);
-        }
-        return list;
-      },
+      warnings: () => [],
     },
     {
       name: "Unlock Dilation",

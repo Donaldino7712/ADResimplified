@@ -278,6 +278,7 @@ export function gainedInfinities() {
     TimeStudy(32),
     RealityUpgrade(5),
     RealityUpgrade(7),
+    Achievement(131).effects.infinitiesGain,
     Achievement(164),
     Ra.unlocks.continuousTTBoost.effects.infinity
   );
@@ -640,7 +641,7 @@ export function gameLoop(passDiff, options = {}) {
     }
   }
 
-  Currency.realityFabric.add(FabricHandler.productionForDiff(diff));
+  FabricHandler.tick(diff);
 
   EventHub.dispatch(GAME_EVENT.GAME_TICK_AFTER);
   GameUI.update();
@@ -673,7 +674,6 @@ function passivePrestigeGen() {
   if (RealityUpgrade(14).isBought) {
     eternitiedGain = DC.D1.timesEffectsOf(
       Achievement(101),
-      Achievement(106),
       RealityUpgrade(3),
       RealityUpgrade(14)
     );

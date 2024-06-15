@@ -27,7 +27,6 @@ export default {
       hideGoogleName: false,
       loggedIn: false,
       userName: "",
-      canSpeedrun: false,
       inSpeedrun: false,
       creditsClosed: false,
       canModifySeed: false,
@@ -79,7 +78,6 @@ export default {
       this.showTimeSinceSave = options.showTimeSinceSave;
       this.hideGoogleName = options.hideGoogleName;
       this.loggedIn = Cloud.loggedIn;
-      this.canSpeedrun = player.speedrun.isUnlocked;
       this.inSpeedrun = player.speedrun.isActive;
       this.canModifySeed = Speedrun.canModifySeed();
       this.creditsClosed = GameEnd.creditsEverClosed;
@@ -199,7 +197,6 @@ export default {
       </div>
       <div class="l-options-grid__row">
         <OptionsButton
-          v-if="canSpeedrun"
           class="o-primary-btn--option_font-x-large"
           :class="{ 'o-pelle-disabled-pointer': creditsClosed }"
           onclick="Modal.enterSpeedrun.show()"

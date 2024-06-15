@@ -19,7 +19,6 @@ export function buyStudiesUntil(id, ec = -1) {
   const currTree = GameCache.currentStudyTree.value;
   // Makes an array [start, start+1, ... , end], empty if end < start
   const range = (start, end) => [...Array(Math.clampMin(end - start + 1, 0)).keys()].map(i => i + start);
-  const ecHasRequirement = !Perk.studyECRequirement.isBought;
 
   // If the player tries to buy a study which is immediately buyable, we try to buy it first in case buying other
   // studies up to that point renders it unaffordable. Effectively the clicked study is higher priority than all others
@@ -48,11 +47,7 @@ export function buyStudiesUntil(id, ec = -1) {
     return studyArray;
   }
 
-  if (ec === 11 && ecHasRequirement) {
-    studyArray.push(...NormalTimeStudies.paths[TIME_STUDY_PATH.ANTIMATTER_DIM].filter(s => (s <= id)));
-  } else if (ec === 12 && ecHasRequirement) {
-    studyArray.push(...NormalTimeStudies.paths[TIME_STUDY_PATH.TIME_DIM].filter(s => (s <= id)));
-  } else if (currTree.currDimPathCount === currTree.allowedDimPathCount || currTree.allowedDimPathCount === 3) {
+  if (currTree.currDimPathCount === currTree.allowedDimPathCount || currTree.allowedDimPathCount === 3) {
     studyArray.push(...TimeStudy.preferredPaths.dimension.studies);
     studyArray.push(...range(71, 103));
   } else if (TimeStudy.preferredPaths.dimension.path.length > 0) {
@@ -105,7 +100,7 @@ export function buyStudiesUntil(id, ec = -1) {
   if (id < 201) return studyArray;
 
   // If we want to buy EC11 or EC12 we don't want 201 unless we have the EC study requirement perk
-  if (!(ecHasRequirement && (ec === 11 || ec === 12))) {
+  if (!(ec === 11 || ec === 12)) {
     // We need to commit what we have to the game state, because the check for priorityRequirement
     // requires us knowing if we have actually purchased 201.
     TimeStudyTree.commitToGameState(studyArray);

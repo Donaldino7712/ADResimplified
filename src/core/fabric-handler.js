@@ -18,5 +18,14 @@ export const FabricHandler = {
     return Effects.product(
       FabricUpgrade(8)
     );
+  },
+
+  get isUnlocked() {
+    return Achievement(146).isUnlocked;
+  },
+
+  tick(diff) {
+    if (!this.isUnlocked) return;
+    Currency.realityFabric.add(this.productionForDiff(diff));
   }
 };

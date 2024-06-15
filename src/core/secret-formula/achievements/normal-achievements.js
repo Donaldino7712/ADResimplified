@@ -31,7 +31,7 @@ export const normalAchievements = [
     checkRequirement: () => AntimatterDimension(4).continuumAmount > 0,
     checkEvent: GAME_EVENT.GAME_TICK_BEFORE,
     reward: "Antimatter Dimensions gain a multiplier based on current antimatter.",
-    effect: () => Math.max(Currency.antimatter.value.ln() ** 0.7, 1),
+    effect: () => Math.max(Currency.antimatter.value.ln() ** 1.1, 1),
     formatEffect: value => `${formatX(value, 2, 2)}`
   },
   {
@@ -665,11 +665,12 @@ export const normalAchievements = [
       (Replicanti.amount.eq(Decimal.NUMBER_MAX_VALUE) || player.replicanti.galaxies > 0) &&
     Time.thisInfinityRealTime.totalHours <= 1,
     checkEvent: GAME_EVENT.REPLICANTI_TICK_AFTER,
-    get reward() { return `You keep your Replicanti and ${formatInt(5)} Replicanti Galaxies on Infinity.`; },
-    effect: 5
+    get reward() { return `You keep your Replicanti and only lose ${format(1)} Replicanti Galaxy on Infinity.`; },
+    effect: 1
   },
   {
     id: 96,
+    displayId: "hear me out",
     name: "Time is relative",
     description: "Go Eternal.",
     checkRequirement: () => true,
@@ -697,8 +698,8 @@ export const normalAchievements = [
     description: "Eternity without having any 8th Antimatter Dimensions.",
     checkRequirement: () => AntimatterDimension(8).totalAmount.eq(0),
     checkEvent: GAME_EVENT.ETERNITY_RESET_BEFORE,
-    reward: "Time Study 32 also applies to Eternities at a reduced rate.",
-    effect: () => Math.max(TimeStudy(32).effectOrDefault(0) * 0.75, 1),
+    reward: "Time Study 33 also applies to Eternities at a reduced rate.",
+    effect: () => Math.max(TimeStudy(33).effectOrDefault(0) ** 0.5, 1),
     formatEffect: value => formatX(value, 2, 2),
   },
   {
@@ -743,10 +744,7 @@ export const normalAchievements = [
     name: "The swarm",
     get description() { return `Get ${formatInt(10)} Replicanti Galaxies in ${formatInt(15)} seconds.`; },
     checkRequirement: () => Replicanti.galaxies.total >= 10 && Time.thisInfinity.totalSeconds <= 15,
-    checkEvent: GAME_EVENT.REPLICANTI_TICK_AFTER,
-    reward: "Gain more Eternities based on current Replicanti Galaxies.",
-    effect: () => Math.max(Replicanti.galaxies.total / 2, 1),
-    formatEffect: value => formatX(value, 2, 2)
+    checkEvent: GAME_EVENT.REPLICANTI_TICK_AFTER
   },
   {
     id: 107,
@@ -936,9 +934,13 @@ export const normalAchievements = [
     checkRequirement: () => Currency.infinitiesBanked.gt(DC.D2E9),
     checkEvent: [GAME_EVENT.ETERNITY_RESET_AFTER, GAME_EVENT.SAVE_CONVERTED_FROM_PREVIOUS_VERSION],
     get reward() {
-      return `After Eternity you permanently keep ${formatPercents(0.05)} of your Infinities as Banked Infinities.`;
+      return `You gain ${formatX(2)} times more Infinities and
+      after Eternity you permanently keep ${formatPercents(0.05)} of your Infinities as Banked Infinities.`;
     },
-    effect: () => Currency.infinities.value.times(0.05).floor()
+    effects: {
+      infinitiesGain: 2,
+      bankedInfinitiesGain: () => Currency.infinities.value.times(0.05).floor()
+    },
   },
   {
     id: 132,
@@ -1084,11 +1086,11 @@ export const normalAchievements = [
   {
     id: 146,
     name: "Perks of living",
-    description: "Have all Perks bought.",
-    checkRequirement: () => player.reality.perks.size === Perks.all.length,
+    get description() { return `Have at least ${format(10)} Perks bought.`; },
+    checkRequirement: () => player.reality.perks.size >= 10,
     checkEvent: GAME_EVENT.PERK_BOUGHT,
-    get reward() { return `+${formatPercents(0.01)} Glyph rarity.`; },
-    effect: 1
+    get reward() { return `+${formatPercents(0.05)} Glyph rarity.`; },
+    effect: 5
   },
   {
     id: 147,

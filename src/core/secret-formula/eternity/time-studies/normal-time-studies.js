@@ -70,8 +70,9 @@ export const normalTimeStudies = [
     cost: 2,
     requirement: [11],
     reqType: TS_REQUIREMENT_TYPE.AT_LEAST_ONE,
-    description: () => `Base Replicanti interval limit ${formatInt(50)}ms ➜ ${formatInt(1)}ms`,
-    effect: 1
+    description: () => `Tickspeed provides a slight boost to Replicanti speed`,
+    effect: () => Math.max(Math.log(Tickspeed.perSecond.pLog10()), 1),
+    formatEffect: value => formatX(value, 2, 2)
   },
   {
     id: 31,
@@ -95,8 +96,9 @@ export const normalTimeStudies = [
     cost: 2,
     requirement: [22],
     reqType: TS_REQUIREMENT_TYPE.AT_LEAST_ONE,
-    description: () => `You keep ${formatPercents(0.8)} of your Replicanti Galaxies on Infinity`,
-    effect: () => 0.8
+    description: "Gain a multiplier to Eternity Points based on current Replicanti Galaxy amount",
+    effect: () => Math.pow(Replicanti.galaxies.total, 4),
+    formatEffect: value => formatX(value, 2, 0)
   },
   {
     id: 41,
@@ -143,7 +145,7 @@ export const normalTimeStudies = [
   {
     id: 71,
     cost: 4,
-    requirement: [61, () => Perk.studyECRequirement.isBought || !EternityChallenge(12).isUnlocked],
+    requirement: [61],
     reqType: TS_REQUIREMENT_TYPE.DIMENSION_PATH,
     description: "Dimensional Sacrifice affects all other Antimatter Dimensions with reduced effect",
     effect: () => Sacrifice.totalBoost.pow(0.25).clampMin(1),
@@ -153,9 +155,7 @@ export const normalTimeStudies = [
   {
     id: 72,
     cost: 6,
-    requirement: [61,
-      () => Perk.studyECRequirement.isBought ||
-        (!EternityChallenge(11).isUnlocked && !EternityChallenge(12).isUnlocked)],
+    requirement: [61],
     reqType: TS_REQUIREMENT_TYPE.DIMENSION_PATH,
     description: "Dimensional Sacrifice affects 4th Infinity Dimension with greatly reduced effect",
     effect: () => Sacrifice.totalBoost.pow(0.04).clampMin(1),
@@ -165,7 +165,7 @@ export const normalTimeStudies = [
   {
     id: 73,
     cost: 5,
-    requirement: [61, () => Perk.studyECRequirement.isBought || !EternityChallenge(11).isUnlocked],
+    requirement: [61],
     reqType: TS_REQUIREMENT_TYPE.DIMENSION_PATH,
     description: "Dimensional Sacrifice affects 3rd Time Dimension with greatly reduced effect",
     effect: () => Sacrifice.totalBoost.pow(0.005).clampMin(1),

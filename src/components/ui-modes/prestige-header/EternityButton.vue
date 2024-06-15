@@ -120,12 +120,15 @@ export default {
       }
 
       if (EternityChallenge.isRunning) {
-        if (!Perk.studyECBulk.isBought) {
-          this.type = EP_BUTTON_DISPLAY_TYPE.CHALLENGE;
-          return;
-        }
-        this.type = EP_BUTTON_DISPLAY_TYPE.CHALLENGE_RUPG;
-        this.updateChallengeWithRUPG();
+        this.type = EP_BUTTON_DISPLAY_TYPE.CHALLENGE;
+        const ec = EternityChallenge.current;
+        this.fullyCompleted = ec.isFullyCompleted;
+        if (this.fullyCompleted) return;
+        const status = ec.gainedCompletionStatus;
+        this.gainedCompletions = status.gainedCompletions;
+        this.failedRestriction = status.failedRestriction;
+        this.hasMoreCompletions = status.hasMoreCompletions;
+        this.nextGoalAt.copyFrom(status.nextGoalAt);
         return;
       }
 
@@ -133,8 +136,8 @@ export default {
       this.currentEP.copyFrom(Currency.eternityPoints);
       this.gainedEP.copyFrom(gainedEP);
       const hasNewContent = !PlayerProgress.realityUnlocked() &&
-      Currency.eternityPoints.exponent >= 4000 &&
-      !TimeStudy.reality.isBought;
+        Currency.eternityPoints.exponent >= 4000 &&
+        !TimeStudy.reality.isBought;
       if (this.isDilation) {
         this.type = hasNewContent
           ? EP_BUTTON_DISPLAY_TYPE.DILATION_EXPLORE_NEW_CONTENT
@@ -154,16 +157,6 @@ export default {
       this.peakEPRate.copyFrom(player.records.thisEternity.bestEPmin);
       this.showEPRate = this.peakEPRate.lte(this.rateThreshold) && this.type !== EP_BUTTON_DISPLAY_TYPE.FIRST_TIME;
       this.creditsClosed = GameEnd.creditsEverClosed;
-    },
-    updateChallengeWithRUPG() {
-      const ec = EternityChallenge.current;
-      this.fullyCompleted = ec.isFullyCompleted;
-      if (this.fullyCompleted) return;
-      const status = ec.gainedCompletionStatus;
-      this.gainedCompletions = status.gainedCompletions;
-      this.failedRestriction = status.failedRestriction;
-      this.hasMoreCompletions = status.hasMoreCompletions;
-      this.nextGoalAt.copyFrom(status.nextGoalAt);
     }
   },
 };
@@ -175,8 +168,7 @@ const EP_BUTTON_DISPLAY_TYPE = {
   CHALLENGE: 2,
   DILATION: 3,
   NORMAL_EXPLORE_NEW_CONTENT: 4,
-  DILATION_EXPLORE_NEW_CONTENT: 5,
-  CHALLENGE_RUPG: 6
+  DILATION_EXPLORE_NEW_CONTENT: 5
 };
 </script>
 
@@ -216,9 +208,30 @@ const EP_BUTTON_DISPLAY_TYPE = {
       </template>
     </template>
 
-    <!-- Challenge -->
-    <template v-else-if="type === 2 || (type === 6 && !canEternity)">
+    <!-- Challenge but can't eternity -->
+    <template v-else-if="type === 2 && !canEternity">
       Other challenges await... I need to become Eternal
+    </template>
+
+    <!-- Challenge -->
+    <template v-else-if="type === 2">
+      Other challenges await...
+      <template v-if="fullyCompleted">
+        <br>
+        (This challenge is already fully completed)
+      </template>
+      <template v-else>
+        <br>
+        {{ quantifyInt("completion", gainedCompletions) }} on Eternity
+        <template v-if="failedRestriction">
+          <br>
+          {{ failedRestriction }}
+        </template>
+        <template v-else-if="hasMoreCompletions">
+          <br>
+          Next goal at {{ format(nextGoalAt) }} IP
+        </template>
+      </template>
     </template>
 
     <!-- Dilation -->
@@ -237,27 +250,6 @@ const EP_BUTTON_DISPLAY_TYPE = {
       </template>
       <br>
       You should explore a bit and look at new content before clicking me!
-    </template>
-
-    <!-- Challenge with multiple completions -->
-    <template v-else-if="type === 6">
-      Other challenges await...
-      <template v-if="fullyCompleted">
-        <br>
-        (This challenge is already fully completed)
-      </template>
-      <template v-else>
-        <br>
-        {{ quantifyInt("completion", gainedCompletions) }} on Eternity
-        <template v-if="failedRestriction">
-          <br>
-          {{ failedRestriction }}
-        </template>
-        <template v-else-if="hasMoreCompletions">
-          <br>
-          Next goal at {{ format(nextGoalAt) }} IP
-        </template>
-      </template>
     </template>
   </button>
 </template>

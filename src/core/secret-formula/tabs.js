@@ -401,6 +401,7 @@ export const tabs = [
         name: "The Machine",
         symbol: "<i class='fas fa-bolt'></i",
         component: "MachineTab",
+        condition: () => FabricHandler.isUnlocked,
         id: 6,
         hidable: true,
       }

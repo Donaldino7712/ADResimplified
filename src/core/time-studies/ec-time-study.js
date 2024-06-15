@@ -35,7 +35,6 @@ export class ECTimeStudyState extends TimeStudyState {
       if (!auto) {
         Tab.challenges.eternity.show();
       }
-      player.challenge.eternity.requirementBits |= 1 << this.id;
       Currency.timeTheorems.subtract(this.cost);
       TimeStudyTree.commitToGameState([TimeStudy.eternityChallenge(this.id)]);
       return true;
@@ -75,7 +74,7 @@ export class ECTimeStudyState extends TimeStudyState {
     if (!this.config.requirement.some(s => TimeStudy(s).isBought)) {
       return false;
     }
-    return this.allSecondaryRequirementsMet;
+    return true;
   }
 
   /**
@@ -83,43 +82,6 @@ export class ECTimeStudyState extends TimeStudyState {
    */
   get challenge() {
     return EternityChallenge(this.id);
-  }
-
-  get requirementTotal() {
-    return this.config.secondary.required(this.challenge.completions);
-  }
-
-  get requirementCurrent() {
-    const current = this.config.secondary.current();
-    if (this.cachedCurrentRequirement === undefined) {
-      this.cachedCurrentRequirement = current;
-    } else if (typeof current === "number") {
-      this.cachedCurrentRequirement = Math.max(this.cachedCurrentRequirement, current);
-    } else {
-      this.cachedCurrentRequirement = this.cachedCurrentRequirement.clampMin(current);
-    }
-    return this.cachedCurrentRequirement;
-  }
-
-  get allSecondaryRequirementsMet() {
-    return Perk.studyECRequirement.isBought || !this.hasForbiddenStudies && this.isEntryGoalMet;
-  }
-
-  get hasForbiddenStudies() {
-    return this.config.secondary.forbiddenStudies?.some(s => TimeStudy(s).isBought);
-  }
-
-  get isEntryGoalMet() {
-    if (this.wasRequirementPreviouslyMet) return true;
-    if (this.config.secondary.forbiddenStudies) return true;
-    const current = this.requirementCurrent;
-    const total = this.requirementTotal;
-    return typeof current === "number" ? current >= total : current.gte(total);
-  }
-
-  get wasRequirementPreviouslyMet() {
-    if (this.id === 11 || this.id === 12) return false;
-    return (player.challenge.eternity.requirementBits & (1 << this.id)) !== 0;
   }
 
   invalidateRequirement() {

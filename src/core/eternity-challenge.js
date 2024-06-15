@@ -107,13 +107,6 @@ export class EternityChallengeState extends GameMechanicState {
       totalCompletions: this.completions,
     };
     if (this.isFullyCompleted) return status;
-    if (!Perk.studyECBulk.isBought) {
-      if (this.canBeCompleted) {
-        ++status.totalCompletions;
-        status.gainedCompletions = 1;
-      }
-      return status;
-    }
 
     let totalCompletions = this.completionsAtIP(player.records.thisEternity.maxIP);
     const maxValidCompletions = this.maxValidCompletions;
@@ -236,16 +229,17 @@ export class EternityChallengeState extends GameMechanicState {
       this.config.checkRestriction(this.config.restriction(completions));
   }
 
-  exit() {
+  exit(isRestarting) {
     if (Player.isInAntimatterChallenge) {
       Player.antimatterChallenge.exit();
     }
     player.challenge.eternity.current = 0;
+    if (!isRestarting) player.respec = true;
     eternity(true);
   }
 
   fail(auto = false) {
-    this.exit();
+    this.exit(false);
     let reason;
     if (auto) {
       if (this.id === 4) {

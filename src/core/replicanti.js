@@ -395,7 +395,7 @@ export const ReplicantiUpgrade = {
     get costIncrease() { return 1e10; }
 
     get cap() {
-      return Effects.min(50, TimeStudy(22));
+      return 1;
     }
 
     get isCapped() {

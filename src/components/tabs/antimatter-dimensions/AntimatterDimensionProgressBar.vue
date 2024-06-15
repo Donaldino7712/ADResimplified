@@ -40,17 +40,13 @@ export default {
         if (Player.isInAntimatterChallenge) {
           setProgress(Currency.antimatter.value, Player.antimatterChallenge.goal, "Percentage to Challenge goal");
         } else if (EternityChallenge.isRunning) {
-          if (Perk.studyECBulk.isBought) {
-            // Note: If the EC is fully complete, this prop doesn't exist
-            const goal = EternityChallenge.current.gainedCompletionStatus.nextGoalAt;
-            if (goal) {
-              setProgress(Currency.infinityPoints.value, goal, "Percentage to next Challenge completion");
-            } else {
-              // In a fully completed EC, there's nothing useful we can show so we just pin it at 100% and say so
-              setProgress(Currency.infinityPoints.value, 10, "This Challenge is already fully completed!");
-            }
+          // Note: If the EC is fully complete, this prop doesn't exist
+          const goal = EternityChallenge.current.gainedCompletionStatus.nextGoalAt;
+          if (goal) {
+            setProgress(Currency.infinityPoints.value, goal, "Percentage to next Challenge completion");
           } else {
-            setProgress(Currency.infinityPoints.value, Player.eternityGoal, "Percentage to Eternity Challenge goal");
+            // In a fully completed EC, there's nothing useful we can show so we just pin it at 100% and say so
+            setProgress(Currency.infinityPoints.value, 10, "This Challenge is already fully completed!");
           }
         } else if (player.dilation.active) {
           if (player.dilation.lastEP.gt(0)) {

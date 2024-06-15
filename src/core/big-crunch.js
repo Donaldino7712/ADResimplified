@@ -126,12 +126,9 @@ export function bigCrunchResetValues(enteringAntimatterChallenge) {
   secondSoftReset(enteringAntimatterChallenge);
 
   let remainingGalaxies = 0;
-  if (Achievement(95).isUnlocked && !Pelle.isDoomed) {
+  if (Achievement(95).canBeApplied) {
     Replicanti.amount = currentReplicanti;
-    remainingGalaxies += Math.min(currentReplicantiGalaxies, Achievement(95).effectValue);
-  }
-  if (TimeStudy(33).isBought && !Pelle.isDoomed) {
-    remainingGalaxies += Math.floor(currentReplicantiGalaxies * TimeStudy(33).effectValue);
+    remainingGalaxies = Math.clampMin(currentReplicantiGalaxies - Achievement(95).effectValue, 0);
   }
 
   if (PelleUpgrade.replicantiGalaxyNoReset.canBeApplied) {

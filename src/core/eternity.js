@@ -16,17 +16,13 @@ function giveEternityRewards(auto) {
 
   if (EternityChallenge.isRunning) {
     const challenge = EternityChallenge.current;
-    challenge.addCompletion(false);
-    if (Perk.studyECBulk.isBought) {
-      let completionCount = 0;
-      while (!challenge.isFullyCompleted && challenge.canBeCompleted) {
-        challenge.addCompletion(false);
-        completionCount++;
-      }
-      AutomatorData.lastECCompletionCount = completionCount;
-      if (Enslaved.isRunning && completionCount > 5) EnslavedProgress.ec1.giveProgress();
+    let completionCount = 0;
+    while (!challenge.isFullyCompleted && challenge.canBeCompleted) {
+      challenge.addCompletion(false);
+      completionCount++;
     }
-    player.challenge.eternity.requirementBits &= ~(1 << challenge.id);
+    AutomatorData.lastECCompletionCount = completionCount;
+    if (Enslaved.isRunning && completionCount > 5) EnslavedProgress.ec1.giveProgress();
     respecTimeStudies(auto);
   }
 
@@ -44,7 +40,7 @@ function giveEternityRewards(auto) {
     player.records.bestEternity.bestEPminReality.max(player.records.thisEternity.bestEPmin);
 
   Currency.infinitiesBanked.value = Currency.infinitiesBanked.value.plusEffectsOf(
-    Achievement(131),
+    Achievement(131).effects.bankedInfinitiesGain,
     TimeStudy(191)
   );
 
@@ -236,7 +232,7 @@ export function gainedEternities() {
   return Pelle.isDisabled("eternityMults")
     ? new Decimal(1)
     : new Decimal(getAdjustedGlyphEffect("timeetermult"))
-      .timesEffectsOf(RealityUpgrade(3), Achievement(101), Achievement(106))
+      .timesEffectsOf(RealityUpgrade(3), Achievement(101))
       .pow(AlchemyResource.eternity.effectValue);
 }
 

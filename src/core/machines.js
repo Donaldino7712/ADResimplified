@@ -12,15 +12,14 @@ export const MachineHandler = {
   },
 
   get realityMachineMultiplier() {
-    return ShopPurchase.RMPurchases.currentMult *
+    return Decimal.mul(ShopPurchase.RMPurchases.currentMult *
       Teresa.rmMultiplier *
       getAdjustedGlyphEffect("effarigrm") *
       Effects.product(
         Perk.firstPerk,
-        FabricUpgrade(6),
         PerkShopUpgrade.rmMult,
         Achievement(167)
-      );
+      ), FabricUpgrade(6).effectOrDefault(1));
   },
 
   get uncappedRM() {
