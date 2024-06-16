@@ -93,14 +93,8 @@ export default {
       switch (idx) {
         case this.modes.LOWEST_SACRIFICE:
           return "fas fa-burn";
-        case this.modes.EFFECT_COUNT:
-          return "fas fa-list-ul";
-        case this.modes.RARITY_THRESHOLD:
+        case this.modes.RANDOM:
           return "fas fa-gem";
-        case this.modes.SPECIFIED_EFFECT:
-          return "fas fa-tasks";
-        case this.modes.EFFECT_SCORE:
-          return "fas fa-list-ol";
         case this.modes.LOWEST_ALCHEMY:
           return "fas fa-atom";
         case this.modes.ALCHEMY_VALUE:
@@ -139,10 +133,7 @@ export default {
     isUnlocked(index) {
       switch (index) {
         case this.modes.LOWEST_SACRIFICE:
-        case this.modes.EFFECT_COUNT:
-        case this.modes.RARITY_THRESHOLD:
-        case this.modes.SPECIFIED_EFFECT:
-        case this.modes.EFFECT_SCORE:
+        case this.modes.RANDOM:
           return true;
         case this.modes.LOWEST_ALCHEMY:
         case this.modes.ALCHEMY_VALUE:

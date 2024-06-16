@@ -336,7 +336,6 @@ window.player = {
   IPMultPurchases: 0,
   version: 25,
   infinityPower: DC.D1,
-  postC4Tier: 0,
   eternityPoints: DC.D0,
   eternities: DC.D0,
   eternityUpgrades: new Set(),
