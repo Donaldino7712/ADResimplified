@@ -124,7 +124,7 @@ function totalEPMult() {
       .times(ShopPurchase.EPPurchases.currentMult)
       .timesEffectsOf(
         EternityUpgrade.epMult,
-        TimeStudy(61),
+        TimeStudy(33),
         TimeStudy(122),
         TimeStudy(121),
         TimeStudy(123),
@@ -174,8 +174,7 @@ export function gainedGlyphLevel() {
 export function resetChallengeStuff() {
   player.chall2Pow = DC.D0_01;
   Currency.matter.reset();
-  player.chall8TotalSacrifice = DC.D1;
-  player.postC4Tier = 1;
+  player.chall6TotalSacrifice = DC.D1;
 }
 
 export function ratePerMinute(amount, time) {

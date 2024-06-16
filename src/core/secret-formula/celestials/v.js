@@ -13,16 +13,8 @@ export const V_REDUCTION_MODE = {
 export const v = {
   // Note: mainUnlock IDs here are one-indexed to match with navigation indices
   mainUnlock: {
-    realities: {
-      id: 1,
-      name: "Realities",
-      resource: () => Currency.realities.value,
-      requirement: 10000,
-      format: x => formatInt(x),
-      progress: () => Currency.realities.value / 10000,
-    },
     eternities: {
-      id: 2,
+      id: 1,
       name: "Eternities",
       resource: () => Currency.eternities.value,
       requirement: 1e70,
@@ -30,7 +22,7 @@ export const v = {
       progress: () => emphasizeEnd(Currency.eternities.value.pLog10() / 70),
     },
     infinities: {
-      id: 3,
+      id: 2,
       name: "Infinities",
       resource: () => Currency.infinitiesTotal.value,
       requirement: 1e160,
@@ -38,7 +30,7 @@ export const v = {
       progress: () => emphasizeEnd(Currency.infinitiesTotal.value.pLog10() / 160),
     },
     dilatedTime: {
-      id: 4,
+      id: 3,
       name: "Dilated Time",
       resource: () => player.records.thisReality.maxDT,
       requirement: DC.E320,
@@ -46,7 +38,7 @@ export const v = {
       progress: () => emphasizeEnd(player.records.thisReality.maxDT.pLog10() / 320),
     },
     replicanti: {
-      id: 5,
+      id: 4,
       name: "Replicanti",
       resource: () => player.records.thisReality.maxReplicanti,
       requirement: DC.E320000,
@@ -54,7 +46,7 @@ export const v = {
       progress: () => emphasizeEnd(player.records.thisReality.maxReplicanti.pLog10() / 320000),
     },
     realityMachines: {
-      id: 6,
+      id: 5,
       name: "Reality Machines",
       resource: () => Currency.realityMachines.value,
       requirement: 1e60,

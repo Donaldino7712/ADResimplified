@@ -97,7 +97,7 @@ export const normalTimeStudies = [
     requirement: [22],
     reqType: TS_REQUIREMENT_TYPE.AT_LEAST_ONE,
     description: "Gain a multiplier to Eternity Points based on current Replicanti Galaxy amount",
-    effect: () => Math.pow(Replicanti.galaxies.total, 4),
+    effect: () => Math.max(Math.pow(Replicanti.galaxies.total, 4), 1),
     formatEffect: value => formatX(value, 2, 0)
   },
   {
@@ -131,7 +131,7 @@ export const normalTimeStudies = [
     cost: 3,
     requirement: [51],
     reqType: TS_REQUIREMENT_TYPE.AT_LEAST_ONE,
-    description: () => `You gain ${formatX(15)} more Eternity Points`,
+    description: () => `nothing currently (saul (or anyone else) please give me ideas)`,
     effect: 15
   },
   {

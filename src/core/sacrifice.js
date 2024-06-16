@@ -102,7 +102,7 @@ export class Sacrifice {
     // C6 uses a variable that keeps track of a sacrifice boost that persists across sacrifice-resets and isn't
     // used anywhere else, which also naturally takes account of the exponent from achievements and time studies.
     if (NormalChallenge(6).isRunning) {
-      return player.chall8TotalSacrifice;
+      return player.chall6TotalSacrifice;
     }
 
     let prePowerBoost;
@@ -129,7 +129,7 @@ export function sacrificeReset() {
   }
   EventHub.dispatch(GAME_EVENT.SACRIFICE_RESET_BEFORE);
   const nextBoost = Sacrifice.nextBoost;
-  player.chall8TotalSacrifice = player.chall8TotalSacrifice.times(nextBoost);
+  player.chall6TotalSacrifice = player.chall6TotalSacrifice.times(nextBoost);
   player.sacrificed = player.sacrificed.plus(AntimatterDimension(1).amount);
   const isAch118Unlocked = Achievement(118).canBeApplied;
   if (NormalChallenge(6).isRunning) {

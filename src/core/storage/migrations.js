@@ -130,7 +130,7 @@ export const migrations = {
       migrations.removeOtherTickspeedProps(player);
       migrations.renameNewsOption(player);
       migrations.removeDimensionCosts(player);
-      migrations.changeC8Handling(player);
+      migrations.changeC6Handling(player);
       migrations.convertAchievementsToBits(player);
       migrations.setNoInfinitiesOrEternitiesThisReality(player);
       migrations.setTutorialState(player);
@@ -424,8 +424,18 @@ export const migrations = {
     //   // The ReSimplified migration
     //   player.chall2Pow = player.chall3Pow;
     //   delete player.chall3Pow;
+    //   player.chall6TotalSacrifice = player.chall8TotalSacrifice;
+    //   delete player.chall8TotalSacrifice;
+    //   delete player.chall9TickseedCostBumps;
+    //   delete player.postC4Tier;
     //   // stuff to migrate: achievements, challenges (and everything related ie. challenge times)
     //   delete player.challenge.eternity.requirementBits;
+    //   const newGlyphFilters = {
+    //     0: 0,
+    //     5: 2,
+    //     6: 3
+    //   };
+    //   player.reality.glyphs.filter.select = newGlyphFilters[player.reality.glyphs.filter.select] ?? 1;
     // },
   },
 
@@ -952,7 +962,7 @@ export const migrations = {
     delete player.tickDecrease;
   },
 
-  changeC8Handling(player) {
+  changeC6Handling(player) {
     player.chall8TotalSacrifice = Decimal.pow(player.chall11Pow, 2);
     delete player.chall11Pow;
   },

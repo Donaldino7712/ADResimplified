@@ -430,9 +430,7 @@ export const AD = {
       let dimMults = Array.repeat(DC.D1, 9);
       if (InfinityChallenge(4).isRunning) {
         for (let tier = 1; tier <= 8; tier++) {
-          if (player.postC4Tier !== tier) {
-            dimMults[tier] = dimMults[tier].pow(1 - InfinityChallenge(4).effectValue).reciprocal();
-          }
+          dimMults[tier] = dimMults[tier].pow(1 - InfinityChallenge(4).effectValue).reciprocal();
         }
       } else if (InfinityChallenge(6).isRunning) {
         dimMults = Array.repeat(DC.D1.dividedByEffectOf(InfinityChallenge(6)), 9);

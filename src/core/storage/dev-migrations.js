@@ -484,7 +484,7 @@ export const devMigrations = {
     player => {
       player.auto.sacrifice.multiplier = new Decimal(player.auto.sacrifice.multiplier);
     },
-    migrations.changeC8Handling,
+    migrations.changeC6Handling,
     player => {
       while (player.celestials.teresa.perkShop.length < 5) player.celestials.teresa.perkShop.push(0);
     },

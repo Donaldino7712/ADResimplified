@@ -146,14 +146,6 @@ function applyNDPowers(mult, tier) {
   const glyphPowMultiplier = getAdjustedGlyphEffect("powerpow");
   const glyphEffarigPowMultiplier = getAdjustedGlyphEffect("effarigdimensions");
 
-  // TODO:mig remove player.postC4Tier
-  // if (InfinityChallenge(4).isRunning) {
-  //   multiplier = multiplier.pow(InfinityChallenge(4).effectValue);
-  // }
-  // if (InfinityChallenge(4).isCompleted) {
-  //   multiplier = multiplier.pow(InfinityChallenge(4).reward.effectValue);
-  // }
-
   multiplier = multiplier.pow(glyphPowMultiplier * glyphEffarigPowMultiplier * Ra.momentumValue);
 
   multiplier = multiplier
@@ -188,7 +180,6 @@ function onBuyDimension(tier) {
 
   if (player.speedrun.isActive && !player.speedrun.hasStarted) Speedrun.startTimer();
 
-  player.postC4Tier = tier;
   player.records.thisInfinity.lastBuyTime = player.records.thisInfinity.time;
   if (tier !== 8) player.requirementChecks.eternity.onlyAD8 = false;
   if (tier !== 1) player.requirementChecks.eternity.onlyAD1 = false;

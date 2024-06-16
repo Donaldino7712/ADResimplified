@@ -245,12 +245,6 @@ export default {
       return `<span style="font-weight: ${isCurrentAction ? "bold" : ""};">
               Refine: ${refinementText}
               </span>`;
-    },
-    scoreText() {
-      if (this.type === "companion" || this.type === "cursed" || this.type === "reality") return "";
-      const showFilterScoreModes = [AUTO_GLYPH_SCORE.SPECIFIED_EFFECT, AUTO_GLYPH_SCORE.EFFECT_SCORE];
-      if (!showFilterScoreModes.includes(this.scoreMode)) return "";
-      return `Score: ${format(AutoGlyphProcessor.filterValue(this.$parent.glyph), 1, 1)}`;
     }
   }
 };
@@ -285,7 +279,8 @@ export default {
           <span v-html="refineText()" />
         </span>
       </span>
-      <span class="c-glyph-tooltip__sacrifice">{{ scoreText() }}</span>
+      <!-- TODO: remove if not needed -->
+      <span />
     </div>
     <div class="l-glyph-tooltip__effects">
       <GlyphTooltipEffect

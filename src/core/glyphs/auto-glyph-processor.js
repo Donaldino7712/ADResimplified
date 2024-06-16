@@ -37,9 +37,9 @@ export const AutoGlyphProcessor = {
   // higher numbers correspond to better glyphs. This value is also displayed on tooltips when it depends
   // on only the glyph itself and not external factors.
   filterValue(glyph) {
-    const typeCfg = this.types[glyph.type];
     if (["companion", "reality"].includes(glyph.type)) return Infinity;
     if (glyph.type === "cursed") return -Infinity;
+    // RANDOM is handled seperately
     switch (this.scoreMode) {
       case AUTO_GLYPH_SCORE.LOWEST_SACRIFICE:
         // Picked glyphs are never kept in this mode. Sacrifice cap needs to be checked since effarig caps
@@ -47,38 +47,6 @@ export const AutoGlyphProcessor = {
         return player.reality.glyphs.sac[glyph.type] >= GlyphSacrifice[glyph.type].cap
           ? -Infinity
           : -player.reality.glyphs.sac[glyph.type];
-      case AUTO_GLYPH_SCORE.EFFECT_COUNT:
-        // Effect count, plus a very small rarity term to break ties in favor of rarer glyphs
-        return strengthToRarity(glyph.strength) / 1000 + getGlyphEffectsFromBitmask(glyph.effects, 0, 0)
-          .filter(effect => effect.isGenerated).length;
-      case AUTO_GLYPH_SCORE.RARITY_THRESHOLD:
-        return strengthToRarity(glyph.strength);
-      case AUTO_GLYPH_SCORE.SPECIFIED_EFFECT: {
-        // Value is equal to rarity but minus 200 for each missing effect. This makes all glyphs which don't
-        // satisfy the requirements have a negative score and generally the worse a glyph misses the requirements,
-        // the more negative of a score it will have
-        const glyphEffectCount = countValuesFromBitmask(glyph.effects);
-        if (glyphEffectCount < typeCfg.effectCount) {
-          return strengthToRarity(glyph.strength) - 200 * (typeCfg.effectCount - glyphEffectCount);
-        }
-        // The missing effect count can be gotten by taking the full filter bitmask, removing only the bits which are
-        // present on both the filter and the glyph, and then counting the bits up
-        const missingEffects = countValuesFromBitmask(typeCfg.specifiedMask - (typeCfg.specifiedMask & glyph.effects));
-        return strengthToRarity(glyph.strength) - 200 * missingEffects;
-      }
-      case AUTO_GLYPH_SCORE.EFFECT_SCORE: {
-        const effectList = getGlyphEffectsFromBitmask(glyph.effects, 0, 0)
-          .filter(effect => effect.isGenerated)
-          .map(effect => effect.bitmaskIndex);
-        const offset = this.bitmaskIndexOffset(glyph.type);
-        // This ternary check is required to filter out any effects which may appear on the glyph which aren't normally
-        // there in typical glyph generation. Ra-Nameless 25 is the only case where this happens, but this also has the
-        // side-effect of making altered glyph generation in mods less likely to crash the game as well
-        const effectScore = effectList
-          .map(e => (typeCfg.effectScores[e - offset] ? typeCfg.effectScores[e - offset] : 0))
-          .sum();
-        return strengthToRarity(glyph.strength) + effectScore;
-      }
       // Picked glyphs are never kept in Alchemy modes.
       // Glyphs for non-unlocked or capped Alchemy Resources are assigned NEGATIVE_INFINITY
       // to make them picked last, because we can't refine them.
@@ -102,28 +70,15 @@ export const AutoGlyphProcessor = {
     // Glyph filter settings are undefined for companion/cursed/reality glyphs, so we return the lowest possible
     // value on the basis that we never want to automatically get rid of them
     if (this.types[glyph.type] === undefined) return -Number.MAX_VALUE;
-    switch (this.scoreMode) {
-      case AUTO_GLYPH_SCORE.EFFECT_COUNT:
-        return player.reality.glyphs.filter.simple;
-      case AUTO_GLYPH_SCORE.RARITY_THRESHOLD:
-      case AUTO_GLYPH_SCORE.SPECIFIED_EFFECT:
-        return this.types[glyph.type].rarity;
-      case AUTO_GLYPH_SCORE.EFFECT_SCORE:
-        return this.types[glyph.type].score;
-      case AUTO_GLYPH_SCORE.LOWEST_SACRIFICE:
-      case AUTO_GLYPH_SCORE.LOWEST_ALCHEMY:
-      case AUTO_GLYPH_SCORE.ALCHEMY_VALUE:
-        // These modes never keep glyphs and always refine/sacrfice
-        return Number.MAX_VALUE;
-      default:
-        throw new Error("Unknown glyph score mode in threshold check");
-    }
+    return Number.MAX_VALUE;
   },
+  // TODO:glyf
   wouldKeep(glyph) {
     return this.filterValue(glyph) >= this.thresholdValue(glyph);
   },
-  // Given a list of glyphs, pick the one with the highest score
+  // Given a list of glyphs, pick the one with the highest score (or a random one)
   pick(glyphs) {
+    if (this.scoreMode === AUTO_GLYPH_SCORE.RANDOM) return glyphs.randomElement();
     // We want to make sure to account for when glyphs are compared to different thresholds based on their type, or
     // else we end up always picking the rarest glyph despite all filter settings. However, we need to special-case
     // modes which never keep glyphs, or else they all become the same value and it ends up picking pseudo-randomly
@@ -172,14 +127,8 @@ export const AutoGlyphProcessor = {
     switch (id) {
       case AUTO_GLYPH_SCORE.LOWEST_SACRIFICE:
         return "Lowest Total Glyph Sacrifice";
-      case AUTO_GLYPH_SCORE.EFFECT_COUNT:
-        return "Number of Effects";
-      case AUTO_GLYPH_SCORE.RARITY_THRESHOLD:
-        return "Rarity Threshold";
-      case AUTO_GLYPH_SCORE.SPECIFIED_EFFECT:
-        return "Specified Effect";
-      case AUTO_GLYPH_SCORE.EFFECT_SCORE:
-        return "Effect Score";
+      case AUTO_GLYPH_SCORE.RANDOM:
+        return "Random";
       case AUTO_GLYPH_SCORE.LOWEST_ALCHEMY:
         return "Lowest Alchemy Resource";
       case AUTO_GLYPH_SCORE.ALCHEMY_VALUE:
