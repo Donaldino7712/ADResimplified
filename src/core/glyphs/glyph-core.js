@@ -816,7 +816,7 @@ export function recalculateAllGlyphs() {
   Glyphs.refresh();
 }
 
-// Makes sure level is a positive whole number and rarity is >0% (retroactive fixes) and recalculates effects
+// Makes sure level is a positive whole number and recalculate effects
 export function calculateGlyph(glyph) {
   if (glyph.color === undefined && glyph.symbol === undefined) {
     glyph.level = Math.max(1, Math.round(glyph.level));
@@ -825,8 +825,6 @@ export function calculateGlyph(glyph) {
       // this was merged, so it's not a big deal.
       glyph.rawLevel = glyph.level < 1000 ? glyph.level : (Math.pow(0.004 * glyph.level - 3, 2) - 1) * 125 + 1000;
     }
-
-    glyph.strength = Math.max(rarityToStrength(100), glyph.strength);
   }
 }
 

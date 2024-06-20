@@ -20,10 +20,6 @@ export default {
       return `You are about to ${this.refiningOrSacrificing} all rejected Glyphs`;
     },
     message() {
-      const negativeWarning = AutoGlyphProcessor.hasNegativeEffectScore()
-        ? ` Note that some of your Effect Filter scores are negative, which may cause you to lose some Glyphs
-          you normally want to keep.`
-        : "";
       return `Are you sure you want to ${this.refiningOrSacrificing} all rejected Glyphs? This will remove
         all Glyphs that would be rejected by your current Glyph Filter settings.${negativeWarning}`;
     },

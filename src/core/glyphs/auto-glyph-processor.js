@@ -39,7 +39,6 @@ export const AutoGlyphProcessor = {
   filterValue(glyph) {
     if (["companion", "reality"].includes(glyph.type)) return Infinity;
     if (glyph.type === "cursed") return -Infinity;
-    // RANDOM is handled seperately
     switch (this.scoreMode) {
       case AUTO_GLYPH_SCORE.LOWEST_SACRIFICE:
         // Picked glyphs are never kept in this mode. Sacrifice cap needs to be checked since effarig caps
@@ -47,6 +46,8 @@ export const AutoGlyphProcessor = {
         return player.reality.glyphs.sac[glyph.type] >= GlyphSacrifice[glyph.type].cap
           ? -Infinity
           : -player.reality.glyphs.sac[glyph.type];
+      case AUTO_GLYPH_SCORE.RANDOM:
+        return Infinity;
       // Picked glyphs are never kept in Alchemy modes.
       // Glyphs for non-unlocked or capped Alchemy Resources are assigned NEGATIVE_INFINITY
       // to make them picked last, because we can't refine them.
@@ -74,6 +75,7 @@ export const AutoGlyphProcessor = {
   },
   // TODO:glyf
   wouldKeep(glyph) {
+    if (this.scoreMode === AUTO_GLYPH_SCORE.RANDOM) return true;
     return this.filterValue(glyph) >= this.thresholdValue(glyph);
   },
   // Given a list of glyphs, pick the one with the highest score (or a random one)
@@ -115,13 +117,6 @@ export const AutoGlyphProcessor = {
         throw new Error("Unknown auto Glyph Sacrifice mode");
     }
   },
-  // Generally only used for UI in order to notify the player that they might end up retroactively getting rid of
-  // some glyphs they otherwise want to keep
-  hasNegativeEffectScore() {
-    return this.scoreMode === AUTO_GLYPH_SCORE.EFFECT_SCORE &&
-      Object.values(this.types).map(t => t.effectScores.min()).min() < 0;
-  },
-
   // These are here because they're used in multiple UI components
   filterModeName(id) {
     switch (id) {

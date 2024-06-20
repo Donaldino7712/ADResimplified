@@ -16,7 +16,9 @@ export const GlyphSelection = {
   },
 
   glyphList(level) {
-    return GlyphGenerator.availableTypes.map(type => GlyphGenerator.createGlyph(level, type));
+    return GlyphGenerator.availableTypes.map(type => (type === "reality"
+      ? GlyphGenerator.realityGlyph(level.actualLevel * 0.8, GlyphGenerator.strength)
+      : GlyphGenerator.createGlyph(level, type)));
   },
 
   generate(level = gainedGlyphLevel()) {
@@ -72,6 +74,12 @@ export function simulatedRealityCount(advancePartSimCounters) {
   return Math.floor(simCount);
 }
 
+export function realityAndPPMultiplier() {
+  return Effects.product(
+    Achievement(144),
+    Achievement(154)
+  );
+}
 /**
  * Triggered when the user clicks the reality button. This triggers the glyph selection
  * process, if applicable. Auto sacrifice is never triggered.
@@ -174,9 +182,7 @@ function processAutoGlyph(gainedLevel) {
     newGlyph = AutoGlyphProcessor.pick(glyphs);
     keepGlyph = AutoGlyphProcessor.wouldKeep(newGlyph);
   } else {
-    // It really doesn't matter which we pick since they're random,
-    // so we might as well take the first one.
-    newGlyph = glyphs[0];
+    newGlyph = glyphs.randomElement();
     keepGlyph = true;
   }
   if (keepGlyph && GameCache.glyphInventorySpace.value > 0) {
@@ -201,6 +207,7 @@ export function getRealityProps(isReset, alreadyGotGlyph = false) {
     gainedShards: Effarig.shardsGained,
     simulatedRealities: simulatedRealityCount(true),
     alreadyGotGlyph,
+    gainedGlyphStrength: GlyphGenerator.strength
   });
 }
 
@@ -228,19 +235,35 @@ function updateRealityRecords(realityProps) {
 
 function giveRealityRewards(realityProps) {
   const multiplier = realityProps.simulatedRealities + 1;
-  const realityAndPPMultiplier = multiplier * Effects.product(
-    Achievement(144),
-    Achievement(154)
-  );
+  const realityAndPPGained = multiplier * realityAndPPMultiplier();
   const gainedRM = Currency.realityMachines.gte(MachineHandler.hardcapRM) ? DC.D0 : realityProps.gainedRM;
   Currency.realityMachines.add(gainedRM.times(multiplier));
   updateRealityRecords(realityProps);
   addRealityTime(
     player.records.thisReality.time, player.records.thisReality.realTime, gainedRM,
-    realityProps.gainedGlyphLevel.actualLevel, realityAndPPMultiplier, multiplier,
+    realityProps.gainedGlyphLevel.actualLevel, realityAndPPGained, multiplier,
     MachineHandler.projectedIMCap);
-  Currency.realities.add(realityAndPPMultiplier);
-  Currency.perkPoints.add(realityAndPPMultiplier);
+  Currency.realities.add(realityAndPPGained);
+  Currency.perkPoints.add(realityAndPPGained);
+  // TODO:glyf
+  // If (FabricUpgrade(14).canBeApplied) {
+  //   gainedLevel = realityProps.gainedGlyphLevel;
+  //   let newGlyph;
+  //   const glyphs = GlyphSelection.glyphList(gainedLevel);
+  //   let keepGlyph;
+  //   if (EffarigUnlock.glyphFilter.isUnlocked) {
+  //     newGlyph = AutoGlyphProcessor.pick(glyphs);
+  //     keepGlyph = AutoGlyphProcessor.wouldKeep(newGlyph);
+  //   } else {
+  //     newGlyph = glyphs.randomElement();
+  //     keepGlyph = true;
+  //   }
+  //   if (keepGlyph && GameCache.glyphInventorySpace.value > 0) {
+  //     Glyphs.addToInventory(newGlyph);
+  //   } else {
+  //     AutoGlyphProcessor.getRidOfGlyph(newGlyph);
+  //   }
+  // }
   if (TeresaUnlocks.effarig.canBeApplied) {
     Currency.relicShards.add(realityProps.gainedShards * multiplier);
   }

@@ -1,17 +1,6 @@
 <script>
-import AutoSacrificeAdvancedTab from "./AutoSacrificeAdvancedTab";
-import AutoSacrificeEffectTab from "./AutoSacrificeEffectTab";
-import GlyphComponent from "@/components/GlyphComponent";
-import SliderComponent from "@/components/SliderComponent";
-
 export default {
   name: "GlyphFilterPanel",
-  components: {
-    AutoSacrificeEffectTab,
-    AutoSacrificeAdvancedTab,
-    SliderComponent,
-    GlyphComponent
-  },
   data() {
     return {
       mode: AUTO_GLYPH_SCORE.LOWEST_SACRIFICE,
@@ -241,115 +230,14 @@ export default {
       This mode never keeps Glyphs, but will instead always sacrifice the Glyph it chooses.
     </div>
     <div
-      v-if="mode === modes.EFFECT_COUNT"
-      class=" c-glyph-sacrifice-options__advanced"
-    >
-      <br>
-      Glyphs must have at least
-      <input
-        ref="effectCount"
-        type="number"
-        min="0"
-        max="8"
-        class="c-auto-sac-effect-tab__input"
-        :value="effectCount"
-        @blur="setEffectCount"
-      >
-      effects to be chosen. Rarer Glyphs are preferred in ties.
-    </div>
-    <div
-      v-if="mode === modes.RARITY_THRESHOLD"
-      class="l-glyph-sacrifice-options__rarity-sliders"
-    >
-      <span class="c-glyph-sacrifice-options__advanced">
-        Any Glyphs with rarity below these thresholds will be sacrificed.
-      </span>
-      <div
-        v-for="type in glyphTypes"
-        :key="type.id"
-        class="l-glyph-sacrifice-options__rarity-slider-div"
-      >
-        <span @click="bumpRarity(type.id)">
-          <GlyphComponent
-            :glyph="{type: type.id, strength: strengthThreshold(type.id) }"
-            v-bind="glyphIconProps"
-            class="o-clickable"
-          />
-        </span>
-        <SliderComponent
-          v-bind="raritySliderProps"
-          :value="rarityThresholds[type.id]"
-          :width="'100%'"
-          @input="setRarityThreshold(type.id, $event)"
-        />
-      </div>
-    </div>
-    <div
-      v-if="mode === modes.SPECIFIED_EFFECT"
+      v-if="mode === modes.RANDOM"
       class="c-glyph-sacrifice-options__advanced"
     >
-      <div>
-        Glyph Type:
-        <span
-          v-for="type in glyphTypes"
-          :key="type.id"
-          v-tooltip="type.id.capitalize()"
-          class="l-glyph-sacrifice-options__advanced-type-select c-glyph-sacrifice-options__advanced-type-select"
-          :style="advancedTypeSelectStyle(type)"
-          @click="advancedType=type.id"
-        >
-          {{ getSymbol(type.id) }}
-        </span>
-      </div>
       <br>
-      <div class="l-glyph-sacrifice-options__rarity-slider-div">
-        <span @click="bumpRarity(advancedType)">
-          <GlyphComponent
-            :glyph="{type: advancedType, strength: strengthThreshold(advancedType) }"
-            v-bind="glyphIconProps"
-            class="o-clickable"
-          />
-        </span>
-        <SliderComponent
-          v-bind="raritySliderProps"
-          :value="rarityThresholds[advancedType]"
-          :width="'100%'"
-          @input="setRarityThreshold(advancedType, $event)"
-        />
-      </div>
-      <template v-for="type in glyphTypes">
-        <AutoSacrificeEffectTab
-          v-show="type.id === advancedType"
-          :key="type.id"
-          :glyph-type="type.id"
-        />
-      </template>
-    </div>
-    <div
-      v-if="mode === modes.EFFECT_SCORE"
-      class="c-glyph-sacrifice-options__advanced"
-    >
-      <div>
-        Glyph Type:
-        <span
-          v-for="type in glyphTypes"
-          :key="type.id"
-          v-tooltip="type.id.capitalize()"
-          class="l-glyph-sacrifice-options__advanced-type-select c-glyph-sacrifice-options__advanced-type-select"
-          :style="advancedTypeSelectStyle(type)"
-          @click="advancedType=type.id"
-        >
-          {{ getSymbol(type.id) }}
-        </span>
-      </div>
+      This filter chooses a random glyph.
       <br>
-      <template v-for="type in glyphTypes">
-        <AutoSacrificeAdvancedTab
-          v-show="type.id === advancedType"
-          :key="type.id"
-          :glyph-type="type.id"
-        />
-      </template>
+      <br>
+      This mode always keeps Glyphs.
     </div>
     <div
       v-if="mode === modes.LOWEST_ALCHEMY"

@@ -49,7 +49,7 @@ export default {
     </div>
     <br>
     <div
-      v-for="row in 3"
+      v-for="row in 4"
       :key="row"
       class="l-fabric-upgrade-grid__row"
     >

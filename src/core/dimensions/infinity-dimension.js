@@ -18,7 +18,8 @@ export function infinityDimensionCommonMultiplier() {
       EternityUpgrade.idMultICRecords,
       AlchemyResource.dimensionality,
       ImaginaryUpgrade(8),
-      PelleRifts.recursion.milestones[1]
+      PelleRifts.recursion.milestones[1],
+      TimeStudy(61).effects.infinity
     );
 
   if (Replicanti.areUnlocked && Replicanti.amount.gt(1)) {

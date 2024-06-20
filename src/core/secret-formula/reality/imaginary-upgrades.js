@@ -102,10 +102,10 @@ export const imaginaryUpgrades = [
     name: "Suspicion of Interference",
     id: 11,
     cost: 5e7,
-    requirement: () => `${format(1e90)} total Relic Shards
+    requirement: () => `${format(1e60)} total Relic Shards
       (You have ${format(player.celestials.effarig.relicShards, 2)})`,
     hasFailed: () => false,
-    checkRequirement: () => player.celestials.effarig.relicShards >= 1e90,
+    checkRequirement: () => player.celestials.effarig.relicShards >= 1e60,
     checkEvent: GAME_EVENT.REALITY_RESET_AFTER,
     description: "Time Dimension power based on total antimatter",
     effect: () => 1 + Math.log10(player.records.totalAntimatter.log10()) / 100,

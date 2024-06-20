@@ -112,15 +112,14 @@ export const GlyphGenerator = {
     };
   },
 
-  realityGlyph(level) {
-    const str = rarityToStrength(100);
+  realityGlyph(level, strength = rarityToStrength(100)) {
     const effects = this.generateRealityEffects(level);
     const effectBitmask = makeGlyphEffectBitmask(effects);
     return {
       id: undefined,
       idx: null,
       type: "reality",
-      strength: str,
+      strength,
       level,
       rawLevel: level,
       effects: effectBitmask,
@@ -274,6 +273,7 @@ export const GlyphGenerator = {
   get availableTypes() {
     const types = [...BASIC_GLYPH_TYPES];
     if (EffarigUnlock.reality.isUnlocked) types.push("effarig");
+    if (FabricUpgrade(15).isBought && Ra.pets.effarig.unlocks[6].isUnlocked) types.push("reality");
     return types;
   }
 };

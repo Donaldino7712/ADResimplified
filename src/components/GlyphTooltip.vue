@@ -107,15 +107,15 @@ export default {
     },
     description() {
       const glyphName = `${this.type.capitalize()}`;
+      let rarityName = this.rarityInfo.name;
+      if (this.type === "reality" && rarityName === "Celestial") rarityName = "Pure";
       switch (this.type) {
         case "companion":
           return "Companion Glyph";
         case "cursed":
           return "Cursed Glyph";
-        case "reality":
-          return `Pure Glyph of ${glyphName}`;
         default:
-          return `${this.rarityInfo.name} Glyph of ${glyphName}`;
+          return `${rarityName} Glyph of ${glyphName}`;
       }
     },
     isLevelCapped() {
@@ -127,8 +127,10 @@ export default {
     rarityText() {
       if (!GlyphTypes[this.type].hasRarity) return "";
       const strength = Pelle.isDoomed ? Pelle.glyphStrength : this.strength;
+      let style = `color: ${this.descriptionStyle.color}`;
+      if (this.descriptionStyle.animation) style = `animation: ${this.descriptionStyle.animation}`;
       return `| Rarity:
-        <span style="color: ${this.descriptionStyle.color}">${formatRarity(strengthToRarity(strength))}</span>`;
+        <span style="${style}">${formatRarity(strengthToRarity(strength))}</span>`;
     },
     levelText() {
       if (this.type === "companion") return "";
@@ -279,8 +281,6 @@ export default {
           <span v-html="refineText()" />
         </span>
       </span>
-      <!-- TODO: remove if not needed -->
-      <span />
     </div>
     <div class="l-glyph-tooltip__effects">
       <GlyphTooltipEffect

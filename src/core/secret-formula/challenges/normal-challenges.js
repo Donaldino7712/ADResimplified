@@ -8,8 +8,7 @@ import { DC } from "../../constants";
 export const normalChallenges = [
   {
     id: 1,
-    legacyId: 1,
-    preSimpId: 1,
+    // preSimpId: 1,
     isQuickResettable: false,
     description() {
       return PlayerProgress.eternityUnlocked()
@@ -24,8 +23,7 @@ export const normalChallenges = [
   },
   {
     id: 2,
-    legacyId: 3,
-    preSimpId: 3,
+    // preSimpId: 3,
     isQuickResettable: false,
     description:
     `the 1st Antimatter Dimension is heavily weakened, but gets an uncapped exponentially increasing multiplier.
@@ -38,8 +36,7 @@ export const normalChallenges = [
   },
   {
     id: 3,
-    legacyId: 6,
-    preSimpId: 5,
+    // preSimpId: 5,
     isQuickResettable: false,
     description:
       () => `the Tickspeed purchase multiplier starts at ${formatX(1.080, 0, 3)} instead of ${formatX(1.1245, 0, 3)}.`,
@@ -52,8 +49,7 @@ export const normalChallenges = [
   },
   {
     id: 4,
-    legacyId: 10,
-    preSimpId: 6,
+    // preSimpId: 6,
     isQuickResettable: false,
     description: () => `upgrading each Antimatter Dimension costs the Antimatter Dimension ${formatInt(2)} tiers ` +
       "below it instead of antimatter. Antimatter Dimension prices are modified.",
@@ -66,8 +62,7 @@ export const normalChallenges = [
   },
   {
     id: 5,
-    legacyId: 9,
-    preSimpId: 7,
+    // preSimpId: 7,
     isQuickResettable: false,
     description: () =>
       `the multiplier from buying ${formatInt(10)} Antimatter Dimensions is reduced to ${formatX(1)}. This increases by
@@ -81,36 +76,33 @@ export const normalChallenges = [
   },
   {
     id: 6,
-    legacyId: 4,
-    preSimpId: 8,
+    // preSimpId: 8,
     isQuickResettable: false,
     description: `Dimension Boosts provide no multiplier and Antimatter Galaxies cannot be bought. Dimensional
       Sacrifice resets antimatter and all Antimatter Dimensions, but also gives a significantly stronger multiplier.`,
     name: "Automated Dimension Boosts",
     reward: "Dimension Boosts Autobuyer",
-    lockedAt: DC.D16,
+    lockedAt: DC.E1,
   },
   {
     id: 7,
-    legacyId: 12,
-    preSimpId: 10,
+    // preSimpId: 10,
     isQuickResettable: false,
     description: () => `there are only ${formatInt(6)} Antimatter Dimensions. Dimension Boost ` +
       "and Antimatter Galaxy costs are modified.",
     name: "Automated Antimatter Galaxies",
     reward: "Antimatter Galaxies Autobuyer",
-    lockedAt: DC.D16,
+    lockedAt: DC.E1,
   },
   {
     id: 8,
-    legacyId: 7,
-    preSimpId: 12,
+    // preSimpId: 12,
     isQuickResettable: false,
     description: () => `each Antimatter Dimension produces the Dimension ${formatInt(2)} tiers below it
       instead of ${formatInt(1)}. Both 1st and 2nd Dimensions produce antimatter.
       The 2nd, 4th, and 6th Dimensions are made stronger to compensate.`,
     name: "Automated Big Crunches",
     reward: "Big Crunches Autobuyer",
-    lockedAt: DC.D16,
+    lockedAt: DC.E1,
   }
 ];

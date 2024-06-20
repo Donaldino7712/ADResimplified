@@ -27,10 +27,6 @@ export default {
       return "No Machines gained";
     },
     formatMachineStats() {
-      // TODO:real
-      // if (!PlayerProgress.realityUnlocked() && this.nextMachineEP.gt("1e8000")) {
-      //   return `(Capped this Reality!)`;
-      // }
       if (this.machinesGained.gt(0) && this.machinesGained.lt(100)) {
         return `(Next at ${format(this.nextMachineEP, 2)} EP)`;
       }
@@ -94,7 +90,7 @@ export default {
       this.glyphLevel = gainedGlyphLevel().actualLevel;
       this.nextGlyphPercent = this.percentToNextGlyphLevelText();
       this.nextMachineEP = EPforRM(this.machinesGained.plus(1));
-      this.ppGained = multiplier;
+      this.ppGained = multiplier * realityAndPPMultiplier();
       this.shardsGained = Effarig.shardsGained * multiplier;
       this.currentShardsRate = (this.shardsGained / Time.thisRealityRealTime.totalMinutes);
       this.bestShardRate = player.records.thisReality.bestRSmin * multiplier;

@@ -26,9 +26,6 @@ export default {
         ANY other Glyph${this.hasPerkShop ? " (includes Music Glyphs)" : ""}`;
     },
     deleteRejectedTooltip() {
-      const negativeWarning = AutoGlyphProcessor.hasNegativeEffectScore()
-        ? " You also have some negative Effect Filter scores; this may remove some Glyphs you normally want to keep!"
-        : "";
       return this.removeCount === 0
         ? `This will not remove any Glyphs, adjust your Filter settings to remove some.`
         : `This will remove ${quantifyInt("Glyph", this.removeCount)}!${negativeWarning}`;

@@ -59,7 +59,8 @@ export const glyphTypes = {
     isUnlocked: () => false,
     canCustomize: () => player.reality.glyphs.createdRealityGlyph,
     // Refining a reality glyph is pretty wasteful anyway, but might as well have this here
-    alchemyResource: ALCHEMY_RESOURCE.REALITY
+    alchemyResource: ALCHEMY_RESOURCE.REALITY,
+    hasRarity: true
   },
   cursed: {
     id: "cursed",

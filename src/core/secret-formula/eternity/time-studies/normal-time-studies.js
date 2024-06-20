@@ -131,8 +131,13 @@ export const normalTimeStudies = [
     cost: 3,
     requirement: [51],
     reqType: TS_REQUIREMENT_TYPE.AT_LEAST_ONE,
-    description: () => `nothing currently (saul (or anyone else) please give me ideas)`,
-    effect: 15
+    description: () => `Multiplier to all Dimensions
+      (Antimatter get ${formatX(1e280)}, Infinity get ${formatX(1e5)}, Time get ${formatX(50)})`,
+    effects: {
+      antimatter: DC.E280,
+      infinity: DC.E5,
+      time: 50
+    }
   },
   {
     id: 62,
@@ -440,7 +445,7 @@ export const normalTimeStudies = [
   {
     id: 191,
     cost: 400,
-    requirement: [181, () => EternityChallenge(10).completions > 0],
+    requirement: [181, () => EternityChallenge(10).completions > 0 || Perk.studyECRequirement.canBeApplied],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     description: () => `After Eternity you permanently keep ${formatPercents(0.05)}
     of your Infinities as Banked Infinities`,
@@ -449,7 +454,8 @@ export const normalTimeStudies = [
   {
     id: 192,
     cost: 730,
-    requirement: [181, () => EternityChallenge(10).completions > 0, () => !Enslaved.isRunning],
+    requirement: [181, () => EternityChallenge(10).completions > 0 || Perk.studyECRequirement.canBeApplied,
+      () => !Enslaved.isRunning],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     description: () => (Enslaved.isRunning
       ? "There is not enough space in this Reality"
@@ -458,7 +464,7 @@ export const normalTimeStudies = [
   {
     id: 193,
     cost: 300,
-    requirement: [181, () => EternityChallenge(10).completions > 0],
+    requirement: [181, () => EternityChallenge(10).completions > 0 || Perk.studyECRequirement.canBeApplied],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     description: "Antimatter Dimension multiplier based on Eternities",
     effect: () => (DC.E13000.pow(Currency.eternities.value.div(1e6).clampMax(1))),

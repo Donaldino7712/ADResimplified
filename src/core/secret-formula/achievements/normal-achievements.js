@@ -31,7 +31,7 @@ export const normalAchievements = [
     checkRequirement: () => AntimatterDimension(4).continuumAmount > 0,
     checkEvent: GAME_EVENT.GAME_TICK_BEFORE,
     reward: "Antimatter Dimensions gain a multiplier based on current antimatter.",
-    effect: () => Math.max(Currency.antimatter.value.ln() ** 1.1, 1),
+    effect: () => Math.max(Currency.antimatter.value.ln() ** 0.8, 1),
     formatEffect: value => `${formatX(value, 2, 2)}`
   },
   {

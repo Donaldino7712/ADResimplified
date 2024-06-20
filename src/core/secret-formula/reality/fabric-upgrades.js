@@ -158,43 +158,27 @@ export const fabricUpgrades = [
     formatEffect: value => formatX(value, 2, 2)
   }),
   {
-    name: "Fabric Upgrade 13",
+    name: "Systemic Selection",
     id: 13,
-    cost: 1e6,
+    cost: 5e4,
     description: "Gain another Glyph slot",
     effect: 1,
     formatEffect: value => `+${format(value, 2, 3)}`
   },
   {
-    name: "Fabric Upgrade 14",
+    name: "Deterministic Decisions (NIY)",
     id: 14,
     cost: 1e300,
-    description: "TBD",
-    effect: () => {
-      let e = Currency.realityFabric.value.sqrt();
-      for (let i = 1; e.gte(i * 500); i++) {
-        e = e.sub(i * 500);
-        e = e.sqrt();
-        e = e.add(i * 500);
-      }
-      return e.toNumber();
-    },
-    formatEffect: value => `+${format(value, 2, 2)}`
+    description: "On Reality, gain one of all basic glyphs, at the same level and rarity as that Reality"
   },
   {
     name: "Fabric Upgrade 15",
     id: 15,
-    cost: 1e300,
-    description: "TBD",
-    effect: () => {
-      let e = Currency.realityFabric.value.clampMin(1).ln();
-      if (e >= 25) e = 25 + Math.cbrt(e - 25);
-      return e;
-    },
-    formatEffect: value => `+${format(value, 2, 2)}%`
+    cost: 1e200,
+    description: "You can pick a Reality Glyph with reduced level on Reality if you have unlocked Reality Glyphs."
   },
   rebuyable({
-    name: "Fabric Upgrade 16",
+    name: "Fabric Upgrade 16 (NIY)",
     id: 16,
     initialCost: 1e300,
     costMult: 1e3,
