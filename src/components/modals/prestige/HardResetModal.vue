@@ -17,9 +17,6 @@ export default {
     },
     hasExtraNG() {
       return player.records.fullGameCompletions > 0;
-    },
-    hasSpeedrun() {
-      return player.speedrun.isUnlocked;
     }
   },
   destroyed() {
@@ -53,10 +50,6 @@ export default {
         <span v-if="hasExtraNG">
           <br>
           This will also remove any Glyph cosmetics you have unlocked from completing the game!
-        </span>
-        <span v-if="hasSpeedrun">
-          <br>
-          You will lose the ability to do a Speedrun. To restart your run, use the "Start Speedrun" button instead.
         </span>
       </div>
     </div>

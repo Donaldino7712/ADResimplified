@@ -70,10 +70,6 @@ export default {
     <h3 v-else>
       You have unlocked all Glyph cosmetic sets!
     </h3>
-    <br>
-    <h3>
-      You can also import "speedrun" to start the game again with additional tracking for speedrunning purposes.
-    </h3>
   </div>
 </template>
 

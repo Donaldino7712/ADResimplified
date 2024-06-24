@@ -162,8 +162,7 @@ export const fabricUpgrades = [
     id: 13,
     cost: 5e4,
     description: "Gain another Glyph slot",
-    effect: 1,
-    formatEffect: value => `+${format(value, 2, 3)}`
+    effect: 1
   },
   {
     name: "Deterministic Decisions (NIY)",

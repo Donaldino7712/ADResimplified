@@ -220,6 +220,9 @@ const EP_BUTTON_DISPLAY_TYPE = {
         <br>
         (This challenge is already fully completed)
       </template>
+      <template v-else-if="!canEternity">
+        I need to become Eternal
+      </template>
       <template v-else>
         <br>
         {{ quantifyInt("completion", gainedCompletions) }} on Eternity

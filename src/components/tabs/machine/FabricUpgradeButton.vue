@@ -1,18 +1,18 @@
 <script>
 import CostDisplay from "@/components/CostDisplay";
+import CustomizeableTooltip from "@/components/CustomizeableTooltip";
 import DescriptionDisplay from "@/components/DescriptionDisplay";
 import EffectDisplay from "@/components/EffectDisplay";
 import HintText from "@/components/HintText";
-import PrimaryToggleButton from "@/components/PrimaryToggleButton";
 
 export default {
-  name: "MachineUpgradeButton",
+  name: "FabricUpgradeButton",
   components: {
-    PrimaryToggleButton,
     DescriptionDisplay,
     EffectDisplay,
     CostDisplay,
-    HintText
+    HintText,
+    CustomizeableTooltip
   },
   props: {
     upgrade: {
@@ -27,10 +27,9 @@ export default {
       isRebuyable: false,
       isBought: false,
       isPossible: false,
-      isAutoUnlocked: false,
-      isAutobuyerOn: false,
-      canBeLocked: false,
-      hasRequirementLock: false,
+      timeEstimate: "",
+      isHovering: false,
+      hideEstimate: false,
     };
   },
   computed: {
@@ -51,16 +50,8 @@ export default {
         description: this.config.requirement
       };
     },
-    canLock() {
-      return this.config.canLock && !(this.isAvailableForPurchase || this.isBought);
-    },
     isUseless() {
       return Pelle.disabledRUPGs.includes(this.upgrade.id) && Pelle.isDoomed;
-    }
-  },
-  watch: {
-    isAutobuyerOn(newValue) {
-      Autobuyer.realityUpgrade(this.upgrade.id).isActive = newValue;
     }
   },
   methods: {
@@ -71,15 +62,8 @@ export default {
       this.isRebuyable = upgrade.isRebuyable;
       this.isBought = upgrade.isBought || upgrade.isCapped;
       this.isPossible = upgrade.isPossible;
-      this.isAutoUnlocked = Ra.unlocks.instantECAndRealityUpgradeAutobuyers.canBeApplied;
-      this.canBeLocked = upgrade.config.canLock && !this.isAvailableForPurchase;
-      this.hasRequirementLock = upgrade.hasPlayerLock;
-      // eslint-disable-next-line capitalized-comments
-      // if (this.isRebuyable) this.isAutobuyerOn = Autobuyer.realityUpgrade(upgrade.id).isActive;
-    },
-    toggleLock(upgrade) {
-      if (this.isRebuyable) return;
-      upgrade.toggleMechanicLock();
+      this.hideEstimate = this.canBeBought || this.isBought || this.isUseless;
+      this.timeEstimate = this.hideEstimate ? null : FabricHandler.upgradeTimeEstimate(this.upgrade.cost);
     }
   }
 };
@@ -92,7 +76,19 @@ export default {
       class="l-reality-upgrade-btn c-reality-upgrade-btn"
       @click.shift.exact="toggleLock(upgrade)"
       @click.exact="upgrade.purchase()"
+      @mouseover="isHovering = true"
+      @mouseleave="isHovering = false"
     >
+      <CustomizeableTooltip
+        v-if="timeEstimate"
+        :show="isHovering && !hideEstimate"
+        left="50%"
+        top="0"
+      >
+        <template #tooltipContent>
+          {{ timeEstimate }}
+        </template>
+      </CustomizeableTooltip>
       <HintText
         type="realityUpgrades"
         class="l-hint-text--reality-upgrade c-hint-text--reality-upgrade"
@@ -113,25 +109,6 @@ export default {
         />
       </span>
     </button>
-    <div
-      v-if="canBeLocked"
-      class="o-requirement-lock"
-    >
-      <i
-        v-if="hasRequirementLock"
-        class="fas fa-lock"
-      />
-      <i
-        v-else-if="canLock"
-        class="fas fa-lock-open"
-      />
-    </div>
-    <PrimaryToggleButton
-      v-if="isRebuyable && isAutoUnlocked"
-      v-model="isAutobuyerOn"
-      label="Auto:"
-      class="l--spoon-btn-group__little-spoon-reality-btn o-primary-btn--reality-upgrade-toggle"
-    />
   </div>
 </template>
 

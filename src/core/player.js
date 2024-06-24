@@ -316,7 +316,6 @@ window.player = {
     },
   },
   speedrun: {
-    isUnlocked: false,
     isActive: false,
     isSegmented: false,
     usedSTD: false,
@@ -327,7 +326,7 @@ window.player = {
     name: "",
     offlineTimeUsed: 0,
     // One spot for every entry in GameDatabase.speedrunMilestones (note: 1-indexed)
-    records: Array.repeat(0, 26),
+    records: Array.repeat(0, 25),
     achievementTimes: {},
     seedSelection: SPEEDRUN_SEED_STATE.FIXED,
     initialSeed: 0,

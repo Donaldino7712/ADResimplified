@@ -98,9 +98,6 @@ export default {
       const currSets = player.reality.glyphs.cosmetics.unlockedFromNG;
       const importedSets = this.player.reality?.glyphs.cosmetics?.unlockedFromNG ?? [];
       return currSets.filter(set => !importedSets.includes(set)).length > 0;
-    },
-    willLoseSpeedrun() {
-      return player.speedrun.isUnlocked && !this.player.speedrun?.isUnlocked;
     }
   },
   mounted() {
@@ -207,10 +204,6 @@ export default {
           Glyph cosmetic sets from completing the game are tied to your save.
           <br>
           Importing this save will cause you to lose some sets.
-        </div>
-        <div v-if="willLoseSpeedrun">
-          <br>
-          You will lose the ability to do a Speedrun, as this save does not have it unlocked.
         </div>
       </div>
     </div>

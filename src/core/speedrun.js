@@ -3,14 +3,6 @@ import { GameMechanicState } from "./game-mechanics";
 
 export const Speedrun = {
   officialFixedSeed: 69420,
-  unlock() {
-    if (player.speedrun.isUnlocked) return;
-    Modal.message.show(`You have unlocked Speedrun Mode! This allows you to start a new save file with some slight
-      changes which can be helpful if you're trying to complete the game as quickly as possible. The option to
-      start a Speedrun Save is now available in the Options tab, under Saving. Choosing to start a Speedrun Save
-      will provide you with another modal with more in-depth information.`, {}, 3);
-    player.speedrun.isUnlocked = true;
-  },
   // Used to block the seed-changing modal from opening (other functions assume this is checked beforehand)
   canModifySeed() {
     return player.realities < 1;
@@ -66,7 +58,6 @@ export const Speedrun = {
     // Carry all relevant post-completion variables over too
     NG.restartWithCarryover();
 
-    player.speedrun.isUnlocked = true;
     player.speedrun.isActive = true;
     this.modifySeed(SPEEDRUN_SEED_STATE.FIXED);
     player.speedrun.name = name;

@@ -137,7 +137,7 @@ export function totalReplicantiSpeedMult(overCap) {
   totalMult = totalMult.times(ShopPurchase.replicantiPurchases.currentMult);
   if (Pelle.isDisabled("replicantiIntervalMult")) return totalMult;
 
-  const preCelestialEffects = Effects.product(
+  totalMult.timesEffectsOf(
     TimeStudy(22),
     TimeStudy(62),
     TimeStudy(213),
@@ -145,7 +145,6 @@ export function totalReplicantiSpeedMult(overCap) {
     RealityUpgrade(6),
     RealityUpgrade(23),
   );
-  totalMult = totalMult.times(preCelestialEffects);
   if (TimeStudy(132).isBought) {
     totalMult = totalMult.times(Perk.studyPassive.isBought ? 3 : 1.5);
   }

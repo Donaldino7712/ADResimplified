@@ -62,7 +62,6 @@ export const NG = {
     const fullTimePlayed = player.records.previousRunRealTime + player.records.realTimePlayed;
     const glyphCosmetics = JSON.stringify(player.reality.glyphs.cosmetics);
     const speedrunRecords = JSON.stringify(player.speedrun.previousRuns);
-    const hasSpeedrun = player.speedrun.isUnlocked;
     const presets = JSON.stringify(player.timestudy.presets);
     const companions = JSON.stringify(Glyphs.allGlyphs.filter(g => g.type === "companion"));
     Modal.hideAll();
@@ -83,7 +82,6 @@ export const NG = {
     ui.view.news = player.options.news.enabled;
     player.reality.glyphs.cosmetics = JSON.parse(glyphCosmetics);
     player.speedrun.previousRuns = JSON.parse(speedrunRecords);
-    player.speedrun.isUnlocked = hasSpeedrun;
     player.timestudy.presets = JSON.parse(presets);
     JSON.parse(companions).forEach(g => {
       Glyphs.addToInventory(g);

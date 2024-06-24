@@ -2,8 +2,6 @@ import { sha512_256 } from "js-sha512";
 
 import { ElectronRuntime } from "@/steam";
 
-import { DEV } from "@/env";
-
 import FullScreenAnimationHandler from "./full-screen-animation-handler";
 
 export class GameOptions {
@@ -56,7 +54,6 @@ const secretImports = [
   "80b7fdc794f5dfc944da6a445a3f21a2d0f7c974d044f2ea25713037e96af9e3",
   "857876556a230da15fe1bb6f410ca8dbc9274de47c1a847c2281a7103dd2c274",
   "be88e62eb68758cd7381104977c0d3d5d81e19c72a848f0d79d1963c1e39221f",
-  "c784c9c0a82b5f3c13884842fa6e6a8f5aed994ef401e6476c30b1adfe439b22",
 ];
 
 function secretImportIndex(data) {
@@ -81,10 +78,6 @@ export function tryImportSecret(data) {
       return true;
     case 2:
       SecretAchievement(37).unlock();
-      return true;
-    case 3:
-      if (player.records.fullGameCompletions > 0 || DEV) Speedrun.unlock();
-      else GameUI.notify.error("Complete the game at least once first!", 15000);
       return true;
     default:
       return false;

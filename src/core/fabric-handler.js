@@ -27,5 +27,13 @@ export const FabricHandler = {
   tick(diff) {
     if (!this.isUnlocked) return;
     Currency.realityFabric.add(this.productionForDiff(diff));
+  },
+
+  upgradeTimeEstimate(goal) {
+    const RFGain = this.productionPerRealSecond;
+    const currentRF = Currency.realityFabric.value;
+    if (RFGain.eq(0)) return null;
+    return TimeSpan.fromSeconds(Decimal.sub(goal, currentRF)
+      .div(RFGain).toNumber()).toTimeEstimate();
   }
 };

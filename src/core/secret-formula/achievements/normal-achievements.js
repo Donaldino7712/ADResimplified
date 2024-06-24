@@ -282,8 +282,8 @@ export const normalAchievements = [
   {
     id: 47,
     name: "Daredevil",
-    get description() { return `Complete ${formatInt(2)} Normal Challenges.`; },
-    checkRequirement: () => NormalChallenges.all.countWhere(c => c.isCompleted) >= 2,
+    get description() { return `Complete ${formatInt(3)} Normal Challenges.`; },
+    checkRequirement: () => NormalChallenges.all.countWhere(c => c.isCompleted) >= 3,
     checkEvent: [GAME_EVENT.BIG_CRUNCH_AFTER, GAME_EVENT.REALITY_RESET_AFTER, GAME_EVENT.REALITY_UPGRADE_TEN_BOUGHT],
   },
   {
@@ -670,7 +670,6 @@ export const normalAchievements = [
   },
   {
     id: 96,
-    displayId: "hear me out",
     name: "Time is relative",
     description: "Go Eternal.",
     checkRequirement: () => true,
@@ -1089,7 +1088,7 @@ export const normalAchievements = [
     get description() { return `Have at least ${format(10)} Perks bought.`; },
     checkRequirement: () => player.reality.perks.size >= 10,
     checkEvent: GAME_EVENT.PERK_BOUGHT,
-    get reward() { return `+${formatPercents(0.05)} Glyph rarity.`; },
+    get reward() { return `+${formatPercents(0.05)} Glyph rarity and unlock The Machine.`; },
     effect: 5
   },
   {
@@ -1133,8 +1132,8 @@ export const normalAchievements = [
     id: 153,
     name: "More like \"reallydoesn'tmatter\"",
     description: "Reality without producing antimatter.",
-    checkRequirement: () => true,
-    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
+    checkRequirement: () => player.requirementChecks.reality.noAM,
+    checkEvent: GAME_EVENT.REALITY_RESET_BEFORE,
   },
   {
     id: 154,

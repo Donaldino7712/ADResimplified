@@ -12,7 +12,7 @@ const rebuyable = props => {
     props.initialCost * props.costMult
   );
   const { effect } = props;
-  props.effect = () => Math.pow(
+  props.effect = () => Decimal.pow(
     effect + ImaginaryUpgrade(props.id).effectOrDefault(0),
     player.reality.rebuyables[props.id] * getAdjustedGlyphEffect("realityrow1pow"));
   props.description = () => props.textTemplate.replace("{value}",
@@ -223,15 +223,9 @@ export const realityUpgrades = [
     name: "Disparity of Rarity",
     id: 16,
     cost: 1500,
-    requirement: () => `Reality with ${formatInt(4)} Glyphs equipped of uncommon or better rarity
-      (${formatInt(Glyphs.activeWithoutCompanion.countWhere(g => g && g.strength >= 1.5))} equipped)`,
-    hasFailed: () => {
-      const availableGlyphs = Glyphs.inventory.countWhere(g => g && g.strength >= 1.5);
-      const equipped = Glyphs.activeWithoutCompanion.countWhere(g => g.strength >= 1.5);
-      const availableSlots = Glyphs.activeSlotCount - Glyphs.activeList.length;
-      return equipped + Math.min(availableGlyphs, availableSlots) < 4;
-    },
-    checkRequirement: () => Glyphs.activeWithoutCompanion.countWhere(g => g.strength >= 1.5) === 4,
+    requirement: () => `Reach ${format(DC.E10500)} Eternity Points without equipping Time or Power Glyphs. (NIY)`,
+    hasFailed: () => false,
+    checkRequirement: () => true,
     checkEvent: GAME_EVENT.REALITY_RESET_BEFORE,
     description: () => `Multiply Glyph rarity by ${formatX(1.5, 1, 1)}`,
     effect: 1.5,
@@ -241,19 +235,17 @@ export const realityUpgrades = [
     name: "Duplicity of Potency",
     id: 17,
     cost: 1500,
-    requirement: () => `Reality with ${formatInt(4)} Glyphs equipped, each having at least ${formatInt(2)} effects
-      (${formatInt(Glyphs.activeWithoutCompanion.countWhere(g => g && countValuesFromBitmask(g.effects) >= 2))}
-      equipped)`,
+    requirement: () => `Reality with Royal Flush equipped (one of each basic Glyph types)`,
     hasFailed: () => {
-      const availableGlyphs = Glyphs.inventory.countWhere(g => g && countValuesFromBitmask(g.effects) >= 2);
-      const equipped = Glyphs.activeWithoutCompanion.countWhere(g => countValuesFromBitmask(g.effects) >= 2);
+      const notEquippedTypes = BASIC_GLYPH_TYPES.filter(type => !Glyphs.activeList.some(g => g.type === type));
+      const notEquipped = Glyphs.inventory.countWhere(g => g && notEquippedTypes.includes(g.type));
+      const equipped = BASIC_GLYPH_TYPES.countWhere(type => Glyphs.activeList.some(g => g.type === type));
       const availableSlots = Glyphs.activeSlotCount - Glyphs.activeList.length;
-      return equipped + Math.min(availableGlyphs, availableSlots) < 4;
+      return equipped + Math.min(notEquipped, availableSlots) < 5;
     },
-    checkRequirement: () => Glyphs.activeWithoutCompanion.countWhere(g => countValuesFromBitmask(g.effects) >= 2) === 4,
+    checkRequirement: () => BASIC_GLYPH_TYPES.every(type => Glyphs.activeList.some(g => g.type === type)),
     checkEvent: GAME_EVENT.REALITY_RESET_BEFORE,
     description: () => `Unlock another effect on Glyphs`,
-    effect: 0.5,
     formatCost: value => format(value, 1, 0)
   },
   {
