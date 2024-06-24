@@ -137,7 +137,7 @@ export function totalReplicantiSpeedMult(overCap) {
   totalMult = totalMult.times(ShopPurchase.replicantiPurchases.currentMult);
   if (Pelle.isDisabled("replicantiIntervalMult")) return totalMult;
 
-  totalMult.timesEffectsOf(
+  totalMult = totalMult.timesEffectsOf(
     TimeStudy(22),
     TimeStudy(62),
     TimeStudy(213),
