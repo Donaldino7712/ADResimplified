@@ -605,7 +605,7 @@ export const glyphEffects = {
     singleDesc: "Increase the effective level of equipped basic Glyphs by {value}",
     totalDesc: "Equipped basic Glyph level +{value}",
     shortDesc: "Basic Glyph Level +{value}",
-    effect: (level, strength) => Math.floor(Math.sqrt(level * 90 * Math.sqrt(strength / 1.5))),
+    effect: (level, strength) => Math.floor(Math.sqrt(level * 90 * Math.sqrt(strength / 3.5))),
     formatEffect: x => formatInt(x),
     combine: GlyphCombiner.add,
   },
@@ -617,7 +617,7 @@ export const glyphEffects = {
     singleDesc: "All Galaxies are {value} stronger",
     totalDesc: "All Galaxy strength +{value}",
     shortDesc: "Galaxy Strength +{value}",
-    effect: (level, strength) => 1 + Math.pow(level * Math.sqrt(strength / 1.5) / 100000, 0.5),
+    effect: (level, strength) => 1 + Math.pow(level * Math.sqrt(strength / 3.5) / 100000, 0.5),
     formatEffect: x => formatPercents(x - 1, 2),
     combine: GlyphCombiner.multiply,
   },
@@ -630,7 +630,7 @@ export const glyphEffects = {
     totalDesc: "Reality Upgrade Amplifier multiplier ^{value}",
     shortDesc: "Amplifier Multiplier ^{value}",
     effect: (level, strength) => {
-      const a = 1 + level * Math.sqrt(strength / 1.5) / 125000;
+      const a = 1 + level * Math.sqrt(strength / 3.5) / 125000;
       if (a > 1.2) {
         return 1.2 + (a - 1.2) ** 0.2;
       }
@@ -650,10 +650,13 @@ export const glyphEffects = {
       ➜ ^(${format(1.3, 1, 1)} + {value})`,
     genericDesc: "Dilated Time factor for Glyph level",
     shortDesc: "DT pow. for level +{value}",
-    effect: (level, strength) => Math.pow(level * Math.sqrt(strength / 1.5) / 25000, 2) /
-      Math.sqrt(level * Math.sqrt(strength / 1.5) / 250),
+    effect: (level, strength) => Math.pow(level * Math.sqrt(strength / 3.5) / 25000, 2) /
+      Math.sqrt(level * Math.sqrt(strength / 3.5) / 250),
     formatEffect: x => format(x, 2, 2),
-    combine: GlyphCombiner.add,
+    combine: effects => {
+      const x = effects.reduce(Number.sumReducer, 1);
+      return x > 0.1 ? (x - 0.1) / 15 + 0.1 : x;
+    },
   },
   companiondescription: {
     id: "companiondescription",

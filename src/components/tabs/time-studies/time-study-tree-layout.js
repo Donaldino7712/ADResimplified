@@ -224,7 +224,7 @@ export const STUDY_TREE_LAYOUT_TYPE = {
     const alt62 = Perk.bypassEC5Lock.isBought;
     const alt181 = Perk.bypassEC1Lock.isBought && Perk.bypassEC2Lock.isBought && Perk.bypassEC3Lock.isBought;
     if (Ra.canBuyTriad) return this.ALTERNATIVE_TRIAD_STUDIES;
-    if (Perk.studyECRequirement.canBeApplied) return this.ALTERNATIVE_EC10;
+    if (Perk.bypassEC10Lock.canBeApplied) return this.ALTERNATIVE_EC10;
     if (alt62 && alt181) return this.ALTERNATIVE_62_181;
     if (alt62) return this.ALTERNATIVE_62;
     if (alt181) return this.ALTERNATIVE_181;

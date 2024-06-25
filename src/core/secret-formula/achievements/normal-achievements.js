@@ -1088,7 +1088,7 @@ export const normalAchievements = [
     get description() { return `Have at least ${format(10)} Perks bought.`; },
     checkRequirement: () => player.reality.perks.size >= 10,
     checkEvent: GAME_EVENT.PERK_BOUGHT,
-    get reward() { return `+${formatPercents(0.05)} Glyph rarity and unlock The Machine.`; },
+    get reward() { return `+${formatPercents(0.05)} Glyph rarity.`; },
     effect: 5
   },
   {

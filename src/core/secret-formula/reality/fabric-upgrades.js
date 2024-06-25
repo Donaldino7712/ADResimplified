@@ -11,11 +11,10 @@ const rebuyable = props => {
     1e3,
     props.initialCost * props.costMult
   );
-  if (!props.maxUpgrades) props.maxUpgrades = Infinity;
-  props.isRebuyable = true;
+  props.maxUpgrades = props.maxUpgrades ?? Number.MAX_VALUE;
   const { effect } = props;
   if (props.effect) props.effect = purchases => effect(purchases ?? player.machine.rebuyables[props.id]);
-  if (!props.formatCost) props.formatCost = value => format(value, 2, 0);
+  props.formatCost = value => format(value, 2, 0);
   return props;
 };
 

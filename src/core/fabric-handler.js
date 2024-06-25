@@ -21,7 +21,7 @@ export const FabricHandler = {
   },
 
   get isUnlocked() {
-    return Achievement(146).isUnlocked;
+    return Perk.machineUnlock.isBought;
   },
 
   tick(diff) {

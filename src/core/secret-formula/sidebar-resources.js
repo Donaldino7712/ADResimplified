@@ -134,7 +134,7 @@ export const sidebarResources = [
   {
     id: 17,
     optionName: "Reality Fabric",
-    isAvailable: () => PlayerProgress.realityUnlocked(),
+    isAvailable: () => FabricHandler.isUnlocked,
     value: () => Currency.realityFabric,
     formatValue: x => format(x, 2, 2),
     formatClass: "o-sidebar-currency--reality"

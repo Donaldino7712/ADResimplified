@@ -312,14 +312,14 @@ export const perks = {
     effect: 15,
     layoutPosList: [80248, 79401, 81001, 79802, 78994, 56239],
   },
-  studyECRequirement: {
+  bypassEC10Lock: {
     id: 72,
     label: "EC10R",
     family: PERK_FAMILY.ETERNITY,
     description: "Remove the Eternity Challenge 10 requirement from all studies.",
     layoutPosList: [62714, 78600, 81398, 80604, 78600, 40599],
   },
-  studyECBulk: {
+  machineUnlock: {
     id: 73,
     label: "RMCH",
     family: PERK_FAMILY.REALITY,
@@ -539,7 +539,7 @@ export const perkConnections = (function() {
     [p.autounlockDilation3, p.autobuyerFasterDilation, p.autounlockTD],
     [p.autounlockTD, p.autounlockReality],
     [p.bypassTGReset, p.autobuyerDilation, p.retroactiveTP1],
-    [p.bypassEC1Lock, p.bypassEC2Lock, p.bypassEC3Lock, p.studyECRequirement],
+    [p.bypassEC1Lock, p.bypassEC2Lock, p.bypassEC3Lock, p.bypassEC10Lock],
     [p.bypassEC2Lock, p.studyActiveEP, p.bypassEC1Lock],
     [p.bypassEC3Lock, p.studyIdleEP, p.bypassEC1Lock],
     [p.bypassEC5Lock, p.studyActiveEP, p.studyIdleEP, p.studyPassive],
@@ -548,7 +548,7 @@ export const perkConnections = (function() {
     [p.autocompleteEC2, p.autocompleteEC3],
     [p.studyActiveEP, p.bypassEC2Lock, p.ttBuySingle],
     [p.studyIdleEP, p.bypassEC3Lock, p.autocompleteEC1],
-    [p.studyECRequirement, p.studyECBulk],
+    [p.bypassEC10Lock, p.machineUnlock],
     [p.retroactiveTP1, p.bypassTGReset, p.startTP, p.retroactiveTP2],
     [p.retroactiveTP2, p.retroactiveTP3],
     [p.retroactiveTP3, p.retroactiveTP4],

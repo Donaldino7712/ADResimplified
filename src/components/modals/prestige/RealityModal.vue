@@ -26,6 +26,7 @@ export default {
       shardsGained: 0,
       effarigUnlocked: false,
       willAutoPurge: false,
+      gainedRealities: 0,
     };
   },
   computed: {
@@ -49,8 +50,8 @@ export default {
     },
     gained() {
       const gainedResources = [];
-      gainedResources.push(`${quantifyInt("Reality", this.simRealities)}`);
-      gainedResources.push(`${quantifyInt("Perk Point", this.simRealities)}`);
+      gainedResources.push(`${quantifyInt("Reality", this.gainedRealities)}`);
+      gainedResources.push(`${quantifyInt("Perk Point", this.gainedRealities)}`);
       gainedResources.push(`${quantify("Reality Machine", this.realityMachines, 2)}`);
       if (this.effarigUnlocked) {
         gainedResources.push(`${quantify("Relic Shard", this.shardsGained, 2)}`);
@@ -82,6 +83,7 @@ export default {
       this.hasFilter = EffarigUnlock.glyphFilter.isUnlocked;
       this.level = gainedGlyphLevel().actualLevel;
       this.simRealities = 1 + simulatedRealityCount(false);
+      this.gainedRealities = this.simRealities * realityAndPPMultiplier();
       this.hasSpace = GameCache.glyphInventorySpace.value >= this.simRealities;
       const simRMGained = MachineHandler.gainedRealityMachines.times(this.simRealities);
       this.realityMachines.copyFrom(simRMGained.clampMax(MachineHandler.distanceToRMCap));
@@ -164,10 +166,9 @@ export default {
     </b>
     <div v-if="simRealities > 1">
       <br>
-      After choosing this Glyph the game will simulate the rest of your Realities,
+      After choosing this Glyph the game will simulate another {{ formatInt(simRealities - 1) }} Realities,
       <br>
-      automatically choosing another {{ quantifyInt("Glyph", simRealities - 1) }}
-      based on your Glyph filter settings.
+      automatically choosing Glyphs based on your Glyph filter settings.
     </div>
     <div v-if="willAutoPurge">
       <br>

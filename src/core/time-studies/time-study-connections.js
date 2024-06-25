@@ -112,13 +112,13 @@ TimeStudy.allConnections = (function() {
 
     [TS(181), EC(10)],
 
-    [EC(10), TS(191), () => Perk.studyECRequirement.canBeApplied],
-    [EC(10), TS(192), () => Perk.studyECRequirement.canBeApplied],
-    [EC(10), TS(193), () => Perk.studyECRequirement.canBeApplied],
+    [EC(10), TS(191), () => Perk.bypassEC10Lock.canBeApplied],
+    [EC(10), TS(192), () => Perk.bypassEC10Lock.canBeApplied],
+    [EC(10), TS(193), () => Perk.bypassEC10Lock.canBeApplied],
 
-    [TS(181), TS(191), () => !Perk.studyECRequirement.canBeApplied],
-    [TS(181), TS(192), () => !Perk.studyECRequirement.canBeApplied],
-    [TS(181), TS(193), () => !Perk.studyECRequirement.canBeApplied],
+    [TS(181), TS(191), () => !Perk.bypassEC10Lock.canBeApplied],
+    [TS(181), TS(192), () => !Perk.bypassEC10Lock.canBeApplied],
+    [TS(181), TS(193), () => !Perk.bypassEC10Lock.canBeApplied],
 
     [TS(192), TS(201)],
 

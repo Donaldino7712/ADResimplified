@@ -5,10 +5,6 @@ class FabricUpgradeState extends BitPurchasableMechanicState {
     return this.config.name;
   }
 
-  get shortDescription() {
-    return this.config.shortDescription ? this.config.shortDescription() : "";
-  }
-
   get currency() {
     return Currency.realityFabric;
   }
@@ -24,18 +20,9 @@ class FabricUpgradeState extends BitPurchasableMechanicState {
   set bits(value) {
     player.machine.upgradeBits = value;
   }
-
-  get isAvailableForPurchase() {
-    return true;
-  }
 }
 
 class RebuyableFabricUpgradeState extends RebuyableMechanicState {
-  constructor(config) {
-    delete config.isRebuyable;
-    super(config);
-  }
-
   get currency() {
     return Currency.realityFabric;
   }
@@ -55,7 +42,7 @@ class RebuyableFabricUpgradeState extends RebuyableMechanicState {
 
 FabricUpgradeState.index = mapGameData(
   GameDatabase.reality.fabricUpgrades,
-  config => (config.isRebuyable
+  config => (config.id % 4 === 0
     ? new RebuyableFabricUpgradeState(config)
     : new FabricUpgradeState(config))
 );
@@ -72,6 +59,7 @@ export const FabricUpgrades = {
    */
   all: FabricUpgradeState.index.compact(),
   get allBought() {
-    return (player.machine.upgradeBits >> 6) + 1 === 1 << (GameDatabase.reality.fabricUpgrades.length - 5);
+    // I am too stupid to write an actual formula, this works though
+    return player.machine.upgradeBits === 61166;
   }
 };

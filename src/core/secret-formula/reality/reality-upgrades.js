@@ -227,8 +227,8 @@ export const realityUpgrades = [
     hasFailed: () => false,
     checkRequirement: () => true,
     checkEvent: GAME_EVENT.REALITY_RESET_BEFORE,
-    description: () => `Multiply Glyph rarity by ${formatX(1.5, 1, 1)}`,
-    effect: 1.5,
+    description: () => `Multiply Glyph rarity by ${formatX(1.2, 1, 1)}`,
+    effect: 1.2,
     formatCost: value => format(value, 1, 0)
   },
   {
