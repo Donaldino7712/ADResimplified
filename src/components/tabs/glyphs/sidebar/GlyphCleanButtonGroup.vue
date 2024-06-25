@@ -28,7 +28,7 @@ export default {
     deleteRejectedTooltip() {
       return this.removeCount === 0
         ? `This will not remove any Glyphs, adjust your Filter settings to remove some.`
-        : `This will remove ${quantifyInt("Glyph", this.removeCount)}!${negativeWarning}`;
+        : `This will remove ${quantifyInt("Glyph", this.removeCount)}!`;
     }
   },
   methods: {
