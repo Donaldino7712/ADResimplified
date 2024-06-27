@@ -82,7 +82,7 @@ export function buyDilationUpgrade(id, bulk = 1) {
     player.dilation.rebuyables[id] += buying;
     if (id === 2) {
       // TODO:hevi
-      if (Pelle.isDoomed) Currency.dilatedTime.reset();
+      // if (Pelle.isDoomed) Currency.dilatedTime.reset();
       player.dilation.nextThreshold = DC.E3;
       player.dilation.baseTachyonGalaxies = 0;
       player.dilation.totalTachyonGalaxies = 0;
@@ -119,7 +119,7 @@ export function getTachyonGalaxyMult(thresholdUpgrade) {
 
 export function getDilationGainPerSecond() {
   if (Pelle.isDoomed) {
-    const tachyonEffect = Currency.tachyonParticles.value.pow(PelleRifts.paradox.milestones[1].effectOrDefault(1));
+    const tachyonEffect = Currency.tachyonParticles.value.pow(PelleRifts.paradox.milestones[0].effectOrDefault(1));
     return new Decimal(tachyonEffect)
       .timesEffectsOf(DilationUpgrade.dtGain, DilationUpgrade.dtGainPelle, DilationUpgrade.flatDilationMult)
       .times(ShopPurchase.dilatedTimePurchases.currentMult ** 0.5)

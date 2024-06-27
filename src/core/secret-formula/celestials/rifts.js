@@ -18,9 +18,9 @@ export const pelleRifts = {
       if (player.challenge.eternity.current !== 0) {
         const chall = EternityChallenge.current;
         const goal = chall.goalAtCompletions(chall.gainedCompletionStatus.totalCompletions);
-        return totalFill.plus(1).pow(0.1).min(goal.pow(0.15));
+        return totalFill.plus(1).pow(0.1).powEffectOf(PelleRifts.recursion.milestones[2]).min(goal.pow(0.15));
       }
-      return totalFill.plus(1).pow(0.33);
+      return totalFill.plus(1).pow(0.33).powEffectOf(PelleRifts.recursion.milestones[2]);
     },
     currency: () => Currency.infinityPoints,
     galaxyGeneratorThreshold: 1000,
@@ -173,7 +173,8 @@ export const pelleRifts = {
       {
         resource: "recursion",
         requirement: 1,
-        description: "Permanently unlock the Galaxy Generator",
+        description: () => `Improve the Infinity Point multiplier from ${wordShift.wordCycle(PelleRifts.vacuum.name)}`,
+        effect: 9
       },
     ],
     galaxyGeneratorText: "Creating more Galaxies is unsustainable, you must focus the $value to allow more"
@@ -186,15 +187,21 @@ export const pelleRifts = {
     baseEffect: x => `All Dimensions ${formatPow(x, 2, 3)}`,
     additionalEffects: () => [PelleRifts.paradox.milestones[2]],
     strike: () => PelleStrikes.dilation,
-    percentage: totalFill => totalFill.plus(1).log10() / 100,
-    percentageToFill: percentage => Decimal.pow10(percentage * 100).minus(1),
+    percentage: totalFill => totalFill.plus(1).log10() / 150,
+    percentageToFill: percentage => Decimal.pow10(percentage * 150).minus(1),
     effect: totalFill => new Decimal(1 + totalFill.plus(1).log10() * 0.004),
     currency: () => Currency.dilatedTime,
     galaxyGeneratorThreshold: 1e5,
     milestones: [
       {
         resource: "paradox",
-        requirement: 0.15,
+        requirement: 0.1,
+        description: () => `Dilated Time gain becomes Tachyon Particles ${formatPow(1.5, 1, 1)}`,
+        effect: 1.5
+      },
+      {
+        resource: "paradox",
+        requirement: 0.2,
         description: "Time Dimensions 5-8 are much cheaper, unlock more Dilation upgrades",
         // FIXME: Not a great solution
         onStateChange: () => {
@@ -204,12 +211,6 @@ export const pelleRifts = {
       {
         resource: "paradox",
         requirement: 0.25,
-        description: () => `Dilated Time gain becomes Tachyon Particles ${formatPow(1.4, 1, 1)}`,
-        effect: 1.4
-      },
-      {
-        resource: "paradox",
-        requirement: 0.5,
         description: "Dilation rebuyable purchase count improves Infinity Power conversion rate",
         effect: () => Math.min(
           1.075 ** (Object.values(player.dilation.rebuyables).sum() - 60),

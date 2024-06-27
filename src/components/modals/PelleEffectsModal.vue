@@ -13,6 +13,7 @@ export default {
       return [
         // Numerical nerfs and disabled boosts
         "Anything unlocked through a Pelle upgrade cannot be unlocked normally",
+        "All boosts to Continuum purchases are disabled",
         "All pre-Doomed IP and EP multipliers are disabled",
         "IP generation based on fastest infinity speed is disabled",
         "All pre-Doomed Replicanti speed multipliers are disabled",
@@ -24,9 +25,10 @@ export default {
         "All Infinity and Eternity multipliers and generation are disabled",
         "Black Holes are disabled",
         `Reality Upgrade "Temporal Transcendence" is disabled`,
+        "All Fabric Upgrades are disabled",
 
         // Initial QoL and automation
-        "All rewards which increase your starting resources except Achievement 21 are disabled",
+        "All rewards which increase your starting resources are disabled",
         "All rewards which prevent resources from being reset are disabled",
         "Perk rewards which reduce unlock costs have been disabled, excluding the ECR group",
         "Automatic Infinity and Eternity Challenges are disabled",
@@ -35,6 +37,7 @@ export default {
         "All Automation related to Time Dilation or later is disabled",
 
         // Time studies + Dilation
+        "Time Study 131 and 133 gain downsides",
         "Eternity Upgrade to Time Dimensions based on days played is based on this Armageddon time",
         `All pre-Doomed Dilated Time multipliers are disabled except the ${formatX(2)} buyable`,
         "All Tachyon Particle multipliers are disabled",
@@ -55,7 +58,7 @@ export default {
         "Infinity Upgrades cannot be charged",
         "Triad Studies and Space Theorems are disabled",
         "Imaginary Upgrades are disabled excluding those relating to DMD's and Celestial unlocks",
-        "Continuum and Singularity rewards are disabled"
+        "Singularity rewards are disabled"
       ];
     }
   }

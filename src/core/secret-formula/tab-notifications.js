@@ -12,7 +12,6 @@ export const tabNotifications = {
         parent: "challenges",
         tab: "normal"
       },
-      // TODO fix the stat mult tab
       // {
       //   parent: "statistics",
       //   tab: "multipliers"

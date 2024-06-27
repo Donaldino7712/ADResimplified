@@ -26,11 +26,11 @@ export const fabricUpgrades = [
     description: "Reality Fabric improves the Infinity Pount formula",
     effect: () => {
       let e = Currency.realityFabric.value.pow(0.2);
-      if (e.gt(50)) e = DC.D50.add(e.sub(50).pow(0.2));
+      if (e.gt(25)) e = DC.D25.add(e.sub(25).pow(0.2));
       return e.toNumber();
     },
     formatEffect: value => `-${format(value, 2, 2)}`,
-    cap: 100
+    cap: 50
   },
   {
     name: "Eternal Enhancement",
@@ -39,11 +39,11 @@ export const fabricUpgrades = [
     description: "Reality Fabric improves the Eternity Point formula",
     effect: () => {
       let e = Currency.realityFabric.value.pow(0.15);
-      if (e.gt(25)) e = DC.D25.add(e.sub(25).pow(0.15));
+      if (e.gt(10)) e = DC.E1.add(e.sub(10).pow(0.15));
       return e.toNumber();
     },
     formatEffect: value => `-${format(value, 2, 2)}`,
-    cap: 50
+    cap: 25
   },
   {
     name: "Mechanical Reality",
@@ -56,7 +56,7 @@ export const fabricUpgrades = [
       return e.toNumber();
     },
     formatEffect: value => `-${format(value, 2, 2)}`,
-    cap: 1000
+    cap: 500
   },
   rebuyable({
     name: "Realistic Refinement",

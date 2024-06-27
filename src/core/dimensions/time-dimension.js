@@ -163,7 +163,7 @@ class TimeDimensionState extends DimensionState {
   nextCost(bought) {
     if (this._tier > 4 && bought < this.e6000ScalingAmount) {
       const cost = Decimal.pow(this.costMultiplier, bought).times(this.baseCost);
-      if (PelleRifts.paradox.milestones[0].canBeApplied) {
+      if (PelleRifts.paradox.milestones[1].canBeApplied) {
         return cost.div("1e2250").pow(0.5);
       }
       return cost;
@@ -180,7 +180,7 @@ class TimeDimensionState extends DimensionState {
     const exponent = this.e6000ScalingAmount + (bought - this.e6000ScalingAmount) * TimeDimensions.scalingPast1e6000;
     const cost = Decimal.pow(base, exponent).times(this.baseCost);
 
-    if (PelleRifts.paradox.milestones[0].canBeApplied && this._tier > 4) {
+    if (PelleRifts.paradox.milestones[1].canBeApplied && this._tier > 4) {
       return cost.div("1e2250").pow(0.5);
     }
     return cost;

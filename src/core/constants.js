@@ -233,10 +233,6 @@ window.RECENT_PRESTIGE_RESOURCE = {
   PRESTIGE_COUNT: 3,
 };
 
-// TODO: see if this breaks anything
-// Free tickspeed multiplier with TS171. Shared here because formatting glyph effects depends on it
-// window.TS171_MULTIPLIER = 1.25;
-
 // Used as drag and drop data type
 window.GLYPH_MIME_TYPE = "text/x-ivark-glyph";
 

@@ -153,6 +153,10 @@ export default {
         </b>
         <br><br>
         All effects from Glyph Sacrifice can no longer be increased once they reach {{ format(maxSacrifice) }}.
+        <br><br>
+        <span v-if="hasSeenRealityGlyph">
+          Reality Glyphs have no altered effects.
+        </span>
       </div>
     </div>
     <br>
@@ -163,9 +167,6 @@ export default {
       <div v-if="teresaMult > 1">
         Glyph sacrifice values are multiplied by {{ formatX(teresaMult, 2, 2) }};
         Teresa was last done at {{ lastMachines }}.
-        <span v-if="hasSeenRealityGlyph">
-          Reality Glyphs are unaffected by this multiplier and have no altered effects.
-        </span>
       </div>
       <template v-for="type in types">
         <TypeSacrifice

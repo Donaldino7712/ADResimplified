@@ -20,6 +20,14 @@ class FabricUpgradeState extends BitPurchasableMechanicState {
   set bits(value) {
     player.machine.upgradeBits = value;
   }
+
+  get isDisabled() {
+    return Pelle.isDoomed;
+  }
+
+  get isEffectActive() {
+    return this.isBought && !this.isDisabled;
+  }
 }
 
 class RebuyableFabricUpgradeState extends RebuyableMechanicState {
@@ -37,6 +45,14 @@ class RebuyableFabricUpgradeState extends RebuyableMechanicState {
 
   get isCapped() {
     return this.boughtAmount === this.config.maxUpgrades;
+  }
+
+  get isDisabled() {
+    return Pelle.isDoomed;
+  }
+
+  get isEffectActive() {
+    return this.isBought && !this.isDisabled;
   }
 }
 

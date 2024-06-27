@@ -125,10 +125,7 @@ export const normalAchievements = [
     name: "Double Galaxy",
     get description() { return `Buy ${formatInt(2)} Antimatter Galaxies.`; },
     checkRequirement: () => player.galaxies >= 2,
-    checkEvent: GAME_EVENT.GALAXY_RESET_AFTER,
-    reward: "Multiplier to Antimatter Dimensions based on Antimatter Galaxy amount.",
-    effect: () => Math.max(player.galaxies ** 1.2, 1),
-    formatEffect: value => `${formatX(value, 2, 2)}`,
+    checkEvent: GAME_EVENT.GALAXY_RESET_AFTER
   },
   {
     id: 28,
@@ -1328,9 +1325,9 @@ export const normalAchievements = [
   {
     id: 182,
     name: "One more time",
-    description: "Permanently gain back all Antimatter Dimension autobuyers.",
-    checkRequirement: () => PelleUpgrade.antimatterDimAutobuyers1.canBeApplied &&
-      PelleUpgrade.antimatterDimAutobuyers2.canBeApplied,
+    description: "Permanently gain back Dimension Boost and Antimatter Galaxy autobuyers.",
+    checkRequirement: () => PelleUpgrade.dimBoostAutobuyer.canBeApplied &&
+      PelleUpgrade.galaxyAutobuyer.canBeApplied,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER
   },
   {
@@ -1360,12 +1357,6 @@ export const normalAchievements = [
   },
   {
     id: 186,
-    displayId: 181,
-    name: "An unhealthy obsession",
-    description: `Purchase Time Study 181 while Doomed.`,
-  },
-  {
-    id: 187,
     name: "The One with Dilated Time",
     description: "Unlock Dilation while Doomed.",
     checkRequirement: () => PelleStrikes.dilation.hasStrike,
@@ -1377,6 +1368,14 @@ export const normalAchievements = [
       multiplier upgrade by ${formatX(1.35, 0, 2)}.`;
     },
     effect: 1.35
+  },
+  {
+    id: 187,
+    name: "name tbd",
+    description: `Fill all Rifts.`,
+    checkRequirement: () => PelleRifts.all.every(r => r.percentage === 1 || r.spentPercentage >= 1),
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER,
+    reward: "Unlock the Galaxy Generator."
   },
   {
     id: 188,

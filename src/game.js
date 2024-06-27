@@ -813,7 +813,7 @@ function laitelaBeatText(disabledDim) {
 function applyAutoprestige(diff) {
   // TODO:hevi
   Currency.infinityPoints.add(gainedInfinityPoints()
-    .times(Time.deltaTime * Effects.max(0, Achievement(114)))
+    .times(Time.deltaTime * Effects.max(0, Achievement(114), PelleUpgrade.passiveIpGain))
     .timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige));
 
   if (TeresaUnlocks.epGen.canBeApplied) {

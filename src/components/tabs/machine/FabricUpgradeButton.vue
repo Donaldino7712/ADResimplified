@@ -51,7 +51,7 @@ export default {
       };
     },
     isUseless() {
-      return Pelle.disabledRUPGs.includes(this.upgrade.id) && Pelle.isDoomed;
+      return this.upgrade.isDisabled;
     }
   },
   methods: {

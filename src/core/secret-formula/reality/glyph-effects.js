@@ -282,7 +282,11 @@ export const glyphEffects = {
       GlyphAlteration.sacrificeBoost("infinity") / 50,
     formatEffect: x => format(x, 3, 3),
     formatSingleEffect: x => format(x - 1, 3, 3),
-    combine: GlyphCombiner.addExponents,
+    combine: effects => {
+      const a = effects.reduce(Number.sumReducer, 1 - effects.length);
+      // eslint-disable-next-line no-nested-ternary
+      return a > 1.75 ? (a > 4 ? (a - 4) / 12 + 2.5 : (a - 1.75) / 3 + 1.75) : a;
+    },
     alteredColor: () => GlyphAlteration.getBoostColor("infinity"),
     alterationType: ALTERATION_TYPE.BOOST,
     enabledInDoomed: true,

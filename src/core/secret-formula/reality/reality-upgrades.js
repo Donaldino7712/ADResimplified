@@ -223,9 +223,10 @@ export const realityUpgrades = [
     name: "Disparity of Rarity",
     id: 16,
     cost: 1500,
-    requirement: () => `Reach ${format(DC.E10500)} Eternity Points without equipping Time or Power Glyphs. (NIY)`,
-    hasFailed: () => false,
-    checkRequirement: () => true,
+    requirement: () => `Reach ${format(DC.E10500)} Eternity Points without equipping Time or Power Glyphs.`,
+    hasFailed: () => Glyphs.activeList.some(g => g.type === "power" || g.type === "time"),
+    checkRequirement: () => Glyphs.activeList.every(g => g.type !== "power" || g.type !== "time") &&
+      gainedEternityPoints().exponent >= 10500,
     checkEvent: GAME_EVENT.REALITY_RESET_BEFORE,
     description: () => `Multiply Glyph rarity by ${formatX(1.2, 1, 1)}`,
     effect: 1.2,
@@ -235,7 +236,7 @@ export const realityUpgrades = [
     name: "Duplicity of Potency",
     id: 17,
     cost: 1500,
-    requirement: () => `Reality with Royal Flush equipped (one of each basic Glyph types)`,
+    requirement: () => `Reality with Royal Flush (one of each basic Glyph types) equipped`,
     hasFailed: () => {
       const notEquippedTypes = BASIC_GLYPH_TYPES.filter(type => !Glyphs.activeList.some(g => g.type === type));
       const notEquipped = Glyphs.inventory.countWhere(g => g && notEquippedTypes.includes(g.type));

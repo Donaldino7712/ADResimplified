@@ -436,6 +436,7 @@ export const migrations = {
     //     6: 3
     //   };
     //   player.reality.glyphs.filter.select = newGlyphFilters[player.reality.glyphs.filter.select] ?? 1;
+    //   if (player.options.sidebarResourceID >= 9) player.options.sidebarResourceID++;
     // },
   },
 

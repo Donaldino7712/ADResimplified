@@ -26,22 +26,22 @@ export const dilationUpgrades = {
     initialCost: 1e4,
     increment: 10,
     description: () =>
-      ((SingularityMilestone.dilatedTimeFromSingularities.canBeApplied || Achievement(187).canBeApplied)
+      ((SingularityMilestone.dilatedTimeFromSingularities.canBeApplied || Achievement(186).canBeApplied)
         ? `${formatX(2 * Effects.product(
           SingularityMilestone.dilatedTimeFromSingularities,
-          Achievement(187)
+          Achievement(186)
         ), 2, 2)} Dilated Time gain`
         : "Double Dilated Time gain"),
     effect: bought => {
       const base = 2 * Effects.product(
         SingularityMilestone.dilatedTimeFromSingularities,
-        Achievement(187)
+        Achievement(186)
       );
       return Decimal.pow(base, bought);
     },
     formatEffect: value => {
       const nonInteger = SingularityMilestone.dilatedTimeFromSingularities.canBeApplied ||
-        Achievement(187).canBeApplied;
+        Achievement(186).canBeApplied;
       return formatX(value, 2, nonInteger ? 2 : 0);
     },
     formatCost: value => format(value, 2),
@@ -52,9 +52,7 @@ export const dilationUpgrades = {
     initialCost: 1e6,
     increment: 100,
     // TODO:hevi
-    description: () => (Pelle.isDoomed
-      ? "Reset Dilated Time and Tachyon Galaxies, but lower their threshold"
-      : "Reset Tachyon Galaxies, but lower their threshold"),
+    description: "Reset Tachyon Galaxies, but lower their threshold",
     // The 38th purchase is at 1e80, and is the last purchase.
     effect: bought => (bought < 38 ? Math.pow(0.8, bought) : 0),
     formatEffect: effect => {

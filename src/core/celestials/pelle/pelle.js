@@ -34,15 +34,6 @@ const disabledMechanicUnlocks = {
   effarig: () => ({}),
   imaginaryUpgrades: () => ({}),
   glyphsac: () => ({}),
-  antimatterDimAutobuyer1: () => PelleUpgrade.antimatterDimAutobuyers1,
-  antimatterDimAutobuyer2: () => PelleUpgrade.antimatterDimAutobuyers1,
-  antimatterDimAutobuyer3: () => PelleUpgrade.antimatterDimAutobuyers1,
-  antimatterDimAutobuyer4: () => PelleUpgrade.antimatterDimAutobuyers1,
-  antimatterDimAutobuyer5: () => PelleUpgrade.antimatterDimAutobuyers2,
-  antimatterDimAutobuyer6: () => PelleUpgrade.antimatterDimAutobuyers2,
-  antimatterDimAutobuyer7: () => PelleUpgrade.antimatterDimAutobuyers2,
-  antimatterDimAutobuyer8: () => PelleUpgrade.antimatterDimAutobuyers2,
-  tickspeedAutobuyer: () => PelleUpgrade.tickspeedAutobuyer,
   dimBoostAutobuyer: () => PelleUpgrade.dimBoostAutobuyer,
   galaxyAutobuyer: () => PelleUpgrade.galaxyAutobuyer,
   timeTheoremAutobuyer: () => ({}),
@@ -174,6 +165,12 @@ export const Pelle = {
 
   get isDoomed() {
     return this.cel.doomed;
+  },
+
+  get disabledAchievements() {
+    return [178, 175, 171, 168, 167, 166, 164, 158, 156, 155, 154, 148, 146, 145, 144, 143, 142, 141, 137, 134, 133,
+      132, 126, 123, 121, 118, 117, 114, 113, 111, 105, 104, 103, 96, 95, 93, 92, 91, 87, 86, 85, 84, 78, 76, 75, 74,
+      73, 72, 68, 66, 65, 64, 58, 56, 55, 54, 45, 37, 36, 34, 31, 28, 23, 21, 14, 12];
   },
 
   get uselessInfinityUpgrades() {
