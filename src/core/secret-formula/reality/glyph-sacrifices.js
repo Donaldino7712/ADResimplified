@@ -79,9 +79,9 @@ export const glyphSacrifice = {
       const sac = player.reality.glyphs.sac.effarig + (added ?? 0);
       // This doesn't use the GlyphSacrificeHandler cap because it hits its cap (+100%) earlier
       const capped = Math.clampMax(sac, 1e70);
-      return 2 * Math.log10(capped / 1e20 + 1);
+      return Math.log10(capped / 1e20 + 1) / 2;
     },
-    description: amount => `+${formatPercents(amount / 100, 2)} additional Glyph rarity`,
+    description: amount => `Delay Glyph rarity instability by +${formatPercents(amount / 100, 2)}`,
     cap: () => 1e70
   },
   "reality": {

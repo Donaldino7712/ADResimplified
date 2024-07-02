@@ -67,7 +67,7 @@ export const fabricUpgrades = [
     effect: p => p,
     formatEffect: value => {
       if (value <= 8) return `log${format(10 - value)}(x)`;
-      return `x${formatPow(value / 1000 + 0.01, 2, 2)}`;
+      return `x${formatPow(value / 1000 + 0.01, 3, 3)}`;
     }
   }),
   {
@@ -164,23 +164,23 @@ export const fabricUpgrades = [
     effect: 1
   },
   {
-    name: "Deterministic Decisions (NIY)",
+    name: "Fabric Upgrade 14 (NIY)",
     id: 14,
-    cost: 1e300,
-    description: "On Reality, gain one of all basic glyphs, at the same level and rarity as that Reality"
+    cost: 1e150,
+    description: "You can pick a Cursed Glyph with modified level on Reality if you have unlocked Cursed Glyphs"
   },
   {
     name: "Fabric Upgrade 15",
     id: 15,
     cost: 1e200,
-    description: "You can pick a Reality Glyph with reduced level on Reality if you have unlocked Reality Glyphs."
+    description: "You can pick a Reality Glyph with reduced level on Reality if you have unlocked Reality Glyphs"
   },
   rebuyable({
     name: "Fabric Upgrade 16 (NIY)",
     id: 16,
-    initialCost: 1e300,
-    costMult: 1e3,
-    description: "TBD",
+    initialCost: 1e120,
+    costMult: 1e5,
+    description: "Multiply Memory gain",
     effect: p => (1 + Currency.realityFabric.value.log10() / 500) ** p,
     formatEffect: value => formatX(value, 2, 2)
   })

@@ -785,7 +785,7 @@ function laitelaRealityTick(realDiff) {
       completionText += ` You need to destabilize in faster than
         ${TimeSpan.fromSeconds(laitelaInfo.fastestCompletion).toStringShort()} to improve your multiplier.`;
     }
-    if (Laitela.isFullyDestabilized) SpeedrunMilestones(24).tryComplete();
+    if (Laitela.isFullyDestabilized) SpeedrunMilestones(23).tryComplete();
     Modal.message.show(completionText, {}, 2);
   }
 }
@@ -813,7 +813,7 @@ function laitelaBeatText(disabledDim) {
 function applyAutoprestige(diff) {
   // TODO:hevi
   Currency.infinityPoints.add(gainedInfinityPoints()
-    .times(Time.deltaTime * Effects.max(0, Achievement(114), PelleUpgrade.passiveIpGain))
+    .times(Time.deltaTime * Effects.max(0, Achievement(116), PelleUpgrade.passiveIpGain))
     .timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige));
 
   if (TeresaUnlocks.epGen.canBeApplied) {

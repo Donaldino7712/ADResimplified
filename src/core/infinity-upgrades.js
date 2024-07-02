@@ -181,7 +181,7 @@ class InfinityIPMultUpgrade extends GameMechanicState {
   purchase(amount = 1) {
     if (!this.canBeBought) return;
     // TODO:hevi
-    if (!Achievement(114).isUnlocked) {
+    if (!Achievement(116).isUnlocked) {
       Autobuyer.bigCrunch.bumpAmount(DC.D2.pow(amount));
     }
     Currency.infinityPoints.subtract(Decimal.sumGeometricSeries(amount, this.cost, this.costIncrease, 0));

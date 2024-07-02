@@ -78,7 +78,7 @@ export function buyDilationUpgrade(id, bulk = 1) {
     buying = Math.clampMax(buying, bulk);
     buying = Math.clampMax(buying, upgrade.config.purchaseCap - upgAmount);
     const cost = Decimal.sumGeometricSeries(buying, upgrade.config.initialCost, upgrade.config.increment, upgAmount);
-    Currency.dilatedTime.subtract(cost);
+    if (!Perk.duFree.canBeApplied) Currency.dilatedTime.subtract(cost);
     player.dilation.rebuyables[id] += buying;
     if (id === 2) {
       // TODO:hevi
@@ -234,7 +234,7 @@ class DilationUpgradeState extends SetPurchasableMechanicState {
 
   onPurchased() {
     if (this.id === 4) player.dilation.totalTachyonGalaxies *= 2;
-    if (this.id === 10) SpeedrunMilestones(15).tryComplete();
+    if (this.id === 10) SpeedrunMilestones(14).tryComplete();
   }
 }
 

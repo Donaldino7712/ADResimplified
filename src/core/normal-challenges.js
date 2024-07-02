@@ -2,14 +2,6 @@ import { DC } from "./constants";
 import { GameMechanicState } from "./game-mechanics";
 
 export function updateNormalAndInfinityChallenges(diff) {
-  if (InfinityChallenge(6).isRunning && AntimatterDimension(2).amount.neq(0)) {
-    Currency.matter.bumpTo(1);
-    // These caps are values which occur at approximately e308 IP
-    const cappedBase = 1.03 + Math.clampMax(DimBoost.totalBoosts, 400) / 200 +
-        Math.clampMax(player.galaxies, 100) / 100;
-    Currency.matter.multiply(Decimal.pow(cappedBase, diff / 20));
-  }
-
   if (NormalChallenge(2).isRunning) {
     player.chall2Pow = player.chall2Pow.times(DC.D1_00038.pow(diff / 100)).clampMax(Decimal.NUMBER_MAX_VALUE);
   }
@@ -24,6 +16,14 @@ export function updateNormalAndInfinityChallenges(diff) {
       // Do not change to diff, as this may lead to a sacrifice softlock with high gamespeed
       player.ic2Count += Math.clamp(Date.now() - player.lastUpdate, 1, 21600000);
     }
+  }
+
+  if (InfinityChallenge(6).isRunning && AntimatterDimension(2).amount.neq(0)) {
+    Currency.matter.bumpTo(1);
+    // These caps are values which occur at approximately e308 IP
+    const cappedBase = 1.03 + Math.clampMax(DimBoost.totalBoosts, 400) / 200 +
+        Math.clampMax(player.galaxies, 100) / 100;
+    Currency.matter.multiply(Decimal.pow(cappedBase, diff / 20));
   }
 }
 
@@ -117,7 +117,7 @@ class NormalChallengeState extends GameMechanicState {
   }
 
   get isEffectConditionSatisfied() {
-    return this.isCompleted;
+    return this.isCompleted && !this.isDisabled;
   }
 }
 

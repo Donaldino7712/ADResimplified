@@ -126,7 +126,7 @@ export const GlyphGenerator = {
     };
   },
 
-  cursedGlyph() {
+  cursedGlyph(level = 6666) {
     const str = rarityToStrength(100);
     const effectBitmask = makeGlyphEffectBitmask(
       orderedEffectList.filter(effect => effect.match("cursed*"))
@@ -136,8 +136,8 @@ export const GlyphGenerator = {
       idx: null,
       type: "cursed",
       strength: str,
-      level: 6666,
-      rawLevel: 6666,
+      level,
+      rawLevel: level,
       effects: effectBitmask,
     };
   },
@@ -204,12 +204,22 @@ export const GlyphGenerator = {
     );
   },
 
+  get baseStrength() {
+    return rarityToStrength((100 + Effarig.maxRarityBoost +
+      Effects.sum(Achievement(146), FabricUpgrade(11))) * this.rarityMultiplier);
+  },
+
+  get strengthInstabilityThreshold() {
+    return rarityToStrength(130 + GlyphSacrifice.effarig.effectOrDefault(0));
+  },
+
+  get isStrengthInstabilityActive() {
+    return this.baseStrength >= this.strengthInstabilityThreshold;
+  },
+
   get strength() {
-    return rarityToStrength((100 + Effarig.maxRarityBoost + Effects.sum(
-      Achievement(146),
-      FabricUpgrade(11),
-      GlyphSacrifice.effarig
-    )) * this.rarityMultiplier);
+    const ins = this.strengthInstabilityThreshold;
+    return this.baseStrength >= ins ? ins + (this.baseStrength - ins) / 2 : this.baseStrength;
   },
 
   // eslint-disable-next-line capitalized-comments
@@ -245,25 +255,6 @@ export const GlyphGenerator = {
     let effectValues = GlyphTypes[type].effects;
     if (!RealityUpgrade(17).isBought) effectValues = effectValues.slice(0, -1);
     return effectValues.map(i => i.bitmaskIndex).toBitmask();
-  },
-
-  getRNG(fake) {
-    return fake ? new GlyphGenerator.FakeGlyphRNG() : new GlyphGenerator.RealGlyphRNG();
-  },
-
-  /**
-   * More than 3 approx 0.001%
-   * More than 2.5 approx 0.2%
-   * More than 2 approx 6%
-   * More than 1.5 approx 38.43%
-   */
-  gaussianBellCurve(rng) {
-    // Old code used max, instead of abs -- but we rejected any samples that were
-    // at the boundary anyways. Might as well use abs, and not cycle as many times.
-    // The function here is an approximation of ^0.65, here is the old code:
-    //     return Math.pow(Math.max(rng.normal() + 1, 1), 0.65);
-    const x = Math.sqrt(Math.abs(rng.normal(), 0) + 1);
-    return -0.111749606737000 + x * (0.900603878243551 + x * (0.229108274476697 + x * -0.017962545983249));
   },
 
   copy(glyph) {

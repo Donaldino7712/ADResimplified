@@ -212,11 +212,13 @@ export const perks = {
     description: "Infinity Dimensions no longer have antimatter requirements.",
     layoutPosList: [51317, 80998, 79397, 80997, 82600, 104489],
   },
-  bypassTGReset: {
+  duFree: {
     id: 52,
-    label: "TGR",
+    label: "DUF",
     family: PERK_FAMILY.DILATION,
-    description: "TBD",
+    get description() {
+      return `Purchasing Dilation Upgrades no longer spends Dilated Time.`;
+    },
     layoutPosList: [116568, 81800, 79801, 79798, 81400, 112677],
   },
   bypassECDilation: {
@@ -538,7 +540,7 @@ export const perkConnections = (function() {
     [p.autounlockDilation2, p.autounlockDilation3],
     [p.autounlockDilation3, p.autobuyerFasterDilation, p.autounlockTD],
     [p.autounlockTD, p.autounlockReality],
-    [p.bypassTGReset, p.autobuyerDilation, p.retroactiveTP1],
+    [p.duFree, p.autobuyerDilation, p.retroactiveTP1],
     [p.bypassEC1Lock, p.bypassEC2Lock, p.bypassEC3Lock, p.bypassEC10Lock],
     [p.bypassEC2Lock, p.studyActiveEP, p.bypassEC1Lock],
     [p.bypassEC3Lock, p.studyIdleEP, p.bypassEC1Lock],
@@ -549,11 +551,11 @@ export const perkConnections = (function() {
     [p.studyActiveEP, p.bypassEC2Lock, p.ttBuySingle],
     [p.studyIdleEP, p.bypassEC3Lock, p.autocompleteEC1],
     [p.bypassEC10Lock, p.machineUnlock],
-    [p.retroactiveTP1, p.bypassTGReset, p.startTP, p.retroactiveTP2],
+    [p.retroactiveTP1, p.duFree, p.startTP, p.retroactiveTP2],
     [p.retroactiveTP2, p.retroactiveTP3],
     [p.retroactiveTP3, p.retroactiveTP4],
     [p.autobuyerDilation, p.autounlockEU2, p.autounlockDilation1,
-      p.bypassECDilation, p.bypassTGReset, p.dilationAutobuyerBulk],
+      p.bypassECDilation, p.duFree, p.dilationAutobuyerBulk],
     [p.autobuyerFasterID],
     [p.ttBuySingle, p.ttFree],
     [p.ttFree, p.ttBuyMax],

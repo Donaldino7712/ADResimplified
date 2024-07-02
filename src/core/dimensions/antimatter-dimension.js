@@ -647,13 +647,5 @@ export const AntimatterDimensions = {
     }
     // Production may overshoot the goal on the final tick of the challenge
     if (hasBigCrunchGoal) Currency.antimatter.dropTo(Player.infinityGoal);
-  },
-
-  get continuumUnlocked() {
-    return Achievement(11).isUnlocked;
-  },
-
-  get continuumActive() {
-    return this.continuumUnlocked && Laitela.continuumActive;
   }
 };

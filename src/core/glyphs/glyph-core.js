@@ -656,6 +656,9 @@ export const Glyphs = {
   get hyperInstabilityThreshold() {
     return 3000 + this.instabilityThreshold;
   },
+  get impossibleInstabilityThreshold() {
+    return 30000 + this.hyperInstabilityThreshold;
+  },
   clearUndo() {
     player.reality.glyphs.undo = [];
   },
@@ -786,8 +789,8 @@ export const Glyphs = {
       return;
     }
     const cursedCount = this.allGlyphs.filter(g => g !== null && g.type === "cursed").length;
-    if (cursedCount >= 5) {
-      GameUI.notify.error(`You don't need more than ${format(5)} Cursed Glyphs!`);
+    if (cursedCount >= 6) {
+      GameUI.notify.error(`You don't need more than ${format(6)} Cursed Glyphs!`);
     } else {
       this.addToInventory(GlyphGenerator.cursedGlyph());
       GameUI.notify.error("Created a Cursed Glyph");

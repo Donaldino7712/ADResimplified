@@ -255,16 +255,6 @@ const functionalGlyphTypes = mapGameDataToObject(
 
 export const GlyphTypes = {
   ...functionalGlyphTypes,
-  /**
-    * @param {function(): number} rng Random number source (0..1)
-    * @param {string} [blacklisted] Do not return the specified type
-    * @returns {string | null}
-    */
-  random(rng, blacklisted = []) {
-    const types = generatedTypes.filter(
-      x => (EffarigUnlock.reality.isUnlocked || x !== "effarig") && !blacklisted.includes(x));
-    return types[Math.floor(rng.uniform() * types.length)];
-  },
   get list() {
     return GLYPH_TYPES.map(e => GlyphTypes[e]);
   },

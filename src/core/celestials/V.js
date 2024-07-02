@@ -166,7 +166,7 @@ export const V = {
       for (const unlock of VRunUnlocks.all) {
         unlock.tryComplete();
       }
-      if (this.spaceTheorems >= 36) SpeedrunMilestones(22).tryComplete();
+      if (this.spaceTheorems >= 36) SpeedrunMilestones(21).tryComplete();
     }
 
     if (VUnlocks.raUnlock.canBeApplied && !Ra.unlocks.autoTP.canBeApplied) {

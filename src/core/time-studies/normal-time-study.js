@@ -71,8 +71,12 @@ export class NormalTimeStudyState extends TimeStudyState {
     return this.checkRequirement() && this.checkSetRequirement();
   }
 
+  get isDisabled() {
+    return Pelle.uselessTimeStudies.includes(this.id) && Pelle.isDoomed;
+  }
+
   get isEffectActive() {
-    return this.isBought;
+    return this.isBought && !this.isDisabled;
   }
 
   purchase(auto = false) {

@@ -135,7 +135,7 @@ export default {
   methods: {
     update() {
       const study = this.study;
-      this.isUseless = Pelle.uselessTimeStudies.includes(this.study.id) && Pelle.isDoomed;
+      this.isUseless = study.isDisabled;
       this.isBought = study.isBought;
       this.eternityChallengeRunning = study.type === TIME_STUDY_TYPE.ETERNITY_CHALLENGE &&
         EternityChallenge.current?.id === study.id;

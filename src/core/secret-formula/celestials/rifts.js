@@ -12,8 +12,8 @@ export const pelleRifts = {
     strike: () => PelleStrikes.infinity,
     percentage: totalFill => Math.log10(totalFill.plus(1).log10() * 10 + 1) ** 2.5 / 100,
     percentageToFill: percentage => Decimal.pow(10,
-      Decimal.pow(10, (percentage * 100) ** (1 / 2.5)).div(10).minus(0.1)
-    ).minus(1),
+      Decimal.pow(10, (percentage * 100) ** (1 / 2.5))
+        .div(10).minus(0.1)).minus(1),
     effect: totalFill => {
       if (player.challenge.eternity.current !== 0) {
         const chall = EternityChallenge.current;

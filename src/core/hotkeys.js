@@ -385,16 +385,7 @@ function keyboardToggleAutobuyers() {
 
 function keyboardToggleContinuum() {
   if (!Laitela.continuumUnlocked) return;
-  if (ImaginaryUpgrade(21).isLockingMechanics && player.auto.disableContinuum) {
-    ImaginaryUpgrade(21).tryShowWarningModal();
-    return;
-  }
-
   SecretAchievement(33).unlock();
-  // This is a toggle despite the lack of !, because player.auto.disableContinuum
-  // is negated compared to whether continuum is on.
-  // Laitela.setContinuum(player.auto.disableContinuum);
-  // GameUI.notify.info(`${(player.auto.disableContinuum) ? "Disabled" : "Enabled"} Continuum`);
 }
 
 function keyboardAutomatorToggle() {

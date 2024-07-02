@@ -8,7 +8,6 @@ import { DC } from "../../constants";
 export const normalChallenges = [
   {
     id: 1,
-    // preSimpId: 1,
     isQuickResettable: false,
     description() {
       return PlayerProgress.eternityUnlocked()
@@ -23,7 +22,6 @@ export const normalChallenges = [
   },
   {
     id: 2,
-    // preSimpId: 3,
     isQuickResettable: false,
     description:
     `the 1st Antimatter Dimension is heavily weakened, but gets an uncapped exponentially increasing multiplier.
@@ -36,20 +34,16 @@ export const normalChallenges = [
   },
   {
     id: 3,
-    // preSimpId: 5,
     isQuickResettable: false,
     description:
       () => `the Tickspeed purchase multiplier starts at ${formatX(1.080, 0, 3)} instead of ${formatX(1.1245, 0, 3)}.`,
     name: "3rd Antimatter",
-    get reward() {
-      return `Galaxies are ${formatPercents(0.1)} stronger.`;
-    },
+    get reward() { return `Galaxies are ${formatPercents(0.1)} stronger.`; },
     effect: 1.1,
     lockedAt: DC.D0,
   },
   {
     id: 4,
-    // preSimpId: 6,
     isQuickResettable: false,
     description: () => `upgrading each Antimatter Dimension costs the Antimatter Dimension ${formatInt(2)} tiers ` +
       "below it instead of antimatter. Antimatter Dimension prices are modified.",
@@ -62,7 +56,6 @@ export const normalChallenges = [
   },
   {
     id: 5,
-    // preSimpId: 7,
     isQuickResettable: false,
     description: () =>
       `the multiplier from buying ${formatInt(10)} Antimatter Dimensions is reduced to ${formatX(1)}. This increases by
@@ -76,7 +69,6 @@ export const normalChallenges = [
   },
   {
     id: 6,
-    // preSimpId: 8,
     isQuickResettable: false,
     description: `Dimension Boosts provide no multiplier and Antimatter Galaxies cannot be bought. Dimensional
       Sacrifice resets antimatter and all Antimatter Dimensions, but also gives a significantly stronger multiplier.`,
@@ -86,7 +78,6 @@ export const normalChallenges = [
   },
   {
     id: 7,
-    // preSimpId: 10,
     isQuickResettable: false,
     description: () => `there are only ${formatInt(6)} Antimatter Dimensions. Dimension Boost ` +
       "and Antimatter Galaxy costs are modified.",
@@ -96,7 +87,6 @@ export const normalChallenges = [
   },
   {
     id: 8,
-    // preSimpId: 12,
     isQuickResettable: false,
     description: () => `each Antimatter Dimension produces the Dimension ${formatInt(2)} tiers below it
       instead of ${formatInt(1)}. Both 1st and 2nd Dimensions produce antimatter.

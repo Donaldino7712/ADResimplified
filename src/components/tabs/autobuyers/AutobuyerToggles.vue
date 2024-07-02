@@ -13,20 +13,12 @@ export default {
       isDoomed: false,
       autobuyersOn: false,
       showContinuum: false,
-      disableContinuum: false,
       allAutobuyersDisabled: false
     };
   },
   watch: {
     autobuyersOn(newValue) {
       player.auto.autobuyersOn = newValue;
-    },
-    disableContinuum(newValue) {
-      if (ImaginaryUpgrade(21).isLockingMechanics && !newValue) {
-        ImaginaryUpgrade(21).tryShowWarningModal();
-        return;
-      }
-      Laitela.setContinuum(!newValue);
     }
   },
   methods: {
@@ -34,7 +26,6 @@ export default {
       this.isDoomed = Pelle.isDoomed;
       this.autobuyersOn = player.auto.autobuyersOn;
       this.showContinuum = Laitela.isUnlocked;
-      this.disableContinuum = player.auto.disableContinuum;
       this.allAutobuyersDisabled = Autobuyers.unlocked.every(autobuyer => !autobuyer.isActive);
     },
     toggleAllAutobuyers() {
@@ -60,23 +51,6 @@ export default {
     >
       {{ allAutobuyersDisabled ? "Enable" : "Disable" }} all autobuyers
     </PrimaryButton>
-    <span v-if="isDoomed">
-      <PrimaryButton
-        v-if="showContinuum"
-        class="o-primary-btn--subtab-option"
-      >
-        Continuum is disabled
-      </PrimaryButton>
-    </span>
-    <span v-else>
-      <PrimaryToggleButton
-        v-if="showContinuum"
-        v-model="disableContinuum"
-        on="Enable Continuum"
-        off="Disable Continuum"
-        class="o-primary-btn--subtab-option"
-      />
-    </span>
   </div>
 </template>
 

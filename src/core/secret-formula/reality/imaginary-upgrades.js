@@ -239,15 +239,11 @@ export const imaginaryUpgrades = [
     name: "Existential Elimination",
     id: 21,
     cost: 1e13,
-    requirement: () => `Reach ${format("1e7400000000000")} antimatter with Continuum disabled for the entire Reality`,
-    // hasFailed: () => !player.requirementChecks.reality.noContinuum,
-    // checkRequirement: () => player.requirementChecks.reality.noContinuum &&
-    //   Currency.antimatter.value.log10() >= 7.4e12,
-    hasFailed: () => false,
-    checkRequirement: () => true,
+    requirement: () => `Reach ${format("1e50000000000")} antimatter with ${formatInt(6)} Cursed Glyphs equipped`,
+    hasFailed: () => player.requirementChecks.reality.maxGlyphs > -18,
+    checkRequirement: () => player.requirementChecks.reality.maxGlyphs <= -18 &&
+      Currency.antimatter.value.exponent >= 5e10,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
-    canLock: true,
-    lockEvent: "enable Continuum",
     description: "Annihilation multiplier gain is improved based on Imaginary Machines",
     effect: () => Math.clampMin(Math.pow(Math.log10(Currency.imaginaryMachines.value) - 10, 3), 1),
     formatEffect: value => `${formatX(value, 2, 1)}`,
@@ -262,7 +258,7 @@ export const imaginaryUpgrades = [
       at least ${formatInt(4)} Cursed Glyphs equipped`,
     // Note: 4 cursed glyphs is -12 glyph count, but equipping a positive glyph in the last slot is allowed
     hasFailed: () => !Effarig.isRunning || player.requirementChecks.reality.maxGlyphs > -10,
-    checkRequirement: () => Effarig.isRunning && player.requirementChecks.reality.maxGlyphs < -10 &&
+    checkRequirement: () => Effarig.isRunning && player.requirementChecks.reality.maxGlyphs <= -10 &&
       Currency.antimatter.value.exponent >= 1.5e11,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     description: () => `All Glyph Sacrifice totals are increased to ${format(1e100)}`,

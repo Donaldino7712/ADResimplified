@@ -437,6 +437,8 @@ export const migrations = {
     //   };
     //   player.reality.glyphs.filter.select = newGlyphFilters[player.reality.glyphs.filter.select] ?? 1;
     //   if (player.options.sidebarResourceID >= 9) player.options.sidebarResourceID++;
+    //   delete player.auto.disableContinuum;
+    //   delete player.requirementChecks.reality.noContinuum;
     // },
   },
 

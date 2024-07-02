@@ -69,15 +69,17 @@ export class Sacrifice {
     return base * preIC2 * postIC2 * triad;
   }
 
+  static get dimAmount() {
+    if (InfinityChallenge(4).isRunning) return [
+      ...AntimatterDimensions.all,
+      ...InfinityDimensions.all,
+      ...TimeDimensions.all
+    ].map(x => x.totalAmount ?? x.amount).map(x => x.clampMin(1)).reduce(Decimal.prodReducer);
+    return AntimatterDimension(1).amount;
+  }
+
   static get nextBoost() {
-    let dimAmount = AntimatterDimension(1).amount;
-    if (InfinityChallenge(4).isRunning) {
-      dimAmount = [
-        ...AntimatterDimensions.all,
-        ...InfinityDimensions.all,
-        ...TimeDimensions.all
-      ].map(x => x.totalAmount ?? x.amount).reduce(Decimal.prodReducer);
-    }
+    const dimAmount = this.dimAmount;
     if (dimAmount.eq(0)) return DC.D1;
     const sacrificed = player.sacrificed.clampMin(1);
     let prePowerSacrificeMult;
@@ -130,7 +132,7 @@ export function sacrificeReset() {
   EventHub.dispatch(GAME_EVENT.SACRIFICE_RESET_BEFORE);
   const nextBoost = Sacrifice.nextBoost;
   player.chall6TotalSacrifice = player.chall6TotalSacrifice.times(nextBoost);
-  player.sacrificed = player.sacrificed.plus(AntimatterDimension(1).amount);
+  player.sacrificed = player.sacrificed.plus(Sacrifice.dimAmount);
   const isAch118Unlocked = Achievement(118).canBeApplied;
   if (NormalChallenge(6).isRunning) {
     if (!isAch118Unlocked) {

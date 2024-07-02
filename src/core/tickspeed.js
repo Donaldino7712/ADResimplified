@@ -95,7 +95,6 @@ export function buyMaxTickSpeed() {
 
 export function resetTickspeed() {
   player.totalTickBought = 0;
-  player.chall9TickspeedCostBumps = 0;
 }
 
 export const Tickspeed = {

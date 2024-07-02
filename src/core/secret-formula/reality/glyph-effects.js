@@ -658,8 +658,8 @@ export const glyphEffects = {
       Math.sqrt(level * Math.sqrt(strength / 3.5) / 250),
     formatEffect: x => format(x, 2, 2),
     combine: effects => {
-      const x = effects.reduce(Number.sumReducer, 1);
-      return x > 0.1 ? (x - 0.1) / 15 + 0.1 : x;
+      const x = effects.reduce(Number.sumReducer, 0);
+      return x > 0.1 ? (x - 0.1) / 150 + 0.1 : x;
     },
   },
   companiondescription: {

@@ -38,16 +38,7 @@ export default {
   methods: {
     update() {
       this.hasInfinity = PlayerProgress.infinityUnlocked();
-      this.checkADAutoStatus();
-    },
-    checkADAutoStatus() {
-      // Since you don't need to buy autobuyers in Doomed and unbought ones are hidden, we can check if only the
-      // autobuyers you can see (ie, have unlocked) have been maxed.
-      if (Pelle.isDoomed) {
-        this.displayADAutobuyersIndividually = !ad.zeroIndexed.filter(x => x.isUnlocked)
-          .every(x => x.hasUnlimitedBulk && x.hasMaxedInterval);
-      }
-    },
+    }
   }
 };
 </script>

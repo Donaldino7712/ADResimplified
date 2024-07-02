@@ -753,8 +753,8 @@ export const normalAchievements = [
     id: 108,
     name: "We COULD afford 9",
     get description() { return `Eternity with exactly ${formatInt(9)} Replicanti.`; },
-    checkRequirement: () => Replicanti.amount.round().eq(9),
-    checkEvent: GAME_EVENT.ETERNITY_RESET_BEFORE
+    checkRequirement: () => true,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER
   },
   {
     id: 111,
@@ -796,8 +796,8 @@ export const normalAchievements = [
     description: "Fail an Eternity Challenge.",
     checkRequirement: () => true,
     checkEvent: GAME_EVENT.CHALLENGE_FAILED,
-    get reward() { return `You gain ${formatPercents(0.01)} of your Infinity Points gained on crunch each second`; },
-    effect: 0.01
+    reward: "A fading sense of accomplishment.",
+    effect: () => "Sense of accomplishment (fading)"
   },
   {
     id: 115,
@@ -811,6 +811,8 @@ export const normalAchievements = [
     get description() { return `Eternity with only ${formatInt(1)} Infinity.`; },
     checkRequirement: () => Currency.infinities.lte(1),
     checkEvent: GAME_EVENT.ETERNITY_RESET_BEFORE,
+    get reward() { return `You gain ${formatPercents(0.01)} of your Infinity Points gained on crunch each second`; },
+    effect: 0.01
   },
   {
     id: 117,
@@ -968,8 +970,8 @@ export const normalAchievements = [
   {
     id: 134,
     name: "When will it be enough?",
-    get description() { return `Reach ${formatPostBreak(DC.E18000)} Replicanti.`; },
-    checkRequirement: () => Replicanti.amount.exponent >= 18000,
+    get description() { return `Reach ${formatPostBreak(DC.E11111)} Replicanti.`; },
+    checkRequirement: () => Replicanti.amount.exponent >= 11111,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     get reward() {
       return `You gain Replicanti ${formatInt(2)} times faster under ${format(replicantiCap(), 1)} Replicanti.`;

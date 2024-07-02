@@ -245,25 +245,6 @@ function giveRealityRewards(realityProps) {
     MachineHandler.projectedIMCap);
   Currency.realities.add(realityAndPPGained);
   Currency.perkPoints.add(realityAndPPGained);
-  // TODO:glyf
-  // If (FabricUpgrade(14).canBeApplied) {
-  //   gainedLevel = realityProps.gainedGlyphLevel;
-  //   let newGlyph;
-  //   const glyphs = GlyphSelection.glyphList(gainedLevel);
-  //   let keepGlyph;
-  //   if (EffarigUnlock.glyphFilter.isUnlocked) {
-  //     newGlyph = AutoGlyphProcessor.pick(glyphs);
-  //     keepGlyph = AutoGlyphProcessor.wouldKeep(newGlyph);
-  //   } else {
-  //     newGlyph = glyphs.randomElement();
-  //     keepGlyph = true;
-  //   }
-  //   if (keepGlyph && GameCache.glyphInventorySpace.value > 0) {
-  //     Glyphs.addToInventory(newGlyph);
-  //   } else {
-  //     AutoGlyphProcessor.getRidOfGlyph(newGlyph);
-  //   }
-  // }
   if (TeresaUnlocks.effarig.canBeApplied) {
     Currency.relicShards.add(realityProps.gainedShards * multiplier);
   }

@@ -133,10 +133,17 @@ export const normalTimeStudies = [
     reqType: TS_REQUIREMENT_TYPE.AT_LEAST_ONE,
     description: () => `Multiplier to all Dimensions
       (Antimatter get ${formatX(1e280)}, Infinity get ${formatX(1e5)}, Time get ${formatX(50)})`,
-    effects: {
-      antimatter: DC.E280,
-      infinity: DC.E5,
-      time: 50
+    // We have to do this slightly weird thing because of how the game works with effects
+    get effects() {
+      const ob = {
+        antimatter: DC.E280,
+        infinity: DC.E5,
+        time: 50
+      };
+      return Object.fromEntries(Object.entries(ob).map(x => [x[0], {
+        effect: x[1],
+        effectCondition: () => TimeStudy(61).canBeApplied
+      }]));
     }
   },
   {

@@ -56,7 +56,6 @@ window.player = {
   },
   auto: {
     autobuyersOn: true,
-    disableContinuum: false,
     reality: {
       mode: 0,
       rm: DC.D1,
@@ -230,7 +229,6 @@ window.player = {
       noPurchasedTT: true,
       noInfinities: true,
       noEternities: true,
-      noContinuum: true,
       maxID1: DC.D0,
       maxStudies: 0,
       maxGlyphs: 0,
@@ -983,7 +981,6 @@ export const Player = {
           // as these requirements are only invalidated on manual infinities or eternities.
           noInfinities: true,
           noEternities: true,
-          noContinuum: player.auto.disableContinuum,
           maxID1: DC.D0,
           maxStudies: 0,
           // This only gets set to the correct value when Glyphs.updateMaxGlyphCount is called, which always happens

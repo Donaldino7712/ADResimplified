@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       enslavedHint: "",
-      showInstability: false,
+      showGLInstability: false,
       instabilityThreshold: 0,
       hyperInstabilityThreshold: 0,
       isInCelestialReality: false,
@@ -41,6 +41,9 @@ export default {
       sacrificeUnlocked: false,
       sacrificeDisplayed: false,
       resetRealityDisplayed: false,
+      impossibleInstabilityThreshold: 0,
+      showRarityInstability: false,
+      rarityInstabilityThreshold: 0,
     };
   },
   computed: {
@@ -58,9 +61,13 @@ export default {
   methods: {
     update() {
       this.resetRealityDisplayed = PlayerProgress.realityUnlocked();
-      this.showInstability = player.records.bestReality.glyphLevel > 800;
+      this.showGLInstability = player.records.bestReality.glyphLevel > 800;
+      this.showRarityInstability =
+        player.records.bestReality.glyphStrength >= GlyphGenerator.strengthInstabilityThreshold;
       this.instabilityThreshold = Glyphs.instabilityThreshold;
       this.hyperInstabilityThreshold = Glyphs.hyperInstabilityThreshold;
+      this.impossibleInstabilityThreshold = Glyphs.impossibleInstabilityThreshold;
+      this.rarityInstabilityThreshold = strengthToRarity(GlyphGenerator.strengthInstabilityThreshold);
       this.isInCelestialReality = isInCelestialReality();
       this.canAmplify = Enslaved.isUnlocked && !this.isInCelestialReality;
       this.autoRestartCelestialRuns = player.options.retryCelestial;
@@ -149,13 +156,22 @@ export default {
 
         <RealityReminder />
 
-        <div v-if="showInstability">
+        <div v-if="showGLInstability || showRarityInstability">
           <br>
           Glyphs are becoming unstable.
           <br>
-          Glyph levels higher than {{ formatInt(instabilityThreshold) }} are harder to reach.
-          <br>
-          This effect is even stronger above level {{ formatInt(hyperInstabilityThreshold) }}.
+          <template v-if="showGLInstability">
+            <br>
+            Glyph levels higher than {{ formatInt(instabilityThreshold) }} are harder to reach.
+            <br>
+            This effect is even stronger above level {{ formatInt(hyperInstabilityThreshold) }}.
+            <br>
+            Glyph levels above {{ formatInt(impossibleInstabilityThreshold) }} are almost impossible to reach.
+          </template>
+          <template v-if="showRarityInstability">
+            <br><br>
+            Glyph rarities above {{ formatPercents(rarityInstabilityThreshold / 100) }} are harder to reach.
+          </template>
         </div>
         <SingleGlyphCustomzationPanel />
         <ExpandingControlBox
