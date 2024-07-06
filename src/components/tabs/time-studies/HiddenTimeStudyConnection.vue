@@ -30,7 +30,7 @@ export default {
   methods: {
     update() {
       this.isVisible = this.isEnslaved
-        ? ((Enslaved.isRunning || Pelle.isDoomed) && player.celestials.enslaved.hasSecretStudy)
+        ? (Enslaved.isRunning && player.celestials.enslaved.hasSecretStudy)
         : player.secretUnlocks.viewSecretTS;
     },
     percents(value) {

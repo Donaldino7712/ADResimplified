@@ -19,7 +19,7 @@ export function infinityDimensionCommonMultiplier() {
       AlchemyResource.dimensionality,
       ImaginaryUpgrade(8),
       PelleRifts.recursion.milestones[1],
-      TimeStudy(61).effects.infinity
+      TimeStudy(33).effects.infinity
     );
 
   if (Replicanti.areUnlocked && Replicanti.amount.gt(1)) {

@@ -119,7 +119,7 @@ export function timeDimensionCommonMultiplier() {
       Pelle.isDoomed ? null : RealityUpgrade(22),
       AlchemyResource.dimensionality,
       PelleRifts.chaos,
-      TimeStudy(61).effects.time
+      TimeStudy(33).effects.time
     );
 
   if (EternityChallenge(9).isRunning) {

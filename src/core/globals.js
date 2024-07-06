@@ -88,7 +88,6 @@ export * from "./shop";
 export * from "./tabs";
 export * from "./tab-notifications";
 export * from "./speedrun";
-export * from "./fabric-handler";
-export * from "./fabric-upgrades";
+export * from "./reality-fabric";
 
 export * from "./automator/script-templates";

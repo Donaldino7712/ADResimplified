@@ -31,7 +31,7 @@ export default {
       vLevel: 0,
       renderedStudyCount: 0,
       renderedConnectionCount: 0,
-      hasEnslavedStudy: false,
+      isEnslaved: false,
       delayTimer: 0,
     };
   },
@@ -111,7 +111,7 @@ export default {
       this.respec = player.respec;
       this.layoutType = STUDY_TREE_LAYOUT_TYPE.current;
       this.vLevel = Ra.pets.v.level;
-      this.hasEnslavedStudy = Enslaved.isRunning || Pelle.isDoomed || Date.now() - this.delayTimer < 1000;
+      this.isEnslaved = Enslaved.isRunning || Date.now() - this.delayTimer < 1000;
     },
     studyComponent(study) {
       switch (study.type) {
@@ -168,7 +168,7 @@ export default {
       />
       <SecretTimeStudy :setup="layout.secretStudy" />
       <EnslavedTimeStudy
-        v-if="hasEnslavedStudy"
+        v-if="isEnslaved"
         :setup="layout.enslavedStudy"
       />
       <svg
@@ -182,9 +182,9 @@ export default {
         />
         <HiddenTimeStudyConnection :setup="layout.secretStudyConnection" />
         <HiddenTimeStudyConnection
-          v-if="hasEnslavedStudy"
+          v-if="isEnslaved"
           :setup="layout.enslavedStudyConnection"
-          :is-enslaved="hasEnslavedStudy"
+          :is-enslaved="isEnslaved"
         />
       </svg>
     </div>

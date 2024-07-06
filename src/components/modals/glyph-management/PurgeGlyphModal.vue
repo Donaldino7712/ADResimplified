@@ -14,7 +14,7 @@ export default {
   },
   computed: {
     threshold() {
-      return this.harsh ? 1 : 5;
+      return this.harsh ? 1 : 6;
     },
     extraMessage() {
       if (this.glyphsDeleted === 0) return `This will Purge no Glyphs.`;

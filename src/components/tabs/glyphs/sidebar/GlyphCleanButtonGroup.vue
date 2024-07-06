@@ -47,7 +47,7 @@ export default {
       if (player.options.confirmations.autoClean) {
         Modal.glyphPurge.show({ harsh: false });
       } else {
-        Glyphs.autoClean(5);
+        Glyphs.autoClean(6);
       }
     },
     harshAutoClean() {

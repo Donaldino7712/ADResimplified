@@ -135,21 +135,14 @@ export default {
       const gainedEP = gainedEternityPoints();
       this.currentEP.copyFrom(Currency.eternityPoints);
       this.gainedEP.copyFrom(gainedEP);
-      const hasNewContent = !PlayerProgress.realityUnlocked() &&
-        Currency.eternityPoints.exponent >= 4000 &&
-        !TimeStudy.reality.isBought;
       if (this.isDilation) {
-        this.type = hasNewContent
-          ? EP_BUTTON_DISPLAY_TYPE.DILATION_EXPLORE_NEW_CONTENT
-          : EP_BUTTON_DISPLAY_TYPE.DILATION;
+        this.type = EP_BUTTON_DISPLAY_TYPE.DILATION;
         this.currentTachyons.copyFrom(Currency.tachyonParticles);
         this.gainedTachyons.copyFrom(getTachyonGain(true));
         return;
       }
 
-      this.type = hasNewContent
-        ? EP_BUTTON_DISPLAY_TYPE.NORMAL_EXPLORE_NEW_CONTENT
-        : EP_BUTTON_DISPLAY_TYPE.NORMAL;
+      this.type = EP_BUTTON_DISPLAY_TYPE.NORMAL;
       if (!PlayerProgress.eternityUnlocked()) this.type = EP_BUTTON_DISPLAY_TYPE.FIRST_TIME;
       this.currentEPRate.copyFrom(gainedEP.dividedBy(
         TimeSpan.fromMilliseconds(player.records.thisEternity.realTime).totalMinutes));
@@ -166,9 +159,7 @@ const EP_BUTTON_DISPLAY_TYPE = {
   FIRST_TIME: 0,
   NORMAL: 1,
   CHALLENGE: 2,
-  DILATION: 3,
-  NORMAL_EXPLORE_NEW_CONTENT: 4,
-  DILATION_EXPLORE_NEW_CONTENT: 5
+  DILATION: 3
 };
 </script>
 
@@ -209,9 +200,11 @@ const EP_BUTTON_DISPLAY_TYPE = {
     </template>
 
     <!-- Challenge but can't eternity -->
-    <template v-else-if="type === 2 && !canEternity">
+    <!--
+      <template v-else-if="type === 2 && !canEternity">
       Other challenges await... I need to become Eternal
-    </template>
+      </template>
+    -->
 
     <!-- Challenge -->
     <template v-else-if="type === 2">
@@ -241,18 +234,6 @@ const EP_BUTTON_DISPLAY_TYPE = {
     <template v-else-if="type === 3">
       Eternity for <span :style="tachyonAmountStyle">{{ format(gainedTachyons, 2, 1) }}</span>
       {{ pluralize("Tachyon Particle", gainedTachyons) }}
-    </template>
-
-    <!-- New content available -->
-    <template v-else-if="type === 4 || type === 5">
-      <template v-if="type === 4">
-        Eternity for <span :style="amountStyle">{{ format(gainedEP, 2, 2) }}</span> EP
-      </template>
-      <template v-else>
-        Eternity for <span :style="tachyonAmountStyle">{{ format(gainedTachyons, 2, 1) }}</span> TP
-      </template>
-      <br>
-      You should explore a bit and look at new content before clicking me!
     </template>
   </button>
 </template>

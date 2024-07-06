@@ -96,9 +96,20 @@ export const normalTimeStudies = [
     cost: 2,
     requirement: [22],
     reqType: TS_REQUIREMENT_TYPE.AT_LEAST_ONE,
-    description: "Gain a multiplier to Eternity Points based on current Replicanti Galaxy amount",
-    effect: () => Math.max(Math.pow(Replicanti.galaxies.total, 4), 1),
-    formatEffect: value => formatX(value, 2, 0)
+    description: () => `Multiplier to all Dimensions
+    (Antimatter get ${formatX(1e280)}, Infinity get ${formatX(1e5)}, Time get ${formatX(50)})`,
+    // We have to do this slightly weird thing because of how the game works with effects
+    get effects() {
+      const ob = {
+        antimatter: DC.E280,
+        infinity: DC.E5,
+        time: 50
+      };
+      return Object.fromEntries(Object.entries(ob).map(x => [x[0], {
+        effect: x[1],
+        effectCondition: () => TimeStudy(33).canBeApplied
+      }]));
+    }
   },
   {
     id: 41,
@@ -131,20 +142,9 @@ export const normalTimeStudies = [
     cost: 3,
     requirement: [51],
     reqType: TS_REQUIREMENT_TYPE.AT_LEAST_ONE,
-    description: () => `Multiplier to all Dimensions
-      (Antimatter get ${formatX(1e280)}, Infinity get ${formatX(1e5)}, Time get ${formatX(50)})`,
-    // We have to do this slightly weird thing because of how the game works with effects
-    get effects() {
-      const ob = {
-        antimatter: DC.E280,
-        infinity: DC.E5,
-        time: 50
-      };
-      return Object.fromEntries(Object.entries(ob).map(x => [x[0], {
-        effect: x[1],
-        effectCondition: () => TimeStudy(61).canBeApplied
-      }]));
-    }
+    description: "Gain a multiplier to Eternity Points based on current Replicanti Galaxy amount",
+    effect: () => Math.max(Math.pow(Replicanti.galaxies.total, 4), 1),
+    formatEffect: value => formatX(value, 2, 0)
   },
   {
     id: 62,
@@ -454,9 +454,9 @@ export const normalTimeStudies = [
     cost: 400,
     requirement: [181, () => EternityChallenge(10).completions > 0 || Perk.bypassEC10Lock.canBeApplied],
     reqType: TS_REQUIREMENT_TYPE.ALL,
-    description: () => `After Eternity you permanently keep ${formatPercents(0.05)}
+    description: () => `After Eternity you permanently keep ${formatPercents(0.1)}
     of your Infinities as Banked Infinities`,
-    effect: () => Currency.infinities.value.times(0.05).floor()
+    effect: () => Currency.infinities.value.times(0.1).floor()
   },
   {
     id: 192,

@@ -124,7 +124,7 @@ function totalEPMult() {
       .times(ShopPurchase.EPPurchases.currentMult)
       .timesEffectsOf(
         EternityUpgrade.epMult,
-        TimeStudy(33),
+        TimeStudy(61),
         TimeStudy(122),
         TimeStudy(121),
         TimeStudy(123),
@@ -813,7 +813,7 @@ function laitelaBeatText(disabledDim) {
 function applyAutoprestige(diff) {
   // TODO:hevi
   Currency.infinityPoints.add(gainedInfinityPoints()
-    .times(Time.deltaTime * Effects.max(0, Achievement(116), PelleUpgrade.passiveIpGain))
+    .times(Time.deltaTime * Effects.max(0, Achievement(107), PelleUpgrade.passiveIpGain))
     .timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige));
 
   if (TeresaUnlocks.epGen.canBeApplied) {

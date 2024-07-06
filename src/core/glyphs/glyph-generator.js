@@ -53,15 +53,6 @@ class GlyphRNG {
 }
 
 export const GlyphGenerator = {
-  // Glyph choices will have more uniformly-distributed properties up for this many groups
-  // of uniform glyphs. The size of a uniformity group is 5, so this gives uniformly-distributed
-  // properties up to a reality count one more than 5x this value; the modified RNG for uniform
-  // glyphs excludes the first fixed glyph and only starts from the 2nd one onward
-  uniformityGroups: 4,
-  get isUniformityActive() {
-    return player.realities <= 5 * this.uniformityGroups;
-  },
-
   fakeSeed: Date.now() % Math.pow(2, 32),
   fakeSecondGaussian: null,
   /* eslint-disable lines-between-class-members */
@@ -265,6 +256,7 @@ export const GlyphGenerator = {
     const types = [...BASIC_GLYPH_TYPES];
     if (EffarigUnlock.reality.isUnlocked) types.push("effarig");
     if (FabricUpgrade(15).isBought && Ra.pets.effarig.unlocks[6].isUnlocked) types.push("reality");
+    if (FabricUpgrade(14).isBought && V.isFlipped) types.push("cursed");
     return types;
   }
 };

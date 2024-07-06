@@ -74,7 +74,6 @@ export const Pelle = {
     player.options.confirmations.glyphReplace = true;
     player.reality.automator.state.repeat = false;
     player.reality.automator.state.forceRestart = false;
-    player.celestials.enslaved.hasSecretStudy = false;
     if (BlackHoles.arePaused) BlackHoles.togglePause();
     player.celestials.pelle.doomed = true;
     Pelle.armageddon(false);
@@ -168,7 +167,7 @@ export const Pelle = {
 
   get disabledAchievements() {
     return [178, 175, 171, 168, 167, 166, 164, 158, 156, 155, 154, 148, 146, 145, 144, 143, 142, 141, 137, 134, 133,
-      132, 126, 123, 121, 118, 117, 116, 113, 111, 105, 104, 103, 96, 95, 93, 92, 91, 87, 86, 85, 84, 78, 76, 75, 74,
+      132, 126, 123, 121, 118, 117, 113, 111, 107, 105, 104, 103, 96, 95, 93, 92, 91, 87, 86, 85, 84, 78, 76, 75, 74,
       73, 72, 68, 66, 65, 64, 58, 56, 55, 54, 45, 37, 36, 34, 31, 28, 23, 21, 12];
   },
 
@@ -297,7 +296,7 @@ export const Pelle = {
 
   // Calculations assume this is in units of proportion per second (eg. 0.03 is 3% drain per second)
   get riftDrainPercent() {
-    return 0.03;
+    return 0.3;
   },
 
   get glyphMaxLevel() {

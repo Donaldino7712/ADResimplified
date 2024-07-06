@@ -16,9 +16,22 @@ export const GlyphSelection = {
   },
 
   glyphList(level) {
-    return GlyphGenerator.availableTypes.map(type => (type === "reality"
-      ? GlyphGenerator.realityGlyph(level.actualLevel * 0.8, GlyphGenerator.strength)
-      : GlyphGenerator.createGlyph(level, type)));
+    const glyphs = [];
+    let g;
+    GlyphGenerator.availableTypes.forEach(type => {
+      switch (type) {
+        case "reality":
+          g = GlyphGenerator.realityGlyph(level.actualLevel * 0.8, GlyphGenerator.strength);
+          break;
+        case "cursed":
+          g = GlyphGenerator.cursedGlyph(Math.max(6666 - level.actualLevel / 2, 666));
+          break;
+        default:
+          g = GlyphGenerator.createGlyph(level, type);
+      }
+      glyphs.push(g);
+    });
+    return glyphs;
   },
 
   generate(level = gainedGlyphLevel()) {
@@ -652,7 +665,6 @@ export function finishProcessReality(realityProps) {
   player.records.thisReality.bestRSminVal = 0;
   resetTimeDimensions();
   resetTickspeed();
-  AchievementTimers.marathon2.reset();
   Currency.infinityPoints.reset();
 
   if (RealityUpgrade(10).isBought) applyRUPG10();

@@ -38,12 +38,12 @@ export default {
     <div>
       <div>
         You have
-        <span class="c-machine-description__accent">{{ format(realityFabric, 2, 2) }}</span>
+        <span class="c-machine-description__accent">{{ formatPostBreak(realityFabric, 2, 2) }}</span>
         Reality Fabric.
       </div>
       <div>
         You are getting
-        {{ format(realityFabricPerRealSecond, 2, 2) }}
+        {{ formatPostBreak(realityFabricPerRealSecond, 2, 2) }}
         Reality Fabric per second.
       </div>
     </div>

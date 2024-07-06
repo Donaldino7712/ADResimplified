@@ -34,10 +34,10 @@ export default {
   },
   methods: {
     update() {
-      this.isVisible = (Enslaved.isRunning || Pelle.isDoomed) && player.celestials.enslaved.hasSecretStudy;
+      this.isVisible = Enslaved.isRunning && player.celestials.enslaved.hasSecretStudy;
     },
     handleClick() {
-      if (!(Enslaved.isRunning || Pelle.isDoomed) || player.celestials.enslaved.hasSecretStudy) return;
+      if (!Enslaved.isRunning || player.celestials.enslaved.hasSecretStudy) return;
       player.celestials.enslaved.hasSecretStudy = true;
       EnslavedProgress.secretStudy.giveProgress();
       Currency.timeTheorems.add(this.enslavedTT);

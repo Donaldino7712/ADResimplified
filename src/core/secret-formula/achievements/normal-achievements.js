@@ -694,8 +694,8 @@ export const normalAchievements = [
     description: "Eternity without having any 8th Antimatter Dimensions.",
     checkRequirement: () => AntimatterDimension(8).totalAmount.eq(0),
     checkEvent: GAME_EVENT.ETERNITY_RESET_BEFORE,
-    reward: "Time Study 33 also applies to Eternities at a reduced rate.",
-    effect: () => Math.max(TimeStudy(33).effectOrDefault(0) ** 0.5, 1),
+    reward: "Time Study 61 also applies to Eternities at a reduced rate.",
+    effect: () => Math.max(TimeStudy(61).effectOrDefault(0) ** 0.5, 1),
     formatEffect: value => formatX(value, 2, 2),
   },
   {
@@ -747,7 +747,9 @@ export const normalAchievements = [
     name: "Do you really need a guide for this?",
     get description() { return `Eternity with less than ${formatInt(10)} Infinities.`; },
     checkRequirement: () => Currency.infinities.lt(10),
-    checkEvent: GAME_EVENT.ETERNITY_RESET_BEFORE
+    checkEvent: GAME_EVENT.ETERNITY_RESET_BEFORE,
+    get reward() { return `You gain ${formatPercents(0.01)} of your Infinity Points gained on crunch each second`; },
+    effect: 0.01
   },
   {
     id: 108,
@@ -811,8 +813,6 @@ export const normalAchievements = [
     get description() { return `Eternity with only ${formatInt(1)} Infinity.`; },
     checkRequirement: () => Currency.infinities.lte(1),
     checkEvent: GAME_EVENT.ETERNITY_RESET_BEFORE,
-    get reward() { return `You gain ${formatPercents(0.01)} of your Infinity Points gained on crunch each second`; },
-    effect: 0.01
   },
   {
     id: 117,
@@ -879,12 +879,7 @@ export const normalAchievements = [
       return `Have your Infinity Power per second exceed your Infinity Power
       for ${formatInt(60)} consecutive seconds during a single Infinity.`;
     },
-    checkRequirement: () => AchievementTimers.marathon2
-      .check(
-        !EternityChallenge(7).isRunning &&
-        InfinityDimension(1).productionPerSecond.gt(Currency.infinityPower.value),
-        60
-      ),
+    checkRequirement: () => true,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER
   },
   {

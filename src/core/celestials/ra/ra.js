@@ -173,21 +173,24 @@ class RaPetState extends GameMechanicState {
   purchaseMemoryUpgrade() {
     if (!this.canBuyMemoryUpgrade || this.memoryUpgradeCapped) return;
 
-    this.memories -= this.memoryUpgradeCost;
+    if (!Ra.unlocks.chargedInfinityUpgradesAndFreeUpgrades.canBeApplied)
+      this.memories -= this.memoryUpgradeCost;
     this.data.memoryUpgrades++;
   }
 
   purchaseChunkUpgrade() {
     if (!this.canBuyChunkUpgrade || this.chunkUpgradeCapped) return;
 
-    this.memories -= this.chunkUpgradeCost;
+    if (!Ra.unlocks.chargedInfinityUpgradesAndFreeUpgrades.canBeApplied)
+      this.memories -= this.chunkUpgradeCost;
     this.data.chunkUpgrades++;
   }
 
   levelUp() {
     if (this.memories < this.requiredMemories) return;
 
-    this.memories -= this.requiredMemories;
+    if (!Ra.unlocks.chargedInfinityUpgradesAndFreeUpgrades.canBeApplied)
+      this.memories -= this.requiredMemories;
     this.level++;
     Ra.checkForUnlocks();
   }
@@ -341,7 +344,7 @@ export const Ra = {
     return player.celestials.ra.run;
   },
   get totalCharges() {
-    return Ra.unlocks.chargedInfinityUpgrades.effectOrDefault(0);
+    return Ra.unlocks.chargedInfinityUpgradesAndFreeUpgrades.effectOrDefault(0);
   },
   get chargesLeft() {
     return this.totalCharges - player.celestials.ra.charged.size;

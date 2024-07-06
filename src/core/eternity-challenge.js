@@ -21,7 +21,6 @@ export function startEternityChallenge() {
   player.records.thisEternity.maxAM = DC.D0;
   Currency.antimatter.reset();
   playerInfinityUpgradesOnReset();
-  AchievementTimers.marathon2.reset();
   ECTimeStudyState.invalidateCachedRequirements();
 }
 

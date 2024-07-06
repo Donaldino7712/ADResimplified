@@ -153,7 +153,7 @@ export const TimeTheorems = {
     if (ecStudy !== undefined) {
       totalCost += ecStudy.cost;
     }
-    if ((Enslaved.isRunning || Pelle.isDoomed) && player.celestials.enslaved.hasSecretStudy) totalCost -= 100;
+    if (Enslaved.isRunning && player.celestials.enslaved.hasSecretStudy) totalCost -= 100;
     return totalCost;
   }
 };

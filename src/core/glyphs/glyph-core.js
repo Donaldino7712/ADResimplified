@@ -550,19 +550,19 @@ export const Glyphs = {
         g.id !== glyph.id &&
         (g.level >= glyph.level || g.strength >= glyph.strength) &&
         ((g.effects & glyph.effects) === glyph.effects));
-    let compareThreshold = glyph.type === "effarig" || glyph.type === "reality" ? 1 : 5;
+    let compareThreshold = glyph.type === "effarig" || glyph.type === "reality" ? 1 : 6;
     compareThreshold = Math.clampMax(compareThreshold, threshold);
     if (toCompare.length < compareThreshold) return false;
     const comparedEffects = getGlyphEffectsFromBitmask(glyph.effects).filter(x => x.id.startsWith(glyph.type));
     const betterCount = toCompare.countWhere(other => !hasSomeBetterEffects(glyph, other, comparedEffects));
     return betterCount >= compareThreshold;
   },
-  // Note that this same function is called with different parameters for purge (5), harsh purge (1), and sac all (0)
+  // Note that this same function is called with different parameters for purge (6), harsh purge (1), and sac all (0)
   // If deleteGlyphs === false, we are running this from the modal and are doing so purely to *count* the number of
   // removed glyphs. In this case, we copy the inventory and run the purge on the copy - we need to be able to remove
   // glyphs as we go, or else the purge logic will be wrong (eg. 7 identical glyphs will all be "worse than 5 others")
-  autoClean(threshold = 5, deleteGlyphs = true) {
-    const isHarsh = threshold < 5;
+  autoClean(threshold = 6, deleteGlyphs = true) {
+    const isHarsh = threshold < 6;
     let toBeDeleted = 0;
     const inventoryCopy = deleteGlyphs ? undefined : this.fakePurgeInventory();
     // If the player hasn't unlocked sacrifice yet, prevent them from removing any glyphs.

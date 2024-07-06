@@ -52,6 +52,9 @@ export default {
     },
     isUseless() {
       return this.upgrade.isDisabled;
+    },
+    currencyName() {
+      return `Reality ${this.upgrade.id >= 16 ? "Shard" : "Fabric"}`;
     }
   },
   methods: {
@@ -62,7 +65,7 @@ export default {
       this.isRebuyable = upgrade.isRebuyable;
       this.isBought = upgrade.isBought || upgrade.isCapped;
       this.isPossible = upgrade.isPossible;
-      this.hideEstimate = this.canBeBought || this.isBought || this.isUseless;
+      this.hideEstimate = this.canBeBought || this.isBought || this.isUseless || Pelle.isDoomed;
       this.timeEstimate = this.hideEstimate ? null : FabricHandler.upgradeTimeEstimate(this.upgrade.cost);
     }
   }
@@ -105,7 +108,7 @@ export default {
           v-if="!isBought"
           :config="config"
           br
-          name="Reality Fabric"
+          :name="currencyName"
         />
       </span>
     </button>

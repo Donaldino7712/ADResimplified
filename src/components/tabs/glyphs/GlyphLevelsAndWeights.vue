@@ -148,7 +148,7 @@ export default {
       }
       this.showAutoAdjustWeights = Achievement(165).isUnlocked;
       this.isAutoAdjustWeightsOn = player.celestials.effarig.autoAdjustGlyphWeights;
-      this.fabricVisible = FabricUpgrade(10).isUnlocked;
+      this.fabricVisible = FabricUpgrade(10).isBought;
     },
     rowStyle(factor) {
       const row = this.visibleRows.findIndex(r => r === factor) + 1;
