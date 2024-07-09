@@ -18,8 +18,8 @@ export default {
     };
   },
   computed: {
-    rowCount: () => Glyphs.totalSlots / 10,
-    colCount: () => 10,
+    rowCount: () => Glyphs.totalSlots / 12,
+    colCount: () => 12,
   },
   created() {
     this.on$(GAME_EVENT.GLYPHS_CHANGED, this.glyphsChanged);

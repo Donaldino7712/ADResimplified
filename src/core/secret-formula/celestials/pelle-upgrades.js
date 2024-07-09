@@ -30,7 +30,7 @@ export const pelleUpgrades = {
     id: "timeSpeedMult",
     description: "Gain a multiplier to game speed",
     cost: [20, 1e3, 30, 1e5],
-    effect: x => Decimal.pow(1.3, x),
+    effect: x => Decimal.pow(1.7, x),
     formatEffect: x => formatX(x, 2, 2),
     cap: 35
   }),
@@ -46,7 +46,7 @@ export const pelleUpgrades = {
     id: "infConversion",
     description: "Increase Infinity Power conversion rate",
     cost: [40, 1e3, 20, 1e18],
-    effect: x => (x * 3.5) ** 0.37,
+    effect: x => (x * 4.7) ** 0.44,
     formatEffect: x => `+${format(x, 2, 2)}`,
     cap: 21
   }),
@@ -54,7 +54,7 @@ export const pelleUpgrades = {
     id: "galaxyPower",
     description: "Multiply Galaxy power",
     cost: [1000, 1e3, 10, 1e30],
-    effect: x => 1 + x / 50,
+    effect: x => 1 + x / 25,
     formatEffect: x => formatX(x, 2, 2),
     cap: 9
   }),

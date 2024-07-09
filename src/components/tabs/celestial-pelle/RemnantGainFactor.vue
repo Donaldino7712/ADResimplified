@@ -108,10 +108,10 @@ export default {
                 {{ format(Math.log10(best.ep.add(1).log10()*dilationMult[0] + 2), 2, 2) }}
               </div>
               <div class="l-remnant-factors-item">
-                {{ format(1.64, 2, 2) }}
+                {{ format(1.46, 2, 2) }}
               </div>
               <div class="l-remnant-factors-item">
-                {{ format(7.5, 2, 2) }}
+                {{ format(8) }}
               </div>
               <div class="l-remnant-factors-item">
                 {{ format(remnants, 2, 0) }}

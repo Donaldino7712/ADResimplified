@@ -1053,6 +1053,8 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  width: 72rem;
+  padding-left: 1rem;
 }
 
 .l-glyph-inventory__row {

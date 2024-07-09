@@ -256,7 +256,6 @@ export const GlyphGenerator = {
     const types = [...BASIC_GLYPH_TYPES];
     if (EffarigUnlock.reality.isUnlocked) types.push("effarig");
     if (FabricUpgrade(15).isBought && Ra.pets.effarig.unlocks[6].isUnlocked) types.push("reality");
-    if (FabricUpgrade(14).isBought && V.isFlipped) types.push("cursed");
     return types;
   }
 };

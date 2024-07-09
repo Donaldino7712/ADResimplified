@@ -748,7 +748,7 @@ export const normalAchievements = [
     get description() { return `Eternity with less than ${formatInt(10)} Infinities.`; },
     checkRequirement: () => Currency.infinities.lt(10),
     checkEvent: GAME_EVENT.ETERNITY_RESET_BEFORE,
-    get reward() { return `You gain ${formatPercents(0.01)} of your Infinity Points gained on crunch each second`; },
+    get reward() { return `You gain ${formatPercents(0.01)} of your Infinity Points gained on crunch each second.`; },
     effect: 0.01
   },
   {
@@ -1368,7 +1368,7 @@ export const normalAchievements = [
   },
   {
     id: 187,
-    name: "name tbd",
+    name: "TBD",
     description: `Fill all Rifts.`,
     checkRequirement: () => PelleRifts.all.every(r => r.percentage === 1 || r.spentPercentage >= 1),
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,

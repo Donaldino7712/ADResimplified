@@ -8449,7 +8449,7 @@ kbd {
 .l-player-glyphs-column {
   display: flex;
   flex-direction: column;
-  width: 65rem;
+  width: 77rem;
   justify-content: flex-start;
   padding-top: 1rem;
 }

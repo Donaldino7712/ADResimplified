@@ -68,6 +68,13 @@ class FabricUpgradeState extends BitPurchasableMechanicState {
   get isEffectActive() {
     return this.isBought && !this.isDisabled;
   }
+
+  onPurchased() {
+    const id = this.id;
+    if (id === 13) {
+      Glyphs.refreshActive();
+    }
+  }
 }
 
 class RebuyableFabricUpgradeState extends RebuyableMechanicState {

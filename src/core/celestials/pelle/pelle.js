@@ -276,14 +276,14 @@ export const Pelle = {
     }
 
     const gain = (
-      (Math.log10(am + 2) + Math.log10(ip + 2) + Math.log10(ep + 2)) / 1.64
-    ) ** 7.5;
+      (Math.log10(am + 2) + Math.log10(ip + 2) + Math.log10(ep + 2)) / 1.46
+    ) ** 8;
 
     return gain < 1 ? gain : Math.floor(gain - this.cel.remnants);
   },
 
   realityShardGain(remnants) {
-    return Decimal.pow(10, remnants ** (1 / 7.5) * 4).minus(1).div(1e3);
+    return Decimal.pow(10, remnants ** (1 / 7.5) * 4).minus(1).div(400);
   },
 
   get realityShardGainPerSecond() {
@@ -308,7 +308,7 @@ export const Pelle = {
   },
 
   antimatterDimensionMult(x) {
-    return Decimal.pow(10, Math.log10(x + 1) + x ** 5.1 / 1e3 + 4 ** x / 1e19);
+    return Decimal.pow(10, x ** 1.1 + Math.log10(x + 1) + x ** 5.1 / 1e3 + 4 ** x / 1e19);
   },
 
   get activeGlyphType() {

@@ -23,7 +23,7 @@ export const fabricUpgrades = [
     name: "Infinite Improvement",
     id: 1,
     cost: 80,
-    description: "Reality Fabric improves the Infinity Pount formula",
+    description: "Reality Fabric improves the Infinity Point formula",
     effect: () => {
       let e = Currency.realityFabric.value.pow(0.2);
       if (e.gt(25)) e = DC.D25.add(e.sub(25).pow(0.2));
@@ -164,10 +164,10 @@ export const fabricUpgrades = [
     effect: 1
   },
   {
-    name: "Deterministic Decisions (NIY)",
+    name: "Fabric Upgrade 14 (NIY)",
     id: 14,
     cost: DC.E308,
-    description: "You can pick a Cursed Glyph with modified level on Reality if you have unlocked Cursed Glyphs"
+    description: "TBD"
   },
   {
     name: "Fabric Upgrade 15",
@@ -180,7 +180,7 @@ export const fabricUpgrades = [
     id: 16,
     initialCost: 100,
     costMult: 1e3,
-    get description() { return "???"; },
+    description: "???",
     effect: p => Math.max((Currency.realityShards.value.log10() - 2) ** p, 1),
     formatEffect: value => formatX(value, 2, 2)
   })

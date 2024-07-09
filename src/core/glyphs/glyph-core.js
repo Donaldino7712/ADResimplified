@@ -65,20 +65,20 @@ export const Glyphs = {
   },
   get activeSlotCount() {
     if (Pelle.isDoomed) {
-      if (PelleRifts.vacuum.milestones[0].canBeApplied) return 1;
+      if (PelleRifts.vacuum.milestones[0].canBeApplied) return 2;
       return 0;
     }
     return 3 + Effects.sum(RealityUpgrade(9), RealityUpgrade(24), FabricUpgrade(13));
   },
   get protectedSlots() {
-    return 10 * player.reality.glyphs.protectedRows;
+    return 12 * player.reality.glyphs.protectedRows;
   },
   get totalSlots() {
-    return 120;
+    return 180;
   },
   changeProtectedRows(rowChange) {
     // Always ensure at least one unprotected row for new glyphs, to prevent some potentially odd-looking behavior
-    const newRows = Math.clamp(player.reality.glyphs.protectedRows + rowChange, 0, this.totalSlots / 10 - 1);
+    const newRows = Math.clamp(player.reality.glyphs.protectedRows + rowChange, 0, this.totalSlots / 12 - 1);
     const rowsToAdd = newRows - player.reality.glyphs.protectedRows;
 
     if (rowsToAdd > 0) {
@@ -90,14 +90,14 @@ export const Glyphs = {
         // Try to shift down all the unprotected rows from top to bottom, repeating until either no shifting is
         // possible or we've freed up the row
         let hasMoved = false;
-        for (let orig = this.protectedSlots / 10 + rowsMoved; !hasMoved && orig < this.totalSlots / 10; orig++) {
+        for (let orig = this.protectedSlots / 12 + rowsMoved; !hasMoved && orig < this.totalSlots / 12; orig++) {
           hasMoved = hasMoved || this.moveGlyphRow(orig, orig + 1);
         }
         // No movement happened this scan; there's nothing else we can do here
         if (!hasMoved) break;
         // Check if the topmost unprotected row is free. This isn't necessarily guaranteed because it could come from
         // merging lower rows, which means the empty row isn't in the right spot
-        if (!this.glyphIndexArray.some(idx => Math.floor(idx / 10) === this.protectedSlots / 10)) {
+        if (!this.glyphIndexArray.some(idx => Math.floor(idx / 12) === this.protectedSlots / 12)) {
           rowsMoved++;
         }
       }
@@ -488,7 +488,7 @@ export const Glyphs = {
     let totalDesiredPadding = 0;
     for (const t of Object.values(byType)) {
       t.glyphs.sort(sortFunction);
-      t.padding = Math.ceil(t.glyphs.length / 10) * 10 - t.glyphs.length;
+      t.padding = Math.ceil(t.glyphs.length / 12) * 12 - t.glyphs.length;
       totalDesiredPadding += t.padding;
     }
     // If we want more padding than we actually have available, trim it down until it fits

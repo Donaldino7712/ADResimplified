@@ -256,7 +256,7 @@ export const imaginaryUpgrades = [
     formatCost: x => format(x, 1),
     requirement: () => `Reach ${format("1e150000000000")} antimatter in Effarig's Reality with
       at least ${formatInt(4)} Cursed Glyphs equipped`,
-    // Note: 4 cursed glyphs is -12 glyph count, but equipping a positive glyph in the last slot is allowed
+    // Note: 4 cursed glyphs is -12 glyph count, but equipping two positive glyphs in the other slots is allowed
     hasFailed: () => !Effarig.isRunning || player.requirementChecks.reality.maxGlyphs > -10,
     checkRequirement: () => Effarig.isRunning && player.requirementChecks.reality.maxGlyphs <= -10 &&
       Currency.antimatter.value.exponent >= 1.5e11,
