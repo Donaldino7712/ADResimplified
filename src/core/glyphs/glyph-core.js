@@ -107,14 +107,14 @@ export const Glyphs = {
       let rowsMoved = 0;
       while (rowsMoved < -rowsToAdd) {
         let hasMoved = false;
-        for (let orig = this.protectedSlots / 10 - rowsMoved - 1; !hasMoved && orig > 0; orig--) {
+        for (let orig = this.protectedSlots / 12 - rowsMoved - 1; !hasMoved && orig > 0; orig--) {
           hasMoved = hasMoved || this.moveGlyphRow(orig, orig - 1);
         }
         if (!hasMoved) break;
-        if (!this.glyphIndexArray.some(idx => Math.floor(idx / 10) === this.protectedSlots / 10 - 1)) {
+        if (!this.glyphIndexArray.some(idx => Math.floor(idx / 12) === this.protectedSlots / 12 - 1)) {
           rowsMoved++;
           // In addition to all the protected glyph movement, we also move the entire unprotected inventory up one row
-          for (let orig = this.protectedSlots / 10 - rowsMoved; orig < this.totalSlots / 10; orig++) {
+          for (let orig = this.protectedSlots / 12 - rowsMoved; orig < this.totalSlots / 12; orig++) {
             this.moveGlyphRow(orig, orig - 1);
           }
         }
@@ -129,26 +129,26 @@ export const Glyphs = {
   // isn't possible. Returns a boolean indicating success/failure on glyph moving. Row is 0-indexed
   moveGlyphRow(orig, dest) {
     if (!player.reality.moveGlyphsOnProtection) return false;
-    if (orig >= this.totalSlots / 10 || dest >= this.totalSlots / 10) return false;
-    if (this.glyphIndexArray.some(idx => Math.floor(idx / 10) === dest)) {
+    if (orig >= this.totalSlots / 12 || dest >= this.totalSlots / 12) return false;
+    if (this.glyphIndexArray.some(idx => Math.floor(idx / 12) === dest)) {
       // Destination row has some glyphs, attempt to merge the rows
-      const hasOverlap = [...Array(10).keys()]
-        .some(col => this.inventory[10 * orig + col] !== null && this.inventory[10 * dest + col] !== null);
+      const hasOverlap = [...Array(12).keys()]
+        .some(col => this.inventory[12 * orig + col] !== null && this.inventory[12 * dest + col] !== null);
       if (hasOverlap) return false;
-      for (let col = 0; col < 10; col++) {
-        const glyph = this.inventory[10 * orig + col];
+      for (let col = 0; col < 12; col++) {
+        const glyph = this.inventory[12 * orig + col];
         if (glyph !== null) {
-          this.moveToSlot(glyph, 10 * dest + col);
+          this.moveToSlot(glyph, 12 * dest + col);
         }
       }
       this.validate();
       return true;
     }
     // Destination row is empty, just move the glyphs
-    for (let col = 0; col < 10; col++) {
-      const glyph = this.inventory[10 * orig + col];
+    for (let col = 0; col < 12; col++) {
+      const glyph = this.inventory[12 * orig + col];
       if (glyph !== null) {
-        this.moveToSlot(glyph, 10 * dest + col);
+        this.moveToSlot(glyph, 12 * dest + col);
       }
     }
     this.validate();
