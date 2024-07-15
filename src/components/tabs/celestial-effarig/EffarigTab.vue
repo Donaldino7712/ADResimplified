@@ -23,8 +23,7 @@ export default {
       runUnlocked: false,
       quote: "",
       isRunning: false,
-      vIsFlipped: false,
-      relicShardRarityAlwaysMax: false
+      vIsFlipped: false
     };
   },
   computed: {
@@ -81,7 +80,6 @@ export default {
       this.runUnlocked = EffarigUnlock.run.isUnlocked;
       this.isRunning = Effarig.isRunning;
       this.vIsFlipped = V.isFlipped;
-      this.relicShardRarityAlwaysMax = Ra.unlocks.extraGlyphChoicesAndRelicShardRarityAlwaysMax.canBeApplied;
     },
     startRun() {
       if (this.isDoomed) return;
@@ -102,13 +100,8 @@ export default {
         <div class="c-effarig-relics">
           You have {{ quantify("Relic Shard", relicShards, 2, 0) }}.
           <br>
-          <span v-if="relicShardRarityAlwaysMax">
+          <span>
             The rarity of new Glyphs is being increased by +{{ formatPercents(shardRarityBoost, 2) }}.
-          </span>
-          <span v-else>
-            Each new Glyph will have its rarity increased
-            <br>
-            by a random value between +{{ formatPercents(0) }} and +{{ formatPercents(shardRarityBoost, 2) }}.
           </span>
           <span v-if="shardPower > 1">
             <br>

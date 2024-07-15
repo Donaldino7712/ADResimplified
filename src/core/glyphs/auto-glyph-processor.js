@@ -37,7 +37,7 @@ export const AutoGlyphProcessor = {
   // higher numbers correspond to better glyphs. This value is also displayed on tooltips when it depends
   // on only the glyph itself and not external factors.
   filterValue(glyph) {
-    if (["companion", "reality"].includes(glyph.type)) return Infinity;
+    if (glyph.type === "companion") return Infinity;
     if (glyph.type === "cursed") return -Infinity;
     switch (this.scoreMode) {
       case AUTO_GLYPH_SCORE.LOWEST_SACRIFICE:
@@ -70,12 +70,11 @@ export const AutoGlyphProcessor = {
   thresholdValue(glyph) {
     // Glyph filter settings are undefined for companion/cursed/reality glyphs, so we return the lowest possible
     // value on the basis that we never want to automatically get rid of them
-    if (this.types[glyph.type] === undefined) return -Number.MAX_VALUE;
+    if (this.types[glyph.type] === undefined && glyph.type !== "reality") return -Number.MAX_VALUE;
     return Number.MAX_VALUE;
   },
   // TODO:glyf
   wouldKeep(glyph) {
-    if (this.scoreMode === AUTO_GLYPH_SCORE.RANDOM) return true;
     return this.filterValue(glyph) >= this.thresholdValue(glyph);
   },
   // Given a list of glyphs, pick the one with the highest score (or a random one)

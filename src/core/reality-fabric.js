@@ -62,7 +62,7 @@ class FabricUpgradeState extends BitPurchasableMechanicState {
   }
 
   get isDisabled() {
-    return (Pelle.isDoomed && this.id < 16) || (!Pelle.isDoomed && this.id >= 16);
+    return Pelle.isDoomed;
   }
 
   get isEffectActive() {
@@ -79,7 +79,7 @@ class FabricUpgradeState extends BitPurchasableMechanicState {
 
 class RebuyableFabricUpgradeState extends RebuyableMechanicState {
   get currency() {
-    return this.id >= 16 ? Currency.realityShards : Currency.realityFabric;
+    return Currency.realityFabric;
   }
 
   get boughtAmount() {
@@ -95,7 +95,7 @@ class RebuyableFabricUpgradeState extends RebuyableMechanicState {
   }
 
   get isDisabled() {
-    return (Pelle.isDoomed && this.id < 16) || (!Pelle.isDoomed && this.id >= 16);
+    return Pelle.isDoomed;
   }
 
   get isEffectActive() {

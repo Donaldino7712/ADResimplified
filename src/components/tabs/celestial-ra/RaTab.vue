@@ -24,6 +24,8 @@ export default {
       petWithRemembrance: "",
       isRunning: false,
       memoryBoosts: "",
+      remembrancePow: 1,
+      remembrancePowUnlocked: false,
     };
   },
   computed: {
@@ -95,6 +97,8 @@ export default {
       this.petWithRemembrance = Ra.petWithRemembrance;
       this.isRunning = Ra.isRunning;
       this.memoryBoosts = Ra.memoryBoostResources;
+      this.remembrancePow = Ra.unlocks.remembrancePow.effectValue;
+      this.remembrancePowUnlocked = Ra.unlocks.remembrancePow.canBeApplied;
     },
     startRun() {
       if (this.isDoomed) return;
@@ -169,8 +173,9 @@ export default {
           Remembrance
         </h1>
         <span :style="petStyle">
-          Whichever Celestial has Remembrance will get {{ formatX(remembranceMult) }} Memory Chunk gain. The other
-          Celestials will get {{ formatX(remembranceNerf, 1, 1) }} Memory Chunk gain.
+          Whichever Celestial has Remembrance will get {{ formatX(remembranceMult) }}
+          <template v-if="remembrancePowUnlocked"> and {{ formatPow(remembrancePow, 1, 1) }}</template>
+          Memory Chunk gain. The other Celestials will get {{ formatX(remembranceNerf, 1, 1) }} Memory Chunk gain.
         </span>
         <div
           v-if="hasRemembrance"

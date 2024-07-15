@@ -127,6 +127,7 @@ class RaPetState extends GameMechanicState {
       Effects.product(Ra.unlocks.continuousTTBoost.effects.memoryChunks, GlyphSacrifice.reality);
     if (this.hasRemembrance) res *= Ra.remembrance.multiplier;
     else if (Ra.petWithRemembrance) res *= Ra.remembrance.nerf;
+    if (this.hasRemembrance && Ra.unlocks.remembrancePow.canBeApplied) res **= Ra.unlocks.remembrancePow.effectValue;
     return res;
   }
 
@@ -139,19 +140,19 @@ class RaPetState extends GameMechanicState {
   }
 
   get memoryUpgradeCurrentMult() {
-    return Math.pow(1.3, this.data.memoryUpgrades);
+    return Math.pow(1.5, this.data.memoryUpgrades);
   }
 
   get chunkUpgradeCurrentMult() {
-    return Math.pow(1.5, this.data.chunkUpgrades);
+    return Math.pow(1.8, this.data.chunkUpgrades);
   }
 
   get memoryUpgradeCost() {
-    return 1000 * Math.pow(5, this.data.memoryUpgrades);
+    return 250 * Math.pow(5, this.data.memoryUpgrades);
   }
 
   get chunkUpgradeCost() {
-    return 5000 * Math.pow(25, this.data.chunkUpgrades);
+    return 1250 * Math.pow(25, this.data.chunkUpgrades);
   }
 
   get canBuyMemoryUpgrade() {
@@ -279,7 +280,7 @@ export const Ra = {
     if (level >= Ra.levelCap) return Infinity;
     const adjustedLevel = level + Math.pow(level, 2) / 10;
     const post15Scaling = Math.pow(1.5, Math.max(0, level - 15));
-    return Math.floor(Math.pow(adjustedLevel, 5.52) * post15Scaling * 1e6);
+    return Math.floor(Math.pow(adjustedLevel, 5.1) * post15Scaling * 5e5);
   },
   // Returns a string containing a time estimate for gaining a specific amount of exp (UI only)
   timeToGoalString(pet, expToGain) {
@@ -332,7 +333,7 @@ export const Ra = {
   },
   // This gets widely used in lots of places since the relevant upgrade is "all forms of continuous non-dimension
   // production", which in this case is infinities, eternities, replicanti, dilated time, and time theorem generation.
-  // It also includes the 1% IP time study, Teresa's 1% EP upgrade, and the charged RM generation upgrade. Note that
+  // It also includes the 1% IP achievement, Teresa's 1% EP upgrade, and the charged RM generation upgrade. Note that
   // removing the hardcap of 10 may cause runaways.
   theoremBoostFactor() {
     return Math.min(10, Math.max(0, Currency.timeTheorems.value.pLog10() - 350) / 50);

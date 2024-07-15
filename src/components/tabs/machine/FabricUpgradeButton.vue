@@ -52,9 +52,6 @@ export default {
     },
     isUseless() {
       return this.upgrade.isDisabled;
-    },
-    currencyName() {
-      return `Reality ${this.upgrade.id >= 16 ? "Shard" : "Fabric"}`;
     }
   },
   methods: {
@@ -108,7 +105,7 @@ export default {
           v-if="!isBought"
           :config="config"
           br
-          :name="currencyName"
+          name="Reality Fabric"
         />
       </span>
     </button>

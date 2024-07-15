@@ -922,7 +922,7 @@ is higher RM gain than linear above ${formatPostBreak(DC.C10P16000D3)} EP.
 <br>
 <br>
 Glyph level scales off of a combination of Eternity Points, Replicanti, and Dilated Time, with a minimum level of
-${formatInt(1)}. The type, effects, and rarity of Glyphs are randomized.
+${formatInt(1)}.
 <br>
 <br>
 You get exactly ${formatInt(1)} Perk Point per Reality.
@@ -1108,6 +1108,26 @@ Additionally, the PAUSE command may behave oddly due to it also being based on r
       isUnlocked: () => Player.automatorUnlocked,
       tags: ["automation", "reality", "code", "script", "endgame", "lategame"],
       tab: "automation/automator"
+    }, {
+      name: "The Machine",
+      info: () => `
+The Machine is a major feature introduced in this mod, unlocked by purchasing the RMCH perk.
+Reality Fabric can be used to purchase Fabric Upgrades which significantly improve pre-Reality aspects
+of the game and most things related to Glyphs.
+<br>
+You gain Reality Fabric based on your current Reality Machines and the current formula on the Realistic Refinement
+upgrade.
+For instance, having ${format(1e30)} RM and no purchases of Realistic Refinement would get you a base of 30 Reality
+Fabric per second (log10(${format(1e30)})).
+Once you upgrade Realistic Refinement past log2(x), the formula changes to x^y.
+This may initially cause a drop in Reality Fabric production, but eventually it will scale much better.
+<br>
+Similarly to Reality and Black Hole upgrades, the cost scaling for repeatable Fabric Upgrades (the fourth column)
+increases faster at 1e30 Reality Fabric, (1) and even more so past 1.8e308 Reality Fabric.
+`,
+      isUnlocked: () => FabricHandler.isUnlocked,
+      tags: ["reality", "endgame", "lategame"],
+      tab: ""
     }, {
       name: "Black Hole",
       info: () => `

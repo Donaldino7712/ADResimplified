@@ -164,13 +164,15 @@ export const fabricUpgrades = [
     effect: 1
   },
   {
-    name: "Fabric Upgrade 14 (NIY)",
+    name: "Selective Singularities",
     id: 14,
-    cost: DC.E308,
-    description: "TBD"
+    cost: DC.E450,
+    description: "Reality Fabric gives a multiplier to Singularities",
+    effect: () => (Currency.realityFabric.value.log10() / 400) ** 2,
+    formatEffect: value => formatX(value, 2, 2)
   },
   {
-    name: "Fabric Upgrade 15",
+    name: "Reactive Realities",
     id: 15,
     cost: DC.E400,
     description: "You can pick a Reality Glyph with reduced level on Reality if you have unlocked Reality Glyphs"

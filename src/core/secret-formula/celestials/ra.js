@@ -7,7 +7,7 @@ export const ra = {
       chunkGain: "Eternity Points",
       memoryGain: "current RM",
       requiredUnlock: () => undefined,
-      rawMemoryChunksPerSecond: () => 8 * Math.pow(Currency.eternityPoints.value.pLog10() / 1e4, 3),
+      rawMemoryChunksPerSecond: () => 50 * Math.pow(Currency.eternityPoints.value.pLog10() / 1e4, 3),
       memoryProductionMultiplier: () => Ra.unlocks.teresaXP.effectOrDefault(1)
     },
     effarig: {
@@ -17,7 +17,7 @@ export const ra = {
       chunkGain: "Relic Shards gained",
       memoryGain: "best Glyph level",
       requiredUnlock: () => Ra.unlocks.effarigUnlock,
-      rawMemoryChunksPerSecond: () => 8 * Math.pow(Effarig.shardsGained, 0.1),
+      rawMemoryChunksPerSecond: () => 50 * Math.pow(Effarig.shardsGained, 0.1),
       memoryProductionMultiplier: () => Ra.unlocks.effarigXP.effectOrDefault(1)
     },
     enslaved: {
@@ -27,7 +27,7 @@ export const ra = {
       chunkGain: "Time Shards",
       memoryGain: "total time played",
       requiredUnlock: () => Ra.unlocks.enslavedUnlock,
-      rawMemoryChunksPerSecond: () => 8 * Math.pow(Currency.timeShards.value.pLog10() / 3e5, 2),
+      rawMemoryChunksPerSecond: () => 50 * Math.pow(Currency.timeShards.value.pLog10() / 3e5, 2),
       memoryProductionMultiplier: () => Ra.unlocks.enslavedXP.effectOrDefault(1)
     },
     v: {
@@ -37,7 +37,7 @@ export const ra = {
       chunkGain: "Infinity Power",
       memoryGain: "total Memory levels",
       requiredUnlock: () => Ra.unlocks.vUnlock,
-      rawMemoryChunksPerSecond: () => 8 * Math.pow(Currency.infinityPower.value.pLog10() / 1e7, 1.5),
+      rawMemoryChunksPerSecond: () => 50 * Math.pow(Currency.infinityPower.value.pLog10() / 1e7, 1.5),
       memoryProductionMultiplier: () => Ra.unlocks.vXP.effectOrDefault(1)
     }
   },
@@ -63,7 +63,7 @@ export const ra = {
     teresaXP: {
       id: 2,
       reward: "All Memory Chunks produce more Memories based on Reality Machines",
-      effect: () => 1 + Math.pow(Currency.realityMachines.value.pLog10() / 100, 0.5),
+      effect: () => 1 + Math.pow(Currency.realityMachines.value.pLog10(), 0.5),
       pet: "teresa",
       level: 5,
       displayIcon: `Ϟ`
@@ -99,11 +99,9 @@ export const ra = {
       level: 25,
       displayIcon: `<i class="far fa-dot-circle"></i>`
     },
-    extraGlyphChoicesAndRelicShardRarityAlwaysMax: {
+    glyphEffectCount: {
       id: 7,
-      reward: () => `Get ${formatX(2)} Glyph choices and the bonus to Glyph rarity from Relic Shards
-        is always its maximum value`,
-      effect: 2,
+      reward: () => `Glyphs always have ${formatInt(4)} effects, and Effarig Glyphs can now have up to ${formatInt(7)}`,
       pet: "effarig",
       level: 1,
       displayIcon: `<i class="fas fa-grip-horizontal"></i>`
@@ -119,14 +117,15 @@ export const ra = {
     effarigXP: {
       id: 9,
       reward: "All Memory Chunks produce more Memories based on highest Glyph level",
-      effect: () => 1 + player.records.bestReality.glyphLevel / 7000,
+      effect: () => 1 + player.records.bestReality.glyphLevel / 350,
       pet: "effarig",
       level: 5,
       displayIcon: `<span class="fas fa-clone"></span>`
     },
-    glyphEffectCount: {
+    remembrancePow: {
       id: 10,
-      reward: () => `Glyphs always have ${formatInt(4)} effects, and Effarig Glyphs can now have up to ${formatInt(7)}`,
+      reward: () => `Remembrance now also raises Memory Chunk gain by ${formatPow(1.2, 1, 1)}`,
+      effect: 1.2,
       pet: "effarig",
       level: 10,
       displayIcon: `<span class="fas fa-braille"></span>`
@@ -148,8 +147,7 @@ export const ra = {
     },
     maxGlyphRarityAndShardSacrificeBoost: {
       id: 13,
-      reward: () => `Glyphs are always generated with ${formatPercents(1)} rarity and
-        Glyph Sacrifice gain is raised to a power based on Relic Shards`,
+      reward: "Glyph Sacrifice gain is raised to a power based on Relic Shards",
       effect: () => 1 + Effarig.maxRarityBoost / 100,
       pet: "effarig",
       level: 25,
@@ -178,7 +176,7 @@ export const ra = {
     enslavedXP: {
       id: 16,
       reward: "All Memory Chunks produce more Memories based on total time played",
-      effect: () => 1 + Math.log10(player.records.totalTimePlayed) / 200,
+      effect: () => 1 + Math.log10(player.records.totalTimePlayed) / 40,
       pet: "enslaved",
       level: 5,
       displayIcon: `<span class="fas fa-stopwatch"></span>`
@@ -241,7 +239,7 @@ export const ra = {
     vXP: {
       id: 23,
       reward: "All Memory Chunks produce more Memories based on total Celestial levels.",
-      effect: () => 1 + Ra.totalPetLevel / 50,
+      effect: () => 1 + Ra.totalPetLevel / 10,
       pet: "v",
       level: 5,
       displayIcon: `<span class="fas fa-book"></span>`

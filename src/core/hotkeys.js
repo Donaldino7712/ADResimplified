@@ -367,9 +367,7 @@ GameKeyboard.bind(
 
 // Toggle autobuyers
 function toggleAutobuyer(buyer) {
-  if (buyer.disabledByContinuum) {
-    GameUI.notify.info("Continuum is enabled, you cannot alter this autobuyer");
-  } else if (buyer.isUnlocked) {
+  if (buyer.isUnlocked) {
     buyer.toggle();
     GameUI.notify.info(`${buyer.name} Autobuyer toggled ${(buyer.isActive) ? "on" : "off"}`);
   }

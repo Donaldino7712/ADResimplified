@@ -95,7 +95,7 @@ export const imaginaryUpgrades = [
     initialCost: 8e9,
     costMult: 2000,
     description: () => `Increase Singularity gain`,
-    effect: 1,
+    effect: 3,
     formatEffect: value => `${formatX(1 + value, 2)}`
   }),
   {

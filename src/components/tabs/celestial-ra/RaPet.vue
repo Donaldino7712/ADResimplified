@@ -171,7 +171,7 @@ export default {
                   {{ name }}'s Recollection
                 </div>
                 <div class="c-ra-pet-upgrade__tooltip__description">
-                  Gain {{ formatPercents(0.3) }} more Memories
+                  Gain {{ formatPercents(0.5) }} more Memories
                 </div>
                 <div class="c-ra-pet-upgrade__tooltip__footer">
                   Cost: {{ quantify("Memory", memoryUpgradeCost, 2, 2) }}
@@ -215,7 +215,7 @@ export default {
                   {{ name }}'s Fragmentation
                 </div>
                 <div class="c-ra-pet-upgrade__tooltip__description">
-                  Gain {{ formatPercents(0.5) }} more Memory Chunks
+                  Gain {{ formatPercents(0.8) }} more Memory Chunks
                 </div>
                 <div class="c-ra-pet-upgrade__tooltip__footer">
                   Cost: {{ quantify("Memory", chunkUpgradeCost, 2, 2) }}
