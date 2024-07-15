@@ -19,6 +19,7 @@ export default {
       isUnlocked: false,
       isPaused: false,
       isEnslaved: false,
+      isLaitela: false,
       pauseMode: 0,
       detailedBH2: "",
       isPermanent: false,
@@ -59,6 +60,7 @@ export default {
         this.startAnimation();
       }
       this.isEnslaved = Enslaved.isRunning;
+      this.isLaitela = Laitela.isRunning;
       this.isPermanent = BlackHoles.arePermanent;
       this.pauseMode = player.blackHoleAutoPauseMode;
       this.hasBH2 = BlackHole(2).isUnlocked;
@@ -212,7 +214,10 @@ export default {
           Active time percent: {{ formatPercents(blackHoleUptime[0], 3) }}
           <span v-if="hasBH2">and {{ formatPercents(blackHoleUptime[1], 3) }}</span>
         </div>
-        <BlackHoleChargingSliders class="l-enslaved-shop-container" />
+        <BlackHoleChargingSliders
+          v-if="!isLaitela"
+          class="l-enslaved-shop-container"
+        />
       </div>
       <div :class="gridStyle()">
         <BlackHoleUpgradeRow

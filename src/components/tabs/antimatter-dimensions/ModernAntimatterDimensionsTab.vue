@@ -30,11 +30,15 @@ export default {
       hasContinuum: false,
       isContinuumActive: false,
       multiplierText: "",
-      secretAchLocked: true,
+      isFullyAutomated: false,
+      secretAchUnlocked: true,
     };
   },
   computed: {
     sacrificeTooltip() {
+      if (this.isFullyAutomated) {
+        return "Sacrifice autobuyer is enabled and Achievement 118 is unlocked, so Sacrifice is now fully automated";
+      }
       if (this.sacrificeBoost.lte(1)) return null;
       return `Boosts 8th Antimatter Dimension by ${formatX(this.sacrificeBoost, 2, 2)}`;
     },
@@ -50,7 +54,7 @@ export default {
         return;
       }
       SecretAchievement(33).unlock();
-      this.secretAchLocked = !SecretAchievement(33).isUnlocked;
+      this.secretAchUnlocked = SecretAchievement(33).isUnlocked;
     },
     getUntil10Display() {
       if (this.isContinuumActive) return "Continuum";
@@ -70,7 +74,8 @@ export default {
 
       this.multiplierText = `Buy 10 Dimension purchase multiplier: ${formatX(this.buy10Mult, 2, 2)}`;
       if (!isSacrificeUnlocked) return;
-      this.isSacrificeAffordable = Sacrifice.canSacrifice;
+      this.isFullyAutomated = Autobuyer.sacrifice.isActive && Achievement(118).isUnlocked;
+      this.isSacrificeAffordable = Sacrifice.canSacrifice && !this.isFullyAutomated;
       this.currentSacrifice.copyFrom(Sacrifice.totalBoost);
       this.sacrificeBoost.copyFrom(Sacrifice.nextBoost);
       this.disabledCondition = Sacrifice.disabledCondition;
@@ -78,7 +83,7 @@ export default {
         ? ` | Dimensional Sacrifice multiplier: ${formatX(this.currentSacrifice, 2, 2)}`
         : "";
       this.multiplierText += sacText;
-      this.secretAchLocked = !SecretAchievement(33).isUnlocked;
+      this.secretAchUnlocked = SecretAchievement(33).isUnlocked;
     }
   }
 };
@@ -88,7 +93,7 @@ export default {
   <div class="l-antimatter-dim-tab">
     <div class="modes-container">
       <button
-        v-if="secretAchLocked"
+        v-if="!secretAchUnlocked"
         class="o-primary-btn l-button-container"
         @click="changeBuyMode"
       >
@@ -106,6 +111,9 @@ export default {
         @click="sacrifice"
       >
         <span v-if="isSacrificeAffordable">Dimensional Sacrifice ({{ formatX(sacrificeBoost, 2, 2) }})</span>
+        <span v-else-if="isFullyAutomated && disabledCondition !== ''">
+          Dimensional Sacrifice is Automated (Achievement 118)
+        </span>
         <span v-else>Dimensional Sacrifice Disabled ({{ disabledCondition }})</span>
       </PrimaryButton>
       <span class="l-button-container" />

@@ -1,7 +1,7 @@
 # Antimatter Dimensions: Resimplified
 
 A mod of a game which makes numbers go up faster.
-Currently based on commit [b3a254a](https://github.com/IvarK/AntimatterDimensionsSourceCode/commit/b3a254a).
+Currently based on commit [aeaa7a3](https://github.com/IvarK/AntimatterDimensionsSourceCode/commit/aeaa7a3).
 
 ## Run
 

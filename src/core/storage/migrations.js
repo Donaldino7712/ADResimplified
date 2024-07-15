@@ -420,26 +420,45 @@ export const migrations = {
       // This update has a rebalance that assumes the 3rd dilation repeatable is unpurchasable in cel7
       if (player.celestials.pelle.doomed) player.dilation.rebuyables[3] = 0;
     },
-    // 100: player => {
-    //   // The ReSimplified migration
-    //   player.chall2Pow = player.chall3Pow;
-    //   delete player.chall3Pow;
-    //   player.chall6TotalSacrifice = player.chall8TotalSacrifice;
-    //   delete player.chall8TotalSacrifice;
-    //   delete player.chall9TickseedCostBumps;
-    //   delete player.postC4Tier;
-    //   // stuff to migrate: achievements, challenges (and everything related ie. challenge times)
-    //   delete player.challenge.eternity.requirementBits;
-    //   const newGlyphFilters = {
-    //     0: 0,
-    //     5: 2,
-    //     6: 3
-    //   };
-    //   player.reality.glyphs.filter.select = newGlyphFilters[player.reality.glyphs.filter.select] ?? 1;
-    //   if (player.options.sidebarResourceID >= 9) player.options.sidebarResourceID++;
-    //   delete player.auto.disableContinuum;
-    //   delete player.requirementChecks.reality.noContinuum;
-    // },
+    99: player => {
+      // The Resimplified migration
+      player.chall2Pow = player.chall3Pow;
+      delete player.chall3Pow;
+      player.chall6TotalSacrifice = player.chall8TotalSacrifice;
+      delete player.chall8TotalSacrifice;
+      delete player.chall9TickseedCostBumps;
+      delete player.postC4Tier;
+      delete player.challenge.eternity.requirementBits;
+      const newGlyphFilters = {
+        0: 0,
+        5: 2,
+        6: 3
+      };
+      player.reality.glyphs.filter.select = newGlyphFilters[player.reality.glyphs.filter.select] ?? 1;
+      if (player.options.sidebarResourceID >= 9) player.options.sidebarResourceID++;
+      delete player.auto.disableContinuum;
+      delete player.requirementChecks.reality.noContinuum;
+      const newChallenges = {
+        1: 1,
+        3: 2,
+        5: 3,
+        6: 4,
+        7: 5,
+        8: 6,
+        10: 7,
+        12: 8
+      };
+      player.challenge.normal.current = newChallenges[player.challenge.normal.current] ?? 0;
+      const newBestTimes = [];
+      Object.keys(newChallenges).forEach(c => newBestTimes.push(player.challenge.normal.bestTimes[c - 1]));
+      player.challenge.normal.bestTimes = newBestTimes;
+      delete player.auto.disableContinuum;
+      delete player.auto.tickspeed;
+      delete player.auto.antimatterDims;
+      delete player.speedrun.isUnlocked;
+      delete player.speedrun.records[4];
+      player.speedrun.records = player.speedrun.records.compact();
+    },
   },
 
   normalizeTimespans(player) {

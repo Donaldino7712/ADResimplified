@@ -248,6 +248,9 @@ export const GlyphGenerator = {
     return effectValues.map(i => i.bitmaskIndex).toBitmask();
   },
 
+  getRNG(fake) {
+    return fake ? new GlyphGenerator.FakeGlyphRNG() : new GlyphGenerator.RealGlyphRNG();
+  },
   copy(glyph) {
     return glyph ? deepmerge({}, glyph) : glyph;
   },
