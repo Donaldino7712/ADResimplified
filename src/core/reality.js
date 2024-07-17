@@ -125,8 +125,6 @@ export function processManualReality(sacrifice, glyphID) {
   if (!isRealityAvailable()) return;
 
   if (player.realities === 0) {
-    // If this is our first Reality, lock in the initial seed and then give the companion glyph
-    player.reality.seed = player.reality.initialSeed;
     Glyphs.addToInventory(GlyphGenerator.companionGlyph(Currency.eternityPoints.value));
   }
   GlyphSelection.generate();
@@ -148,9 +146,6 @@ export function processManualReality(sacrifice, glyphID) {
         Glyphs.addToInventory(newGlyph);
       }
     } else {
-      // This doesn't use the seeded RNG, but this isn't exploitable since the player can just reenable
-      // the modal and choose themselves anyway. The alternative is adding an extra seeded RNG call
-      // everywhere else to ensure RNG consistency, which is probably undesirable
       GlyphSelection.select(Math.floor(Math.random() * GlyphSelection.choiceCount), sacrifice);
     }
   } else {

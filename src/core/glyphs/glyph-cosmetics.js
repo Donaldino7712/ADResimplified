@@ -234,7 +234,6 @@ export const GlyphAppearanceHandler = {
     if (toUnlock && lockedSets.includes(toUnlock)) {
       unlocked = toUnlock;
     } else if (!toUnlock && lockedSets.length > 0) {
-      // Randomness doesn't need to be seeded since we normally let the player choose and randomness is just a fallback
       unlocked = lockedSets[Math.floor(Math.random() * lockedSets.length)];
     } else {
       return;

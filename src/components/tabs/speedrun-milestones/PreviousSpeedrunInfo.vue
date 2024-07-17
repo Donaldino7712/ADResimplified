@@ -38,32 +38,8 @@ export default {
         text: `${offlineFrac === 0 ? "No" : formatPercents(offlineFrac, 1)} Offline Time`,
       };
     },
-    seedAttr() {
-      let symbol;
-      switch (this.prevRunInfo.seedSelection) {
-        case SPEEDRUN_SEED_STATE.UNKNOWN:
-          symbol = "fa-question";
-          break;
-        case SPEEDRUN_SEED_STATE.FIXED:
-          symbol = "fa-gamepad";
-          break;
-        case SPEEDRUN_SEED_STATE.RANDOM:
-          symbol = "fa-dice";
-          break;
-        case SPEEDRUN_SEED_STATE.PLAYER:
-          symbol = "fa-user-pen";
-          break;
-        default:
-          throw new Error("Unrecognized speedrun seed option in previous run subtab");
-      }
-
-      return {
-        icon: `fas ${symbol} o-icon`,
-        text: Speedrun.seedModeText(this.prevRunInfo),
-      };
-    },
     iconAttrs() {
-      return [this.offlineAttr, this.segmentAttr, this.stdAttr, this.seedAttr];
+      return [this.offlineAttr, this.segmentAttr, this.stdAttr];
     },
     startDate() {
       return Time.toDateTimeString(this.prevRunInfo.startDate);

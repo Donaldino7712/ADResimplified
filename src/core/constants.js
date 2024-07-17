@@ -505,10 +505,3 @@ window.PROGRESS_STAGE = {
 };
 
 window.STD_BACKEND_URL = "https://antimatterdimensionspayments.ew.r.appspot.com";
-
-window.SPEEDRUN_SEED_STATE = {
-  UNKNOWN: 0,
-  FIXED: 1,
-  RANDOM: 2,
-  PLAYER: 3,
-};

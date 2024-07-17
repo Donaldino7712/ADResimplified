@@ -77,7 +77,7 @@ export default {
       }
       function EPforRM(rm) {
         const adjusted = Decimal.divide(rm, MachineHandler.realityMachineMultiplier);
-        const div = 4000 - Effects.sum(FabricUpgrade(3));
+        const div = 4000 - Effects.sum(FabricUpgrade(6));
         return Decimal.pow10(div * (adjusted.log10() / 3 + 1));
       }
 

@@ -2,48 +2,6 @@ import { GameDatabase } from "./secret-formula/game-database";
 import { GameMechanicState } from "./game-mechanics";
 
 export const Speedrun = {
-  officialFixedSeed: 69420,
-  // Used to block the seed-changing modal from opening (other functions assume this is checked beforehand)
-  canModifySeed() {
-    return player.realities < 1;
-  },
-  modifySeed(key, seed) {
-    player.speedrun.seedSelection = key;
-    let newSeed;
-    switch (key) {
-      case SPEEDRUN_SEED_STATE.FIXED:
-        player.reality.initialSeed = this.officialFixedSeed;
-        player.speedrun.initialSeed = this.officialFixedSeed;
-        return;
-      case SPEEDRUN_SEED_STATE.RANDOM:
-        // This gives seeds of roughly the same magnitude that the first-run Date.now() would give
-        newSeed = Math.floor(1e13 * Math.random());
-        player.reality.initialSeed = newSeed;
-        player.speedrun.initialSeed = newSeed;
-        return;
-      case SPEEDRUN_SEED_STATE.PLAYER:
-        player.reality.initialSeed = seed;
-        player.speedrun.initialSeed = seed;
-        return;
-      default:
-        throw new Error("Unrecognized speedrun seed setting option");
-    }
-  },
-  seedModeText(rec) {
-    const record = rec ?? player.speedrun;
-    switch (record.seedSelection) {
-      case SPEEDRUN_SEED_STATE.UNKNOWN:
-        return `No seed data (old save)`;
-      case SPEEDRUN_SEED_STATE.FIXED:
-        return `Official fixed seed (${record.initialSeed})`;
-      case SPEEDRUN_SEED_STATE.RANDOM:
-        return `Random seed (${record.initialSeed})`;
-      case SPEEDRUN_SEED_STATE.PLAYER:
-        return `Player seed (${record.initialSeed})`;
-      default:
-        throw new Error("Unrecognized speedrun seed option in seedModeText");
-    }
-  },
   // If a name isn't given, choose a somewhat-likely-to-be-unique big number instead
   generateName(name) {
     if (name.trim() === "") {
@@ -59,7 +17,6 @@ export const Speedrun = {
     NG.restartWithCarryover();
 
     player.speedrun.isActive = true;
-    this.modifySeed(SPEEDRUN_SEED_STATE.FIXED);
     player.speedrun.name = name;
 
     // We make a few assumptions on settings which are likely to be changed for all speedrunners
@@ -69,6 +26,8 @@ export const Speedrun = {
       if (typeof player.options.animations[key] === "boolean") player.options.animations[key] = false;
     }
 
+    // A few achievements are given for free to mitigate weird strategies at the beginning of runs or unavoidable
+    // timewalls for particularly fast/optimized runs
     // TODO: remove these (after achievement rearrange)
     Achievement(22).unlock();
     Achievement(35).unlock();

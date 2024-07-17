@@ -15,8 +15,6 @@ export default {
       mostRecent: {},
       isCollapsed: false,
       timeSince: 0,
-      seedText: 0,
-      canModifySeed: false,
       isComplete: false,
     };
   },
@@ -52,7 +50,6 @@ export default {
     update() {
       const speedrun = player.speedrun;
       this.isActive = speedrun.isActive;
-      this.canModifySeed = Speedrun.canModifySeed();
       // Short-circuit if speedrun isn't active; updating some later stuff can cause vue errors outside of speedruns
       if (!this.isActive) return;
       this.isSegmented = speedrun.isSegmented;
@@ -69,7 +66,6 @@ export default {
       this.mostRecent = Speedrun.mostRecentMilestone();
       this.timeSince = Time.realTimePlayed.minus(TimeSpan.fromMilliseconds(speedrun.records[this.mostRecent] ?? 0))
         .toStringShort();
-      this.seedText = Speedrun.seedModeText();
     },
     milestoneName(id) {
       const db = GameDatabase.speedrunMilestones;
@@ -84,10 +80,6 @@ export default {
     },
     toggleCollapse() {
       player.speedrun.hideInfo = !this.isCollapsed;
-    },
-    openSeedModal() {
-      if (!this.canModifySeed) return;
-      Modal.modifySeed.show();
     }
   },
 };
@@ -111,11 +103,6 @@ export default {
       <i>{{ segmentText }}</i>
       <br>
       <i>{{ iapText }}</i>
-      <br>
-      <span
-        :class="{ 'c-speedrun-status--can-change': canModifySeed }"
-        @click="openSeedModal()"
-      >{{ seedText }}</span>
       <br>
       Total real playtime since start: {{ timePlayedStr }}
       <br>

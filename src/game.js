@@ -89,7 +89,7 @@ export function gainedInfinityPoints() {
     308,
     Achievement(103),
     TimeStudy(111)
-  ) - FabricUpgrade(1).effectOrDefault(0);
+  ) - FabricUpgrade(4).effectOrDefault(0);
   if (Pelle.isDisabled("IPMults")) {
     return Decimal.pow10(player.records.thisInfinity.maxAM.log10() / div - 0.75)
       .timesEffectsOf(PelleRifts.vacuum)
@@ -136,7 +136,7 @@ function totalEPMult() {
 export function gainedEternityPoints() {
   const div = 308 -
     PelleRifts.recursion.effectValue.toNumber() -
-    FabricUpgrade(2).effectOrDefault(0);
+    FabricUpgrade(5).effectOrDefault(0);
   let ep = DC.D5.pow(player.records.thisEternity.maxIP.plus(
     gainedInfinityPoints()).log10() / div - 0.7).times(totalEPMult());
 
@@ -366,7 +366,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
 
   factor *= PelleUpgrade.timeSpeedMult.effectValue.toNumber();
 
-  factor *= FabricUpgrade(12).effectOrDefault(1);
+  factor *= FabricUpgrade(3).effectOrDefault(1);
   // 1e-300 is now possible with max inverted BH, going below it would be possible with
   // an effarig glyph.
   factor = Math.clamp(factor, 1e-300, 1e300);

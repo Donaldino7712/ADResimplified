@@ -1,89 +1,6 @@
-/**
- * It turns out reading and writing the RNG state from player is really slow, for
- * some reason. Thus, it's very advantageous to get an RNG as a local variable, and only
- * write the state back out to player when we are done with it.
- * So, this interface is implemented by a real and fake RNG class; after creating one and
- * using it, call finalize on it to write the seed out.
- */
 import { deepmerge } from "@/utility/deepmerge";
 
-class GlyphRNG {
-  static get SECOND_GAUSSIAN_DEFAULT_VALUE() {
-    return 1e6;
-  }
-
-  constructor(seed, secondGaussian) {
-    this.seed = seed;
-    this.secondGaussian = secondGaussian;
-  }
-
-  uniform() {
-    const state = xorshift32Update(this.seed);
-    this.seed = state;
-    return state * 2.3283064365386963e-10 + 0.5;
-  }
-
-  normal() {
-    if (this.secondGaussian !== GlyphRNG.SECOND_GAUSSIAN_DEFAULT_VALUE) {
-      const toReturn = this.secondGaussian;
-      this.secondGaussian = GlyphRNG.SECOND_GAUSSIAN_DEFAULT_VALUE;
-      return toReturn;
-    }
-    let u = 0, v = 0, s = 0;
-    do {
-      u = this.uniform() * 2 - 1;
-      v = this.uniform() * 2 - 1;
-      s = u * u + v * v;
-    } while (s >= 1 || s === 0);
-    s = Math.sqrt(-2 * Math.log(s) / s);
-    this.secondGaussian = v * s;
-    return u * s;
-  }
-
-  /**
-   * Write the seed out to where it can be restored
-   * @abstract
-   */
-  finalize() { throw new NotImplementedError(); }
-
-  /**
-   * @abstract
-   */
-  get isFake() { throw new NotImplementedError(); }
-}
-
 export const GlyphGenerator = {
-  fakeSeed: Date.now() % Math.pow(2, 32),
-  fakeSecondGaussian: null,
-  /* eslint-disable lines-between-class-members */
-  RealGlyphRNG: class extends GlyphRNG {
-    constructor() { super(player.reality.seed, player.reality.secondGaussian); }
-    finalize() {
-      player.reality.seed = this.seed;
-      player.reality.secondGaussian = this.secondGaussian;
-    }
-    get isFake() { return false; }
-  },
-
-  FakeGlyphRNG: class extends GlyphRNG {
-    constructor() { super(GlyphGenerator.fakeSeed, GlyphGenerator.fakeSecondGaussian); }
-    finalize() {
-      GlyphGenerator.fakeSeed = this.seed;
-      GlyphGenerator.fakeSecondGaussian = this.secondGaussian;
-    }
-    get isFake() { return true; }
-  },
-
-  MusicGlyphRNG: class extends GlyphRNG {
-    constructor() { super(player.reality.musicSeed, player.reality.musicSecondGaussian); }
-    finalize() {
-      player.reality.musicSeed = this.seed;
-      player.reality.musicSecondGaussian = this.secondGaussian;
-    }
-    get isFake() { return false; }
-  },
-  /* eslint-enable lines-between-class-members */
-
   randomGlyph(level) {
     return this.createGlyph(level, this.availableTypes.randomElement());
   },
@@ -169,10 +86,8 @@ export const GlyphGenerator = {
   },
 
   musicGlyph() {
-    const rng = new GlyphGenerator.MusicGlyphRNG();
     const glyph =
       this.randomGlyph({ actualLevel: Math.floor(player.records.bestReality.glyphLevel * 0.8), rawLevel: 1 });
-    rng.finalize();
     glyph.cosmetic = "music";
     glyph.fixedCosmetic = "music";
     return glyph;
@@ -197,7 +112,7 @@ export const GlyphGenerator = {
 
   get baseStrength() {
     return rarityToStrength((100 + Effarig.maxRarityBoost +
-      Effects.sum(Achievement(146), FabricUpgrade(11))) * this.rarityMultiplier);
+      Effects.sum(Achievement(146), FabricUpgrade(12))) * this.rarityMultiplier);
   },
 
   get strengthInstabilityThreshold() {
@@ -212,24 +127,6 @@ export const GlyphGenerator = {
     const ins = this.strengthInstabilityThreshold;
     return this.baseStrength >= ins ? ins + (this.baseStrength - ins) / 2 : this.baseStrength;
   },
-
-  // eslint-disable-next-line capitalized-comments
-  // get strength() {
-  //   // TODO:glyf
-  //   if (Ra.unlocks.maxGlyphRarityAndShardSacrificeBoost.canBeApplied) return rarityToStrength(100);
-  //   let result = GlyphGenerator.gaussianBellCurve(rng) * GlyphGenerator.strengthMultiplier;
-  // eslint-disable-next-line max-len
-  //   const relicShardFactor = Ra.unlocks.extraGlyphChoicesAndRelicShardRarityAlwaysMax.canBeApplied ? 1 : rng.uniform();
-  //   const increasedRarity =
-  //   // relicShardFactor *
-  //     Effarig.maxRarityBoost +
-  //     Effects.sum(Achievement(146), GlyphSacrifice.effarig);
-  //   // Each rarity% is 0.025 strength.
-  //   result += increasedRarity / 40;
-  //   // Raise the result to the next-highest 0.1% rarity.
-  //   result = Math.ceil(result * 400) / 400;
-  //   return result;
-  // },
 
   // Populate a list of reality glyph effects based on level
   generateRealityEffects(level) {
@@ -248,9 +145,6 @@ export const GlyphGenerator = {
     return effectValues.map(i => i.bitmaskIndex).toBitmask();
   },
 
-  getRNG(fake) {
-    return fake ? new GlyphGenerator.FakeGlyphRNG() : new GlyphGenerator.RealGlyphRNG();
-  },
   copy(glyph) {
     return glyph ? deepmerge({}, glyph) : glyph;
   },

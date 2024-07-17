@@ -19,11 +19,11 @@ export const MachineHandler = {
         Perk.firstPerk,
         PerkShopUpgrade.rmMult,
         Achievement(167)
-      ), FabricUpgrade(6).effectOrDefault(1));
+      ), FabricUpgrade(8).effectOrDefault(1));
   },
 
   get uncappedRM() {
-    const div = 4e3 - Effects.sum(FabricUpgrade(3));
+    const div = 4e3 - Effects.sum(FabricUpgrade(6));
     const log10FinalEP = player.records.thisReality.maxEP.plus(gainedEternityPoints()).log10();
     let rmGain = DC.E3.pow(log10FinalEP / div - 1);
     rmGain = rmGain.times(this.realityMachineMultiplier);

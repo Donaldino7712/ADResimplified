@@ -414,7 +414,7 @@ export const InfinityDimensions = {
     return (7 +
       getAdjustedGlyphEffect("infinityrate") +
       PelleUpgrade.infConversion.effectOrDefault(0) +
-      FabricUpgrade(9).effectOrDefault(0)
+      FabricUpgrade(10).effectOrDefault(0)
     ) * multiplier;
   }
 };

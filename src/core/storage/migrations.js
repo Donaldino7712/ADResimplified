@@ -242,7 +242,8 @@ export const migrations = {
         newArr[entry.id] = player.speedrun.records[entry.key];
       }
       player.speedrun.records = newArr;
-      player.speedrun.seedSelection = SPEEDRUN_SEED_STATE.UNKNOWN;
+      // UNKNOWN
+      player.speedrun.seedSelection = 0;
 
       // This contains redundant info and was never cleaned up during the initial implementation
       delete player.speedrun.milestones;
@@ -426,7 +427,7 @@ export const migrations = {
       delete player.chall3Pow;
       player.chall6TotalSacrifice = player.chall8TotalSacrifice;
       delete player.chall8TotalSacrifice;
-      delete player.chall9TickseedCostBumps;
+      delete player.chall9TickspeedCostBumps;
       delete player.postC4Tier;
       delete player.challenge.eternity.requirementBits;
       const newGlyphFilters = {
@@ -460,6 +461,7 @@ export const migrations = {
       delete player.speedrun.records[4];
       player.speedrun.records = player.speedrun.records.compact();
       const updateEffectsAndStrength = function(g) {
+        if (["companion", "reality", "cursed"].includes(g.type)) return g;
         g.strength = Math.max(g.strength, 3.5);
         let effects = GlyphTypes[g.type].effects;
         if ((player.reality.upgradeBits & (1 << 17)) === 0) effects = effects.slice(0, -1);
@@ -470,16 +472,11 @@ export const migrations = {
         const l = g.idx % 10;
         const r = Math.floor(g.idx / 10);
         g.idx = r * 12 + l;
+        return g;
       };
-
-      player.reality.glyphs.inventory = player.reality.glyphs.inventory.map(g => {
-        updatePosition(g);
-        return ["companion", "reality", "cursed"].includes(g.type) ? g : updateEffectsAndStrength(g);
-      });
-
-      player.reality.glyphs.active = player.reality.glyphs.active.map(g =>
-        (["companion", "reality", "cursed"].includes(g.type) ? g : updateEffectsAndStrength(g))
-      );
+      player.reality.glyphs.inventory = player.reality.glyphs.inventory.map(updatePosition);
+      player.reality.glyphs.inventory.concat(player.reality.glyphs.active).map(updateEffectsAndStrength);
+      Glyphs.refresh();
     },
   },
 

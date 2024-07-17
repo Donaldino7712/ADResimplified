@@ -14,12 +14,6 @@ export default {
   },
   computed: {
     upgrades: () => FabricUpgrades.all,
-    costScalingTooltip: () => `Prices start increasing faster above ${format(1e30)} RM and then even faster
-      above ${format(Decimal.NUMBER_MAX_VALUE, 1)} RM`,
-    possibleTooltip: () => `Checkered upgrades are impossible to unlock this Reality. Striped upgrades are
-      still possible.`,
-    lockTooltip: () => `This will only function if you have not already failed the condition or
-      unlocked the upgrade.`,
   },
   methods: {
     update() {
@@ -27,7 +21,7 @@ export default {
       this.realityFabricPerRealSecond.copyFrom(FabricHandler.productionPerRealSecond);
     },
     id(row, column) {
-      return (row - 1) * 4 + column - 1;
+      return (row - 1) * 3 + column - 1;
     }
   }
 };
@@ -49,12 +43,12 @@ export default {
     </div>
     <br>
     <div
-      v-for="row in 4"
+      v-for="row in 5"
       :key="row"
       class="l-fabric-upgrade-grid__row"
     >
       <FabricUpgradeButton
-        v-for="column in 4"
+        v-for="column in 3"
         :key="id(row, column)"
         :upgrade="upgrades[id(row, column)]"
       />

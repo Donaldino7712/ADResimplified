@@ -45,11 +45,6 @@ export default {
         "c-reality-upgrade-btn--locked": !this.isAvailableForPurchase && !this.isPossible,
       };
     },
-    requirementConfig() {
-      return {
-        description: this.config.requirement
-      };
-    },
     isUseless() {
       return this.upgrade.isDisabled;
     }
@@ -60,7 +55,7 @@ export default {
       this.isAvailableForPurchase = upgrade.isAvailableForPurchase;
       this.canBeBought = upgrade.canBeBought;
       this.isRebuyable = upgrade.isRebuyable;
-      this.isBought = upgrade.isBought || upgrade.isCapped;
+      this.isBought = !upgrade.isRebuyable && upgrade.isBought;
       this.isPossible = upgrade.isPossible;
       this.hideEstimate = this.canBeBought || this.isBought || this.isUseless || Pelle.isDoomed;
       this.timeEstimate = this.hideEstimate ? null : FabricHandler.upgradeTimeEstimate(this.upgrade.cost);

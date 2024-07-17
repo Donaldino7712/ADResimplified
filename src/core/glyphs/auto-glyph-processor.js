@@ -260,7 +260,7 @@ export function getGlyphLevelInputs() {
   adjustFactor(sources.dt, weights.dt / 100);
   adjustFactor(sources.eternities, weights.eternities / 100);
   const shardFactor = Ra.unlocks.relicShardGlyphLevelBoost.effectOrDefault(0);
-  const fabricFactor = FabricUpgrade(10).effectOrDefault(0);
+  const fabricFactor = FabricUpgrade(11).effectOrDefault(0);
   let baseLevel = sources.ep.value * sources.repl.value * sources.dt.value * sources.eternities.value *
     staticFactors.perkShop + shardFactor + fabricFactor;
 

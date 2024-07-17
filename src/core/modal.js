@@ -64,7 +64,6 @@ import ImportSaveModal from "@/components/modals/ImportSaveModal";
 import ImportTimeStudyConstants from "@/components/modals/ImportTimeStudyConstants";
 import InformationModal from "@/components/modals/InformationModal";
 import LoadGameModal from "@/components/modals/LoadGameModal";
-import ModifySeedModal from "@/components/modals/ModifySeedModal";
 import PelleEffectsModal from "@/components/modals/PelleEffectsModal";
 import RealityGlyphCreationModal from "@/components/modals/RealityGlyphCreationModal";
 import ReplaceGlyphModal from "@/components/modals/ReplaceGlyphModal";
@@ -215,7 +214,6 @@ Modal.celestials = new Modal(EnterCelestialsModal, 1);
 Modal.hardReset = new Modal(HardResetModal, 1);
 Modal.backupWindows = new Modal(BackupWindowModal, 1);
 Modal.enterSpeedrun = new Modal(SpeedrunModeModal);
-Modal.modifySeed = new Modal(ModifySeedModal);
 Modal.changeName = new Modal(ChangeNameModal);
 Modal.armageddon = new Modal(ArmageddonModal, 1);
 

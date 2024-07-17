@@ -2,7 +2,7 @@ import { BitPurchasableMechanicState, RebuyableMechanicState } from "./game-mech
 
 export const FabricHandler = {
   get productionPerSecond() {
-    const p = FabricUpgrade(4).boughtAmount;
+    const p = FabricUpgrade(1).boughtAmount;
     let base = Decimal.log(Currency.realityMachines.value.clampMin(1), 10 - p);
     if (p >= 9) base = Currency.realityMachines.value.pow(p / 1000 + 0.01);
     return Decimal.mul(base, this.realityFabricMultipliers);
@@ -18,7 +18,7 @@ export const FabricHandler = {
 
   get realityFabricMultipliers() {
     return Effects.product(
-      FabricUpgrade(8)
+      FabricUpgrade(2)
     );
   },
 
@@ -83,15 +83,11 @@ class RebuyableFabricUpgradeState extends RebuyableMechanicState {
   }
 
   get boughtAmount() {
-    return player.machine.rebuyables[this.id];
+    return player.machine.rebuyables[this.id - 1];
   }
 
   set boughtAmount(value) {
-    player.machine.rebuyables[this.id] = value;
-  }
-
-  get isCapped() {
-    return this.boughtAmount === this.config.maxUpgrades;
+    player.machine.rebuyables[this.id - 1] = value;
   }
 
   get isDisabled() {
@@ -105,7 +101,7 @@ class RebuyableFabricUpgradeState extends RebuyableMechanicState {
 
 FabricUpgradeState.index = mapGameData(
   GameDatabase.reality.fabricUpgrades,
-  config => (config.id % 4 === 0
+  config => (config.id <= 3
     ? new RebuyableFabricUpgradeState(config)
     : new FabricUpgradeState(config))
 );
@@ -122,7 +118,6 @@ export const FabricUpgrades = {
    */
   all: FabricUpgradeState.index.compact(),
   get allBought() {
-    // I am too stupid to write an actual formula, this works though
-    return player.machine.upgradeBits === 61166;
+    return (player.machine.upgradeBits >> 4) + 1 === 1 << (GameDatabase.reality.fabricUpgrades.length - 3);
   }
 };

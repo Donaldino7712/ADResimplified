@@ -326,12 +326,10 @@ window.player = {
     // One spot for every entry in GameDatabase.speedrunMilestones (note: 1-indexed)
     records: Array.repeat(0, 25),
     achievementTimes: {},
-    seedSelection: SPEEDRUN_SEED_STATE.FIXED,
-    initialSeed: 0,
     previousRuns: {}
   },
   IPMultPurchases: 0,
-  version: 25,
+  version: 99,
   infinityPower: DC.D1,
   eternityPoints: DC.D0,
   eternities: DC.D0,
@@ -436,13 +434,6 @@ window.player = {
         colorMap: {},
       }
     },
-    initialSeed: Math.floor(Date.now() * Math.random() + 1),
-    // The seed value should get set from initialSeed upon unlocking reality, but we set it to 1 as a fallback in
-    // case somehow it doesn't get set properly. Do not change this to 0, as a seed of 0 causes the game to hang
-    seed: 1,
-    secondGaussian: 1e6,
-    musicSeed: Math.floor(Date.now() * Math.random() + 0xBCDDECCB),
-    musicSecondGaussian: 1e6,
     rebuyables: {
       1: 0,
       2: 0,
@@ -888,12 +879,7 @@ window.player = {
   },
   machine: {
     realityFabric: DC.D0,
-    rebuyables: {
-      4: 0,
-      8: 0,
-      12: 0,
-      16: 0
-    },
+    rebuyables: [0, 0, 0],
     upgradeBits: 0
   }
 };

@@ -21,8 +21,6 @@ export const NG = {
         offlineTimeUsed: speedrun.offlineTimeUsed,
         records: [...speedrun.records],
         achievementTimes: JSON.parse(JSON.stringify(speedrun.achievementTimes)),
-        seedSelection: speedrun.seedSelection,
-        initialSeed: speedrun.initialSeed,
       };
 
       // For the sake of keeping a bounded savefile size, we only keep a queue of the last 100 full runs. The earliest
