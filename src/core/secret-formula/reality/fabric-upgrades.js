@@ -168,7 +168,7 @@ export const fabricUpgrades = [
     id: 14,
     cost: DC.E450,
     description: "Reality Fabric gives a multiplier to Singularities",
-    effect: () => (Currency.realityFabric.value.log10() / 400) ** 2,
+    effect: () => Math.clampMin((Currency.realityFabric.value.log10() / 400) ** 2, 1),
     formatEffect: value => formatX(value, 2, 2)
   },
   {

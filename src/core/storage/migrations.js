@@ -456,8 +456,30 @@ export const migrations = {
       delete player.auto.tickspeed;
       delete player.auto.antimatterDims;
       delete player.speedrun.isUnlocked;
+      // C9 completion
       delete player.speedrun.records[4];
       player.speedrun.records = player.speedrun.records.compact();
+      const updateEffectsAndStrength = function(g) {
+        g.strength = Math.max(g.strength, 3.5);
+        let effects = GlyphTypes[g.type].effects;
+        if ((player.reality.upgradeBits & (1 << 17)) === 0) effects = effects.slice(0, -1);
+        g.effects = effects.map(e => e.bitmaskIndex).toBitmask();
+        return g;
+      };
+      const updatePosition = function(g) {
+        const l = g.idx % 10;
+        const r = Math.floor(g.idx / 10);
+        g.idx = r * 12 + l;
+      };
+
+      player.reality.glyphs.inventory = player.reality.glyphs.inventory.map(g => {
+        updatePosition(g);
+        return ["companion", "reality", "cursed"].includes(g.type) ? g : updateEffectsAndStrength(g);
+      });
+
+      player.reality.glyphs.active = player.reality.glyphs.active.map(g =>
+        (["companion", "reality", "cursed"].includes(g.type) ? g : updateEffectsAndStrength(g))
+      );
     },
   },
 
