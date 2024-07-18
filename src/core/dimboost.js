@@ -166,7 +166,7 @@ export class DimBoost {
   }
 
   static get startingDimensionBoosts() {
-    if (InfinityUpgrade.ipOffline.isBought) return 5;
+    if (InfinityUpgrade.skipResetSacrifice.isBought) return 5;
     if (InfinityUpgrade.skipResetGalaxy.isBought) return 4;
     if (InfinityUpgrade.skipReset3.isBought) return 3;
     if (InfinityUpgrade.skipReset2.isBought) return 2;

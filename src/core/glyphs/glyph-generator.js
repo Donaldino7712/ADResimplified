@@ -5,14 +5,14 @@ export const GlyphGenerator = {
     return this.createGlyph(level, this.availableTypes.randomElement());
   },
 
-  createGlyph(level, typeIn) {
+  createGlyph(level, type) {
     const strength = this.strength;
-    const effectBitmask = this.getEffectsForType(typeIn);
+    const effectBitmask = this.getEffectsForType(type);
 
     return {
       id: undefined,
       idx: null,
-      type: typeIn,
+      type,
       strength,
       level: level.actualLevel,
       rawLevel: level.rawLevel,
@@ -139,7 +139,6 @@ export const GlyphGenerator = {
   },
 
   getEffectsForType(type) {
-    // TODO:glyf
     let effectValues = GlyphTypes[type].effects;
     if (!RealityUpgrade(17).isBought) effectValues = effectValues.slice(0, -1);
     return effectValues.map(i => i.bitmaskIndex).toBitmask();

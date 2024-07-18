@@ -340,6 +340,29 @@ with your current amount of antimatter.
       tags: ["dimension", "earlygame", "time"],
       tab: "dimensions/antimatter"
     }, {
+      name: "Continuum",
+      info: () => `
+When you purchase your first Antimatter Dimension, your Antimatter Dimensions and Tickspeed Upgrades switch
+to a mode of production called Continuum, which allows for buying partial Dimension or Tickspeed Upgrades.
+These fractional purchases are given for free without spending your antimatter and will provide
+an appropriate portion of their multiplier.
+<br>
+<br>
+The purchase buttons for Antimatter Dimensions and Tickspeed Upgrades become modified to display the number of upgrades
+you would be able to purchase if Continuum was inactive, and the purchase count is scaled smoothly with antimatter.
+For example, having ${format(2e7)} antimatter will give you a Continuum value of ${format(5.3, 0, 1)} for tickspeed
+(initial cost of ${format(1e3)} and increase of ${formatX(10)}) since you can purchase it ${formatInt(5)} times and
+are roughly ${formatPercents(0.3)} of the way to the next. Tickspeed Continuum in this case will then
+give a production boost equal to (upgrade multiplier)<sup>${format(5.3, 0, 1)}</sup>.
+<br>
+<br>
+Some upgrades will multiply Continuum value directly, which gives a production boost without affecting the cost
+scaling.
+`,
+      isUnlocked: () => Laitela.continuumUnlocked,
+      tags: ["continuum", "purchase", "dimension", "earlygame"],
+      tab: ""
+    }, {
       name: "Dimension Boosts",
       info: () => `
 <b>Dimension Boost:</b> This resets your antimatter and all of your Antimatter Dimensions, but unlocks another
@@ -350,10 +373,11 @@ every additional boost will cost ${formatInt(15)} more 8th Dimensions than the p
 unlock a Dimension, but will continue to increase your Dimension multipliers.
 <br>
 <br>
-You gain a ${formatX(2)} multiplier to the 1st Dimension for every Dimension Boost you have. Each higher
+You gain a ${formatX(2.5, 1, 1)} multiplier to the 1st Dimension for every Dimension Boost you have. Each higher
 Dimension will have the multiplier applied one less time as the previous, down to a minimum of ${formatInt(0)}.
-For example, with ${formatInt(3)} Boosts, the 1st Dimension will gain ${formatX(8)}, the 2nd Dimension ${formatX(4)},
-the 3rd Dimension ${formatX(2)}, and all other Dimensions are unaffected.
+For example, with ${formatInt(3)} Boosts, the 1st Dimension will gain ${formatX(2.5 ** 3, 3, 3)},
+the 2nd Dimension ${formatX(2.5 ** 2, 2, 2)}, the 3rd Dimension ${formatX(2.5, 1, 1)}, and all other Dimensions
+are unaffected.
 <br>
 <br>
 <b>Hotkey: D</b> will try to purchase a Dimension Boost.
@@ -1709,35 +1733,6 @@ Lai'tela will not directly unlock the next Celestial.
       isUnlocked: () => Laitela.isUnlocked,
       tags: ["omsi", "reality", "dark", "matter", "dimensions", "lategame", "endgame", "ascend", "celestial"],
       tab: "celestials/laitela"
-    }, {
-      name: "Continuum",
-      info: () => `
-When you unlock Lai'tela, your Antimatter Dimensions and Tickspeed Upgrades switch to a new mode of production
-called Continuum, which gives the same effect as previously but allows for buying partial Dimension or
-Tickspeed Upgrades. These fractional purchases are given for free without spending your antimatter and will provide
-an appropriate portion of their multiplier.
-<br>
-<br>
-The purchase buttons for Antimatter Dimensions and Tickspeed Upgrades become modified to display the number of upgrades
-you would be able to purchase if Continuum was inactive, and the purchase count is scaled smoothly with antimatter.
-For example, having ${format(2e7)} antimatter will give you a Continuum value of ${format(5.3, 0, 1)} for tickspeed
-(initial cost of ${format(1e3)} and increase of ${formatX(10)}) since you can purchase it ${formatInt(5)} times and
-are roughly ${formatPercents(0.3)} of the way to the next. Tickspeed Continuum in this case will then
-give a production boost equal to (upgrade multiplier)<sup>${format(5.3, 0, 1)}</sup>.
-<br>
-<br>
-Some upgrades will multiply Continuum value directly, which gives a production boost without affecting the cost
-scaling. However, these upgrades will not function if Continuum is disabled on the Autobuyers page, which may result
-in a loss of production if disabled. Continuum makes your autobuyers for Antimatter Dimensions and Tickspeed obsolete,
-so all the related autobuyer settings for these autobuyers are now hidden on that tab as long as Continuum is active.
-`,
-      // Apparently continuumUnlocked is really important in a lot of places and if we keep it unlocked
-      // Things break, so we check for the iMU instead.
-      // TODO: check if this breaks
-      // TODO: rewrite this
-      isUnlocked: () => Laitela.continuumUnlocked,
-      tags: ["continuum", "purchase", "reality", "lategame", "endgame"],
-      tab: ""
     }, {
       name: "Singularities",
       info: () => `

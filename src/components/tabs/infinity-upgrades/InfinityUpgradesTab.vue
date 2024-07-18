@@ -62,7 +62,7 @@ export default {
         "o-primary-btn--charged-respec-active": this.disCharge
       };
     },
-    offlineIpUpgrade: () => InfinityUpgrade.ipOffline
+    skipReset5Upgrade: () => InfinityUpgrade.skipResetSacrifice
   },
   watch: {
     disCharge(newValue) {
@@ -166,7 +166,7 @@ export default {
     >
       <IpMultiplierButton class="l-infinity-upgrades-tab__mult-btn" />
       <InfinityUpgradeButton
-        :upgrade="offlineIpUpgrade"
+        :upgrade="skipReset5Upgrade"
         :class="btnClassObject(1)"
       />
     </div>

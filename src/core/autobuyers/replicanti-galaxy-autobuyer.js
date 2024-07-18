@@ -14,7 +14,6 @@ export class ReplicantiGalaxyAutobuyerState extends AutobuyerState {
   }
 
   get isEnabled() {
-    // TODO:hevi
     return !Pelle.isDoomed || !TimeStudy(131).isBought;
   }
 

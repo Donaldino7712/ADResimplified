@@ -51,7 +51,6 @@ export const dilationUpgrades = {
     id: 2,
     initialCost: 1e6,
     increment: 100,
-    // TODO:hevi
     description: "Reset Tachyon Galaxies, but lower their threshold",
     // The 38th purchase is at 1e80, and is the last purchase.
     effect: bought => (bought < 38 ? Math.pow(0.8, bought) : 0),

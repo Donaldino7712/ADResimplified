@@ -73,7 +73,6 @@ export const AutoGlyphProcessor = {
     if (this.types[glyph.type] === undefined && glyph.type !== "reality") return -Number.MAX_VALUE;
     return Number.MAX_VALUE;
   },
-  // TODO:glyf
   wouldKeep(glyph) {
     return this.filterValue(glyph) >= this.thresholdValue(glyph);
   },

@@ -128,7 +128,6 @@ export function processManualReality(sacrifice, glyphID) {
     Glyphs.addToInventory(GlyphGenerator.companionGlyph(Currency.eternityPoints.value));
   }
   GlyphSelection.generate();
-  // TODO:glyf
   // If we don't actually have a chosen ID, that means a manual reality was done with the modal disabled or the
   // modal showed up and the player decided not to pick anything
   if (glyphID === undefined) {

@@ -99,7 +99,6 @@ export function getReplicantiInterval(overCapOverride, intervalIn) {
   const amount = Replicanti.amount;
   const overCap = overCapOverride === undefined ? amount.gt(replicantiCap()) : overCapOverride;
   interval = new Decimal(interval);
-  // TODO:hevi
   if ((TimeStudy(133).isBought && Pelle.isDoomed) || overCap) {
     interval = interval.times(10);
   }

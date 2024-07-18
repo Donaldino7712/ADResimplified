@@ -81,8 +81,6 @@ export function buyDilationUpgrade(id, bulk = 1) {
     if (!Perk.duFree.canBeApplied) Currency.dilatedTime.subtract(cost);
     player.dilation.rebuyables[id] += buying;
     if (id === 2) {
-      // TODO:hevi
-      // if (Pelle.isDoomed) Currency.dilatedTime.reset();
       player.dilation.nextThreshold = DC.E3;
       player.dilation.baseTachyonGalaxies = 0;
       player.dilation.totalTachyonGalaxies = 0;

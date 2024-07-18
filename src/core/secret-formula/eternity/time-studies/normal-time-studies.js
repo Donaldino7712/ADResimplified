@@ -329,7 +329,6 @@ export const normalTimeStudies = [
     requirement: [121],
     reqType: TS_REQUIREMENT_TYPE.AT_LEAST_ONE,
     requiresST: [132, 133],
-    // TODO:hevi
     description: () => (Pelle.isDoomed
       ? `Automatic Replicanti Galaxies are disabled, but you can get ${formatPercents(0.5)} more`
       : `You can get ${formatPercents(0.5)} more Replicanti Galaxies`),
@@ -355,7 +354,6 @@ export const normalTimeStudies = [
     requirement: [123],
     reqType: TS_REQUIREMENT_TYPE.AT_LEAST_ONE,
     requiresST: [131, 132],
-    // TODO:hevi
     description: () => (Pelle.isDoomed
       ? `Replicanti are ${formatX(10)} slower until ${format(Number.MAX_VALUE, 2)}` +
       `, but Replicanti Galaxies are ${formatPercents(0.5)} stronger`

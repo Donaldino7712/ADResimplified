@@ -235,7 +235,7 @@ Currency.antimatter = new class extends DecimalCurrency {
       Achievement(54),
       Achievement(55),
       Achievement(78)
-    ).toDecimal().powEffectOf(InfinityUpgrade.ipOffline);
+    ).toDecimal().powEffectOf(InfinityUpgrade.skipResetSacrifice);
   }
 }();
 

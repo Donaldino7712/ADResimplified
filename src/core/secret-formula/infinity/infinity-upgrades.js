@@ -203,9 +203,8 @@ export const infinityUpgrades = {
       `Start every reset with ${formatInt(4)} Dimension Boosts, automatically unlocking the 8th Antimatter Dimension;
       and an Antimatter Galaxy`,
   },
-  // TODO: change the id
-  ipOffline: {
-    id: "ipOffline",
+  skipResetSacrifice: {
+    id: "skipResetSacrifice",
     cost: 1000,
     checkRequirement: () => Achievement(41).isUnlocked,
     description: () =>
@@ -216,7 +215,7 @@ export const infinityUpgrades = {
   ipMult: {
     id: "ipMult",
     cost: () => InfinityUpgrade.ipMult.cost,
-    checkRequirement: () => Achievement(41).isUnlocked && InfinityUpgrade.skipResetGalaxy.isBought,
+    checkRequirement: () => Achievement(41).isUnlocked,
     costCap: DC.E6E6,
     costIncreaseThreshold: DC.E3E6,
     description: () => `Multiply Infinity Points from all sources by ${formatX(2)}`,

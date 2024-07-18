@@ -180,7 +180,6 @@ class InfinityIPMultUpgrade extends GameMechanicState {
   // change mid-purchase
   purchase(amount = 1) {
     if (!this.canBeBought) return;
-    // TODO:hevi
     if (!Achievement(107).isUnlocked) {
       Autobuyer.bigCrunch.bumpAmount(DC.D2.pow(amount));
     }

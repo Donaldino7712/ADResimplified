@@ -24,7 +24,7 @@ export function playerInfinityUpgradesOnReset() {
       "27Mult", "18Mult", "36Mult", "resetMult",
       "skipReset3", "passiveGen", "45Mult",
       "resetBoost", "galaxyBoost", "skipResetGalaxy",
-      "ipOffline"]
+      "skipResetSacrifice"]
   );
 
   const breakInfinityUpgrades = new Set(
@@ -36,7 +36,7 @@ export function playerInfinityUpgradesOnReset() {
       "totalMult", "currentMult", "postGalaxy",
       "challengeMult", "achievementMult", "infinitiedMult",
       "infinitiedGeneration", "autoBuyerUpgrade", "autobuyMaxDimboosts",
-      "ipOffline"]
+      "skipResetSacrifice"]
   );
 
   if (PelleUpgrade.keepBreakInfinityUpgrades.canBeApplied) {
@@ -811,7 +811,6 @@ function laitelaBeatText(disabledDim) {
 
 // This gives IP/EP/RM from the respective upgrades that reward the prestige currencies continuously
 function applyAutoprestige(diff) {
-  // TODO:hevi
   Currency.infinityPoints.add(gainedInfinityPoints()
     .times(Time.deltaTime * Effects.max(0, Achievement(107), PelleUpgrade.passiveIpGain))
     .timesEffectOf(Ra.unlocks.continuousTTBoost.effects.autoPrestige));
