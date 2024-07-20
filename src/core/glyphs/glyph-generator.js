@@ -86,8 +86,11 @@ export const GlyphGenerator = {
   },
 
   musicGlyph() {
-    const glyph =
-      this.randomGlyph({ actualLevel: Math.floor(player.records.bestReality.glyphLevel * 0.8), rawLevel: 1 });
+    const types = [...BASIC_GLYPH_TYPES];
+    if (EffarigUnlock.reality.isUnlocked) types.push("effarig");
+    const glyph = this.createGlyph(
+      { actualLevel: Math.floor(player.records.bestReality.glyphLevel * 0.8), rawLevel: 1 },
+      types.randomElement());
     glyph.cosmetic = "music";
     glyph.fixedCosmetic = "music";
     return glyph;

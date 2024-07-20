@@ -476,6 +476,17 @@ export const migrations = {
       };
       player.reality.glyphs.inventory = player.reality.glyphs.inventory.map(updatePosition);
       player.reality.glyphs.inventory.concat(player.reality.glyphs.active).map(updateEffectsAndStrength);
+      delete player.speedrun.seedSelection;
+      delete player.speedrun.initialSeed;
+      delete player.reality.initialSeed;
+      delete player.reality.seed;
+      delete player.reality.secondpGaussian;
+      delete player.reality.musicSeed;
+      delete player.reality.musicSecondGaussian;
+      if (player.infinityUpgrades.has("ipOffline")) {
+        player.infinityUpgrades.add("skipResetSacrifice");
+        player.infinityUpgrades.delete("ipOffline");
+      }
       Glyphs.refresh();
     },
   },
